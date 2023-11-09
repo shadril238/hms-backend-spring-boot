@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,8 +33,14 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+
+        UserEntity userEntity = userRepository.findUserByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found!"));
+
+        return new User(userEntity.getEmail(),userEntity.getPassword(),
+                true,true,true,true,new ArrayList<>());
     }
 
     @Override
@@ -70,23 +77,35 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
 
 
     @Override
-    public Optional<UserRegistrationRequestDto> getUserById(Long id) {
-        return Optional.empty();
+    public UserDto getUserById(Long id)
+            throws CustomException{
+
+        String errorMessage = "No user found with id: " + id;
+        UserEntity userEntity = userRepository
+                .findUserById(id)
+                .orElseThrow(() -> new CustomException(new ResponseMessageDto(errorMessage, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST));
+        return new ModelMapper().map(userEntity, UserDto.class);
     }
 
     @Override
-    public Optional<UserRegistrationRequestDto> getUserByEmail(String email) {
-        return Optional.empty();
+    public UserDto getUserByEmail(String email)
+            throws CustomException {
+
+        String errorMessage = "No user found with email: " + email;
+        UserEntity userEntity = userRepository
+                .findUserByEmail(email)
+                .orElseThrow(() -> new CustomException(new ResponseMessageDto(errorMessage, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST));
+        return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override
-    public Optional<UserRegistrationRequestDto> updateUser(UserRegistrationRequestDto userDto) {
-        return Optional.empty();
+    public UserDto updateUser(UserRegistrationRequestDto userDto) {
+        return null;
     }
 
     @Override
-    public Optional<UserRegistrationRequestDto> deleteUserById(Long id) {
-        return Optional.empty();
+    public UserDto deleteUserById(Long id) {
+        return null;
     }
 
 }

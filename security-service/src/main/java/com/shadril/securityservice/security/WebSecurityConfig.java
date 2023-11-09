@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                             .anyRequest().permitAll();
                 })
                 .addFilter(new CustomAuthenticationFilter(authenticationManager))
-                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
         ;
         return http.build();
     }

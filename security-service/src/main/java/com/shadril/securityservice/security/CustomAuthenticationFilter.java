@@ -3,7 +3,7 @@ package com.shadril.securityservice.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shadril.securityservice.SpringApplicationContext;
 import com.shadril.securityservice.constants.AppConstants;
-import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
+import com.shadril.securityservice.dtos.UserDto;
 import com.shadril.securityservice.dtos.UserLoginRequestDto;
 import com.shadril.securityservice.services.UserService;
 import com.shadril.securityservice.utils.JwtUtils;
@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -50,9 +51,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String user = ((User)authResult.getPrincipal()).getUsername();
 //        String accessToken = JwtUtils.generateToken(user);
         UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImplementation");
-        UserRegistrationRequestDto userDto = null;
+        UserDto userDto = null;
         try {
-            userDto = userService.getUserByEmail(user).orElseThrow(() -> new RuntimeException("User not found"));
+            userDto = userService.getUserByEmail(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -68,5 +69,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String responseBodyJson = objectMapper.writeValueAsString(responseBody);
         response.setContentType("application/json");
         response.getWriter().write(responseBodyJson);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Authentication failed");
+        errorResponse.put("message", "Invalid email or password");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String errorResponseJson = objectMapper.writeValueAsString(errorResponse);
+        response.getWriter().write(errorResponseJson);
     }
 }
