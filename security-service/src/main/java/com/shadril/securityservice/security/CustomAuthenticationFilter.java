@@ -3,7 +3,7 @@ package com.shadril.securityservice.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shadril.securityservice.SpringApplicationContext;
 import com.shadril.securityservice.constants.AppConstants;
-import com.shadril.securityservice.dtos.UserDto;
+import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
 import com.shadril.securityservice.dtos.UserLoginRequestDto;
 import com.shadril.securityservice.services.UserService;
 import com.shadril.securityservice.utils.JwtUtils;
@@ -50,7 +50,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String user = ((User)authResult.getPrincipal()).getUsername();
 //        String accessToken = JwtUtils.generateToken(user);
         UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImplementation");
-        UserDto userDto = null;
+        UserRegistrationRequestDto userDto = null;
         try {
             userDto = userService.getUserByEmail(user).orElseThrow(() -> new RuntimeException("User not found"));
         } catch (Exception e) {

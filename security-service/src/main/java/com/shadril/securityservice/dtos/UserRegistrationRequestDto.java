@@ -15,10 +15,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class UserRegistrationRequestDto {
     private Long id;
     private String email;
-//    private String password;
+    private String password;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
@@ -31,5 +31,5 @@ public class UserDto {
     private String address;
     @Enumerated(EnumType.STRING)
     private Role role;
-//    private boolean isActive;
+    private boolean isActive;
 }

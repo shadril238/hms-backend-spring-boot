@@ -1,7 +1,7 @@
 package com.shadril.securityservice.controllers;
 
-import com.shadril.securityservice.dtos.ResponseMessageDto;
 import com.shadril.securityservice.dtos.UserDto;
+import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
 import com.shadril.securityservice.dtos.UserRegistrationResponseDto;
 import com.shadril.securityservice.exceptions.CustomException;
 import com.shadril.securityservice.services.UserService;
@@ -25,7 +25,7 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDto) throws CustomException{
+    public ResponseEntity<?> register(@RequestBody UserRegistrationRequestDto userDto) throws CustomException{
         log.info("Inside register method of UserController");
         UserDto responseUser = userService.createUser(userDto);
         UserRegistrationResponseDto userRegistrationResponse = new UserRegistrationResponseDto(

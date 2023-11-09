@@ -1,13 +1,12 @@
 package com.shadril.securityservice.services.implementations;
 
-import com.shadril.securityservice.constants.AppConstants;
 import com.shadril.securityservice.dtos.ResponseMessageDto;
 import com.shadril.securityservice.dtos.UserDto;
+import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
 import com.shadril.securityservice.entities.UserEntity;
 import com.shadril.securityservice.exceptions.CustomException;
 import com.shadril.securityservice.repositories.UserRepository;
 import com.shadril.securityservice.services.UserService;
-import com.shadril.securityservice.utils.JwtUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +37,11 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
-    public UserDto createUser(UserDto userDto)
+    public UserDto createUser(UserRegistrationRequestDto userDto)
             throws CustomException {
 
         if(userRepository.findUserByEmail(userDto.getEmail()).isPresent()) {
-            String errorMessage = "User with email '" + userDto.getEmail() + "' already exists!";
+            String errorMessage = "User with email " + userDto.getEmail() + " already exists";
             throw new CustomException(new ResponseMessageDto(errorMessage, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
 
@@ -66,29 +65,27 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         UserDto returnedUser = modelMapper.map(savedUser, UserDto.class);
         List<String> userRoles = new ArrayList<>();
         userRoles.add(String.valueOf(userDto.getRole()));
-
-        String accessToken = JwtUtils.generateToken(userEntity.getEmail(), userRoles);
         return returnedUser;
     }
 
 
     @Override
-    public Optional<UserDto> getUserById(Long id) {
+    public Optional<UserRegistrationRequestDto> getUserById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<UserDto> getUserByEmail(String email) {
+    public Optional<UserRegistrationRequestDto> getUserByEmail(String email) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<UserDto> updateUser(UserDto userDto) {
+    public Optional<UserRegistrationRequestDto> updateUser(UserRegistrationRequestDto userDto) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<UserDto> deleteUserById(Long id) {
+    public Optional<UserRegistrationRequestDto> deleteUserById(Long id) {
         return Optional.empty();
     }
 
