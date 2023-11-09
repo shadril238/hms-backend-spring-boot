@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserRegistrationRequestDto {
     private Long id;
     private String email;

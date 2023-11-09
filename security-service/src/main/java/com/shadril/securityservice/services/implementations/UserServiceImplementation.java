@@ -55,15 +55,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         userEntity.setEmail(userDto.getEmail());
         userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         userEntity.setRole(userDto.getRole());
-//        userEntity.setFirstName(userDto.getFirstName());
-//        userEntity.setLastName(userDto.getLastName());
-//        userEntity.setAddress(userDto.getAddress());
-//        userEntity.setPhoneNumber(userDto.getPhoneNumber());
-//        userEntity.setBloodGroup(userDto.getBloodGroup());
-//        userEntity.setDateOfBirth(userDto.getDateOfBirth());
-//        userEntity.setGender(userDto.getGender());
         userEntity.setActive(true);
-
 
         UserEntity savedUser = userRepository.save(userEntity);
         log.info("User created with email: {}", userDto.getEmail());
