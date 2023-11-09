@@ -5,7 +5,6 @@ import com.shadril.securityservice.dtos.*;
 import com.shadril.securityservice.exceptions.CustomException;
 import com.shadril.securityservice.services.UserService;
 import com.shadril.securityservice.utils.JwtUtils;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegistrationRequestDto userDto) throws CustomException{
+    public ResponseEntity<UserRegistrationResponseDto> register(@RequestBody UserRegistrationRequestDto userDto) throws CustomException{
         log.info("Inside register method of UserController");
         UserDto responseUser = userService.createUser(userDto);
         UserRegistrationResponseDto userRegistrationResponse = new UserRegistrationResponseDto(
@@ -41,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletResponse response) throws CustomException{
+    public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) throws CustomException{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequestDto.getEmail(), userLoginRequestDto.getPassword()));
         UserDto userDto = userService.getUserByEmail(userLoginRequestDto.getEmail());
 
