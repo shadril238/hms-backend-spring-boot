@@ -1,13 +1,12 @@
 package com.shadril.securityservice.entities;
 
-import com.shadril.securityservice.enums.BloodGroup;
-import com.shadril.securityservice.enums.Gender;
 import com.shadril.securityservice.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.*;
-
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -28,29 +27,29 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 20)
-    private String firstName;
-
-    @Column(nullable = false, length = 20)
-    private String lastName;
-
-    @Column(nullable = false)
-    private LocalDate dateOfBirth;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private BloodGroup bloodGroup;
-
-    @Column(nullable = false, length = 11)
-    private String phoneNumber;
-
-    @Column(nullable = false)
-    @Lob // Large object for storing large string
-    private String address;
+//    @Column(nullable = false, length = 20)
+//    private String firstName;
+//
+//    @Column(nullable = false, length = 20)
+//    private String lastName;
+//
+//    @Column(nullable = false)
+//    private LocalDate dateOfBirth;
+//
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private Gender gender;
+//
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private BloodGroup bloodGroup;
+//
+//    @Column(nullable = false, length = 11)
+//    private String phoneNumber;
+//
+//    @Column(nullable = false)
+//    @Lob // Large object for storing large string
+//    private String address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

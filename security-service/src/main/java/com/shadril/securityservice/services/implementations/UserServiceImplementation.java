@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -56,13 +55,13 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         userEntity.setEmail(userDto.getEmail());
         userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         userEntity.setRole(userDto.getRole());
-        userEntity.setFirstName(userDto.getFirstName());
-        userEntity.setLastName(userDto.getLastName());
-        userEntity.setAddress(userDto.getAddress());
-        userEntity.setPhoneNumber(userDto.getPhoneNumber());
-        userEntity.setBloodGroup(userDto.getBloodGroup());
-        userEntity.setDateOfBirth(userDto.getDateOfBirth());
-        userEntity.setGender(userDto.getGender());
+//        userEntity.setFirstName(userDto.getFirstName());
+//        userEntity.setLastName(userDto.getLastName());
+//        userEntity.setAddress(userDto.getAddress());
+//        userEntity.setPhoneNumber(userDto.getPhoneNumber());
+//        userEntity.setBloodGroup(userDto.getBloodGroup());
+//        userEntity.setDateOfBirth(userDto.getDateOfBirth());
+//        userEntity.setGender(userDto.getGender());
         userEntity.setActive(true);
 
 
