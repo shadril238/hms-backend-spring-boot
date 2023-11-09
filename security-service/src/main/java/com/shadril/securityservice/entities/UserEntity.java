@@ -1,12 +1,11 @@
 package com.shadril.securityservice.entities;
 
-import com.shadril.securityservice.entities.enums.BloodGroup;
-import com.shadril.securityservice.entities.enums.Gender;
-import com.shadril.securityservice.entities.enums.Role;
+import com.shadril.securityservice.enums.BloodGroup;
+import com.shadril.securityservice.enums.Gender;
+import com.shadril.securityservice.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
@@ -15,14 +14,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
-@Component
-@Getter
-@Setter
 @Table(name = "users")
 public class UserEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)

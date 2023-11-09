@@ -38,6 +38,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+	implementation 'org.modelmapper:modelmapper:2.1.1'
+
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'

@@ -1,24 +1,36 @@
 package com.shadril.securityservice.services.implementations;
 
+import com.shadril.securityservice.constants.AppConstants;
+import com.shadril.securityservice.dtos.ResponseMessageDto;
 import com.shadril.securityservice.dtos.UserDto;
 import com.shadril.securityservice.entities.UserEntity;
-import com.shadril.securityservice.exceptions.UserAlreadyExistException;
+import com.shadril.securityservice.exceptions.CustomException;
 import com.shadril.securityservice.repositories.UserRepository;
 import com.shadril.securityservice.services.UserService;
+import com.shadril.securityservice.utils.JwtUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImplementation implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -26,23 +38,37 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
-    public Optional<UserDto> createUser(UserDto userDto) throws UserAlreadyExistException{
-        // Check if user already exists by email
-        userRepository.findUserByEmail(userDto.getEmail()).ifPresent(u -> {
-            throw new UserAlreadyExistException(userDto.getEmail());
-        });
+    public UserDto createUser(UserDto userDto)
+            throws CustomException {
 
-        // Convert UserDto to UserEntity
-        UserEntity userEntity = convertToEntity(userDto);
+        if(userRepository.findUserByEmail(userDto.getEmail()).isPresent()) {
+            String errorMessage = "User with email '" + userDto.getEmail() + "' already exists!";
+            throw new CustomException(new ResponseMessageDto(errorMessage, HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
 
-        // Save the UserEntity to the database
-        UserEntity savedUserEntity = userRepository.save(userEntity);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userEntity.setRole(userDto.getRole());
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        userEntity.setAddress(userDto.getAddress());
+        userEntity.setPhoneNumber(userDto.getPhoneNumber());
+        userEntity.setBloodGroup(userDto.getBloodGroup());
+        userEntity.setDateOfBirth(userDto.getDateOfBirth());
+        userEntity.setGender(userDto.getGender());
+        userEntity.setActive(true);
 
-        // Convert the saved UserEntity back to UserDto
-        UserDto savedUserDto = convertToDto(savedUserEntity);
 
-        // Return the saved UserDto wrapped in an Optional
-        return Optional.of(savedUserDto);
+        UserEntity savedUser = userRepository.save(userEntity);
+        log.info("User created with email: {}", userDto.getEmail());
+
+        UserDto returnedUser = modelMapper.map(savedUser, UserDto.class);
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add(String.valueOf(userDto.getRole()));
+
+        String accessToken = JwtUtils.generateToken(userEntity.getEmail(), userRoles);
+        return returnedUser;
     }
 
 
@@ -64,41 +90,6 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     @Override
     public Optional<UserDto> deleteUserById(Long id) {
         return Optional.empty();
-    }
-
-    // Convert UserDto to UserEntity
-    private UserEntity convertToEntity(UserDto userDto) {
-        return UserEntity.builder()
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .dateOfBirth(userDto.getDateOfBirth())
-                .gender(userDto.getGender())
-                .bloodGroup(userDto.getBloodGroup())
-                .phoneNumber(userDto.getPhoneNumber())
-                .address(userDto.getAddress())
-                .role(userDto.getRole())
-                .isActive(userDto.isActive())
-                .build();
-    }
-
-    // Convert UserEntity to UserDto
-    private UserDto convertToDto(UserEntity userEntity) {
-        return new UserDto(
-                userEntity.getId(),
-                userEntity.getEmail(),
-                userEntity.getPassword(),
-                userEntity.getFirstName(),
-                userEntity.getLastName(),
-                userEntity.getDateOfBirth(),
-                userEntity.getGender(),
-                userEntity.getBloodGroup(),
-                userEntity.getPhoneNumber(),
-                userEntity.getAddress(),
-                userEntity.getRole(),
-                userEntity.isActive()
-        );
     }
 
 }

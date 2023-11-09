@@ -1,8 +1,8 @@
 package com.shadril.securityservice.dtos;
 
-import com.shadril.securityservice.entities.enums.BloodGroup;
-import com.shadril.securityservice.entities.enums.Gender;
-import com.shadril.securityservice.entities.enums.Role;
+import com.shadril.securityservice.enums.BloodGroup;
+import com.shadril.securityservice.enums.Gender;
+import com.shadril.securityservice.enums.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;

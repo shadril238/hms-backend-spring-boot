@@ -1,5 +1,6 @@
 package com.shadril.securityservice.utils;
 
+import com.shadril.securityservice.constants.AppConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -8,55 +9,44 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Component
 public final class JwtUtils {
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
-    @Value("${jwt.expiration-time}")
-    private long expirationTime;
-
-    public boolean hasTokenExpired(String token) {
-        try {
-            Claims claims = getClaims(token);
-            Date tokenExpirationDate = claims.getExpiration();
-            return tokenExpirationDate.before(new Date());
-        } catch (JwtException e) {
-            log.error("Error checking if token has expired", e);
-            return true;
-        }
+    private static final Random RANDOM = new SecureRandom();
+    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    public static Boolean hasTokenExpired(String token){
+        Claims claims = Jwts.parser().setSigningKey(AppConstants.TOKEN_SECRET).parseClaimsJws(token).getBody();
+        Date tokenExpirationDate = claims.getExpiration();
+        Date today = new Date();
+        return tokenExpirationDate.before(today);
     }
+    public static String generateToken(String email, List<String> roles){
 
-    public String generateToken(String email, List<String> roles) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("roles", roles)
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .setExpiration(new Date(System.currentTimeMillis()+AppConstants.EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, AppConstants.TOKEN_SECRET)
                 .compact();
     }
-
-    public String extractUser(String token) {
-        return getClaims(token).getSubject();
+    private static String generateRandomString(int length){
+        StringBuilder returnValue = new StringBuilder(length);
+        for (int i = 0;i<length;i++)
+            returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
+        return new String(returnValue);
+    }
+    public static String extractUser(String token) {
+        return Jwts.parser().setSigningKey(AppConstants.TOKEN_SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> extractUserRoles(String token) {
-        Claims claims = getClaims(token);
-        try {
-            return claims.get("roles", List.class);
-        } catch (ClassCastException e) {
-            log.error("Error extracting user roles from token", e);
-            throw new JwtException("Roles claim is not of expected type List<String>");
-        }
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+    public static List<String> extractUserRoles(String token) {
+        Claims claims = Jwts.parser().setSigningKey(AppConstants.TOKEN_SECRET).parseClaimsJws(token).getBody();
+        return  (List<String>) claims.get("roles");
     }
 }

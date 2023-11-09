@@ -1,4 +1,4 @@
-package com.shadril.securityservice.entities.enums;
+package com.shadril.securityservice.enums;
 
 public enum Gender {
     Male,
