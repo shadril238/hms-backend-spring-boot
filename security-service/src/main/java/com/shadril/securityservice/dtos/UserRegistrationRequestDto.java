@@ -1,8 +1,9 @@
 package com.shadril.securityservice.dtos;
 
 import com.shadril.securityservice.enums.Role;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -11,20 +12,13 @@ import lombok.*;
 @Getter
 @Setter
 public class UserRegistrationRequestDto {
-    private Long id;
+    @Email
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
-//    private String firstName;
-//    private String lastName;
-//    private LocalDate dateOfBirth;
-//    @Enumerated(EnumType.STRING)
-//    private Gender gender;
-//    @Enumerated(EnumType.STRING)
-//    private BloodGroup bloodGroup;
-//    private String phoneNumber;
-//    @Lob // Large object for storing large string
-//    private String address;
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
+    @NotNull
     private boolean isActive;
 }
