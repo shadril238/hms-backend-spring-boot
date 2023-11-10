@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Table(name = "doctors")
 public class DoctorEntity {
     @Id
-    @GeneratedValue(generator = "patient-id-generator")
+    @GeneratedValue(generator = "doctor-id-generator")
     @GenericGenerator(
             name = "doctor-id-generator",
             strategy = "com.shadril.doctorservice.generator.DoctorIdGenerator"
