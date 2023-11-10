@@ -26,7 +26,7 @@ public class PatientServiceImplementation implements PatientService {
     private final ModelMapper modelMapper;
 
     @Override
-    public PatientDto createPatient(PatientRegistrationRequestDto registrationDto) throws CustomException {
+    public PatientDto registerPatient(PatientRegistrationRequestDto registrationDto) throws CustomException {
         try {
             UserRegistrationRequestDto userRegistrationRequestDto = new UserRegistrationRequestDto();
             userRegistrationRequestDto.setEmail(registrationDto.getEmail());

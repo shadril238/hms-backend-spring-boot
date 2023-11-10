@@ -22,7 +22,7 @@ public class PatientController {
     public ResponseEntity<PatientRegistrationResponseDto> registerPatient(@RequestBody PatientRegistrationRequestDto registrationDto)
             throws CustomException{
         log.info("Inside registerPatient method of PatientController");
-        PatientDto createdPatient = patientService.createPatient(registrationDto);
+        PatientDto createdPatient = patientService.registerPatient(registrationDto);
         PatientRegistrationResponseDto responseDto =
                 new PatientRegistrationResponseDto("Patient registered successfully", HttpStatus.CREATED, createdPatient);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);

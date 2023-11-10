@@ -5,5 +5,5 @@ import com.shadril.patientservice.dtos.PatientRegistrationRequestDto;
 import com.shadril.patientservice.exceptions.CustomException;
 
 public interface PatientService {
-    PatientDto createPatient(PatientRegistrationRequestDto registrationDto) throws CustomException;
+    PatientDto registerPatient(PatientRegistrationRequestDto registrationDto) throws CustomException;
 }
