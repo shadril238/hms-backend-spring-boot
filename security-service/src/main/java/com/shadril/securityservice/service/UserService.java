@@ -1,11 +1,8 @@
-package com.shadril.securityservice.services;
+package com.shadril.securityservice.service;
 
-import com.shadril.securityservice.dtos.UserDto;
-import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
-import com.shadril.securityservice.exceptions.CustomException;
-import org.apache.catalina.User;
-
-import java.util.Optional;
+import com.shadril.securityservice.dto.UserDto;
+import com.shadril.securityservice.dto.UserRegistrationRequestDto;
+import com.shadril.securityservice.exception.CustomException;
 
 public interface UserService {
     UserDto createUser(UserRegistrationRequestDto userDto) throws CustomException;

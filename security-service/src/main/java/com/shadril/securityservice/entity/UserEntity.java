@@ -1,4 +1,4 @@
-package com.shadril.securityservice.entities;
+package com.shadril.securityservice.entity;
 
 import com.shadril.securityservice.enums.Role;
 import jakarta.persistence.*;

@@ -1,9 +1,9 @@
-package com.shadril.securityservice.controllers;
+package com.shadril.securityservice.controller;
 
 import com.shadril.securityservice.constants.AppConstants;
-import com.shadril.securityservice.dtos.*;
-import com.shadril.securityservice.exceptions.CustomException;
-import com.shadril.securityservice.services.UserService;
+import com.shadril.securityservice.dto.*;
+import com.shadril.securityservice.exception.CustomException;
+import com.shadril.securityservice.service.UserService;
 import com.shadril.securityservice.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

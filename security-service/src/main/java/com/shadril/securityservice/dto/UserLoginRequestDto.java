@@ -1,4 +1,4 @@
-package com.shadril.securityservice.dtos;
+package com.shadril.securityservice.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

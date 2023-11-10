@@ -1,6 +1,6 @@
-package com.shadril.securityservice.repositories;
+package com.shadril.securityservice.repository;
 
-import com.shadril.securityservice.entities.UserEntity;
+import com.shadril.securityservice.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

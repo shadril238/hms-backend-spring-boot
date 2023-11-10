@@ -1,6 +1,6 @@
-package com.shadril.securityservice.exceptions;
+package com.shadril.securityservice.exception;
 
-import com.shadril.securityservice.dtos.ResponseMessageDto;
+import com.shadril.securityservice.dto.ResponseMessageDto;
 import org.springframework.http.HttpStatus;
 
 public class CustomException extends Exception {

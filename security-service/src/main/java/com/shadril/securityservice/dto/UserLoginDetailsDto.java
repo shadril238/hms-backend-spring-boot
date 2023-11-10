@@ -1,4 +1,4 @@
-package com.shadril.securityservice.dtos;
+package com.shadril.securityservice.dto;
 
 import com.shadril.securityservice.enums.Role;
 import lombok.AllArgsConstructor;

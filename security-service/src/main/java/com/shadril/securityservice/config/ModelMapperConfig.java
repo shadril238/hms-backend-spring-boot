@@ -1,4 +1,4 @@
-package com.shadril.securityservice.configs;
+package com.shadril.securityservice.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

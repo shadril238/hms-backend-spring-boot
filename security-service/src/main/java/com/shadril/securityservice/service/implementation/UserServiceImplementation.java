@@ -1,12 +1,12 @@
-package com.shadril.securityservice.services.implementations;
+package com.shadril.securityservice.service.implementation;
 
-import com.shadril.securityservice.dtos.ResponseMessageDto;
-import com.shadril.securityservice.dtos.UserDto;
-import com.shadril.securityservice.dtos.UserRegistrationRequestDto;
-import com.shadril.securityservice.entities.UserEntity;
-import com.shadril.securityservice.exceptions.CustomException;
-import com.shadril.securityservice.repositories.UserRepository;
-import com.shadril.securityservice.services.UserService;
+import com.shadril.securityservice.dto.ResponseMessageDto;
+import com.shadril.securityservice.dto.UserDto;
+import com.shadril.securityservice.dto.UserRegistrationRequestDto;
+import com.shadril.securityservice.entity.UserEntity;
+import com.shadril.securityservice.exception.CustomException;
+import com.shadril.securityservice.repository.UserRepository;
+import com.shadril.securityservice.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
