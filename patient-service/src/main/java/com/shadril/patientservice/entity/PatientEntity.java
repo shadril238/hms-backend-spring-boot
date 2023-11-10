@@ -1,4 +1,4 @@
-package com.shadril.patientservice.entities;
+package com.shadril.patientservice.entity;
 
 import com.shadril.patientservice.enums.BloodGroup;
 import com.shadril.patientservice.enums.Gender;

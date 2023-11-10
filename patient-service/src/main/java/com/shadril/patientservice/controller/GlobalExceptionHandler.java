@@ -1,8 +1,7 @@
-package com.shadril.patientservice.controllers;
+package com.shadril.patientservice.controller;
 
 import com.shadril.patientservice.dtos.ResponseMessageDto;
-import com.shadril.patientservice.exceptions.CustomException;
-import feign.FeignException;
+import com.shadril.patientservice.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

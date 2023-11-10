@@ -1,10 +1,10 @@
-package com.shadril.patientservice.controllers;
+package com.shadril.patientservice.controller;
 
 import com.shadril.patientservice.dtos.PatientDto;
 import com.shadril.patientservice.dtos.PatientRegistrationRequestDto;
 import com.shadril.patientservice.dtos.PatientRegistrationResponseDto;
-import com.shadril.patientservice.exceptions.CustomException;
-import com.shadril.patientservice.services.PatientService;
+import com.shadril.patientservice.exception.CustomException;
+import com.shadril.patientservice.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

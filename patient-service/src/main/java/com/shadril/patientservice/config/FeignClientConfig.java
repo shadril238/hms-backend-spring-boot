@@ -1,4 +1,4 @@
-package com.shadril.patientservice.configs;
+package com.shadril.patientservice.config;
 
 import com.shadril.patientservice.networkmanager.CustomFeignErrorDecoder;
 import feign.codec.ErrorDecoder;

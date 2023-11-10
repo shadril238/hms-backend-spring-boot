@@ -1,6 +1,6 @@
 package com.shadril.patientservice.repository;
 
-import com.shadril.patientservice.entities.PatientEntity;
+import com.shadril.patientservice.entity.PatientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

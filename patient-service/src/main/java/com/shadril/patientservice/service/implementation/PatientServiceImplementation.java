@@ -1,12 +1,12 @@
-package com.shadril.patientservice.services.implementations;
+package com.shadril.patientservice.service.implementation;
 
 import com.shadril.patientservice.dtos.*;
-import com.shadril.patientservice.entities.PatientEntity;
+import com.shadril.patientservice.entity.PatientEntity;
 import com.shadril.patientservice.enums.Role;
-import com.shadril.patientservice.exceptions.CustomException;
+import com.shadril.patientservice.exception.CustomException;
 import com.shadril.patientservice.networkmanager.SecurityServiceFeignClient;
 import com.shadril.patientservice.repository.PatientRepository;
-import com.shadril.patientservice.services.PatientService;
+import com.shadril.patientservice.service.PatientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

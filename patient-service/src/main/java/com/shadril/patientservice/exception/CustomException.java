@@ -1,4 +1,4 @@
-package com.shadril.patientservice.exceptions;
+package com.shadril.patientservice.exception;
 
 import com.shadril.patientservice.dtos.ResponseMessageDto;
 import org.springframework.http.HttpStatus;
