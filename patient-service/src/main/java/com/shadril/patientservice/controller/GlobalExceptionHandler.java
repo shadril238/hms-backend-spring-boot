@@ -1,6 +1,6 @@
 package com.shadril.patientservice.controller;
 
-import com.shadril.patientservice.dtos.ResponseMessageDto;
+import com.shadril.patientservice.dto.ResponseMessageDto;
 import com.shadril.patientservice.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

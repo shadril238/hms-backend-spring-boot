@@ -1,4 +1,4 @@
-package com.shadril.patientservice.dtos;
+package com.shadril.patientservice.dto;
 
 import com.shadril.patientservice.enums.Role;
 import lombok.AllArgsConstructor;

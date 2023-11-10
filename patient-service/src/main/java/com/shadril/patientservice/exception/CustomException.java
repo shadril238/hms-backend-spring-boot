@@ -1,6 +1,6 @@
 package com.shadril.patientservice.exception;
 
-import com.shadril.patientservice.dtos.ResponseMessageDto;
+import com.shadril.patientservice.dto.ResponseMessageDto;
 import org.springframework.http.HttpStatus;
 
 public class CustomException extends Exception {

@@ -1,4 +1,4 @@
-package com.shadril.patientservice.dtos;
+package com.shadril.patientservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.shadril.patientservice.dtos;
+package com.shadril.patientservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PatientRegistrationResponseDto {
+public class UserLoginResponseDto {
     private String message;
     private HttpStatus status;
-    private PatientDto registeredPatientData;
+    private UserLoginDetailsDto userLoginDetails;
 }

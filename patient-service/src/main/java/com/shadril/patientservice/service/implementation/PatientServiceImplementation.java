@@ -1,6 +1,6 @@
 package com.shadril.patientservice.service.implementation;
 
-import com.shadril.patientservice.dtos.*;
+import com.shadril.patientservice.dto.*;
 import com.shadril.patientservice.entity.PatientEntity;
 import com.shadril.patientservice.enums.Role;
 import com.shadril.patientservice.exception.CustomException;

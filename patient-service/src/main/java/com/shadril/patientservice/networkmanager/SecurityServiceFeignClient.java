@@ -1,9 +1,9 @@
 package com.shadril.patientservice.networkmanager;
 
-import com.shadril.patientservice.dtos.UserLoginRequestDto;
-import com.shadril.patientservice.dtos.UserLoginResponseDto;
-import com.shadril.patientservice.dtos.UserRegistrationRequestDto;
-import com.shadril.patientservice.dtos.UserRegistrationResponseDto;
+import com.shadril.patientservice.dto.UserLoginRequestDto;
+import com.shadril.patientservice.dto.UserLoginResponseDto;
+import com.shadril.patientservice.dto.UserRegistrationRequestDto;
+import com.shadril.patientservice.dto.UserRegistrationResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

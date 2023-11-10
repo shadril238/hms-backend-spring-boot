@@ -1,8 +1,7 @@
-package com.shadril.patientservice.dtos;
+package com.shadril.patientservice.dto;
 
 import com.shadril.patientservice.enums.BloodGroup;
 import com.shadril.patientservice.enums.Gender;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

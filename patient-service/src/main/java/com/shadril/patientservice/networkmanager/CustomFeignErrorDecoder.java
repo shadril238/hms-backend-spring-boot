@@ -2,7 +2,7 @@ package com.shadril.patientservice.networkmanager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shadril.patientservice.dtos.ResponseMessageDto;
+import com.shadril.patientservice.dto.ResponseMessageDto;
 import com.shadril.patientservice.exception.CustomException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
