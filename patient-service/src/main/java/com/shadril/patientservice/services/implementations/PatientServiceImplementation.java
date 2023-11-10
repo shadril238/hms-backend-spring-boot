@@ -27,31 +27,34 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public PatientDto createPatient(PatientRegistrationRequestDto registrationDto) throws CustomException {
-        UserRegistrationRequestDto userRegistrationRequestDto = new UserRegistrationRequestDto();
-        userRegistrationRequestDto.setEmail(registrationDto.getEmail());
-        userRegistrationRequestDto.setPassword(registrationDto.getPassword());
-        userRegistrationRequestDto.setRole(Role.valueOf("Patient"));
-        userRegistrationRequestDto.setActive(true);
-        log.info("Sending request to security service");
+        try {
+            UserRegistrationRequestDto userRegistrationRequestDto = new UserRegistrationRequestDto();
+            userRegistrationRequestDto.setEmail(registrationDto.getEmail());
+            userRegistrationRequestDto.setPassword(registrationDto.getPassword());
+            userRegistrationRequestDto.setRole(Role.valueOf("Patient"));
+            userRegistrationRequestDto.setActive(true);
 
-        ResponseEntity<UserRegistrationResponseDto> responseFromSecurityService = securityServiceFeignClient.register(userRegistrationRequestDto);
-        log.info("Response from security service: {}", responseFromSecurityService);
+            log.info("Sending request to security service for patient registration");
+            ResponseEntity<UserRegistrationResponseDto> response = securityServiceFeignClient.register(userRegistrationRequestDto);
 
-        if (!responseFromSecurityService.getStatusCode().equals(HttpStatus.CREATED)
-                || responseFromSecurityService.getBody() == null
-                || responseFromSecurityService.getBody().getRegisteredUserData() == null) {
-            throw new CustomException(new ResponseMessageDto("User registration failed!", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            if (response.getStatusCode() != HttpStatus.CREATED || response.getBody() == null) {
+                throw new CustomException(new ResponseMessageDto("Registration failed at security service", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
+            PatientEntity patientEntity = modelMapper.map(registrationDto, PatientEntity.class);
+            patientEntity.setUserId(response.getBody().getRegisteredUserData().getId());
+            patientEntity.setActive(true);
+            patientEntity.setApproved(false);
+
+            log.info("Saving patient to database");
+            PatientEntity savedEntity = patientRepository.save(patientEntity);
+            log.info("Patient saved successfully with ID: {}", savedEntity.getPatientId());
+
+            return modelMapper.map(savedEntity, PatientDto.class);
+        } catch (CustomException e) {
+            log.error("Error occurred during patient registration: {}", e.getMessage());
+            // Further handling of the exception, like rethrowing it or converting to a response DTO
+            throw e;
         }
-
-        PatientEntity patientEntity = modelMapper.map(registrationDto, PatientEntity.class);
-        patientEntity.setUserId(responseFromSecurityService.getBody().getRegisteredUserData().getId());
-        patientEntity.setActive(true);
-        patientEntity.setApproved(false);
-
-        log.info("Saving patient to database");
-        PatientEntity savedEntity = patientRepository.save(patientEntity);
-        log.info("Patient saved successfully with ID: {}", savedEntity.getPatientId());
-
-        return modelMapper.map(savedEntity, PatientDto.class);
     }
 }

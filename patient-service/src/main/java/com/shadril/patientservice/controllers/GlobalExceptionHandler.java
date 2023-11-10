@@ -23,17 +23,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseMessage, e.getStatusCode());
     }
 
-    @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ResponseMessageDto> handleFeignException(FeignException e) {
-        HttpStatus status = HttpStatus.valueOf(e.status());
-        String errorMessage = "Error occurred while calling " + e.getMessage();
-        ResponseMessageDto responseMessage = new ResponseMessageDto(errorMessage, status);
-        return new ResponseEntity<>(responseMessage, status);
-    }
-
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ResponseMessageDto> handleNullPointerException(NullPointerException e) {
-        ResponseMessageDto responseMessage = new ResponseMessageDto("Null Pointer Exception", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(FeignException.class)
+//    public ResponseEntity<ResponseMessageDto> handleFeignException(FeignException e) {
+//        HttpStatus status = HttpStatus.valueOf(e.status());
+//        String errorMessage = "Error occurred while calling " + e.getMessage();
+//        ResponseMessageDto responseMessage = new ResponseMessageDto(errorMessage, status);
+//        return new ResponseEntity<>(responseMessage, status);
+//    }
+//
+//    @ExceptionHandler(NullPointerException.class)
+//    public ResponseEntity<ResponseMessageDto> handleNullPointerException(NullPointerException e) {
+//        ResponseMessageDto responseMessage = new ResponseMessageDto("Null Pointer Exception", HttpStatus.BAD_REQUEST);
+//        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+//    }
 }

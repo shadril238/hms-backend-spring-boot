@@ -79,7 +79,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
-    public UserDto getUserByEmail(String email)
+    public UserDto  getUserByEmail(String email)
             throws CustomException {
 
         String errorMessage = "No user found with email: " + email;

@@ -27,30 +27,6 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = false, length = 20)
-//    private String firstName;
-//
-//    @Column(nullable = false, length = 20)
-//    private String lastName;
-//
-//    @Column(nullable = false)
-//    private LocalDate dateOfBirth;
-//
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Gender gender;
-//
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private BloodGroup bloodGroup;
-//
-//    @Column(nullable = false, length = 11)
-//    private String phoneNumber;
-//
-//    @Column(nullable = false)
-//    @Lob // Large object for storing large string
-//    private String address;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;

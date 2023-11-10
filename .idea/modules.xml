@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/hms-backend.iml" filepath="$PROJECT_DIR$/.idea/hms-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/patient-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/security-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/security-service.main.iml" />

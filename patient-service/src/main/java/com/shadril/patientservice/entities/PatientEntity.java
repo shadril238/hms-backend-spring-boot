@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,11 @@ import java.time.LocalDate;
 @Table(name = "patients")
 public class PatientEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient-id-generator")
+    @GeneratedValue(generator = "patient-id-generator")
+    @GenericGenerator(
+            name = "patient-id-generator",
+            strategy = "com.shadril.patientservice.generator.PatientIdGenerator"
+    )
     private String patientId;
 
     @Column(nullable = false, unique = true)
