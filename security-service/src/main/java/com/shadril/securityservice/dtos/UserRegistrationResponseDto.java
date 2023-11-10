@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @Builder
 public class UserRegistrationResponseDto {
-    private String message;
-    private HttpStatus status;
+        private String message;
+        private HttpStatus status;
     private UserDto registeredUserData;
 }

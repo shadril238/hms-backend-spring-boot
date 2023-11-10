@@ -23,9 +23,11 @@ public class PatientIdGenerator implements IdentifierGenerator, ApplicationConte
         if (counter == null) {
             synchronized (this) {
                 if (counter == null) {
-                    PatientRepository patientRepository = context.getBean(PatientRepository.class);
-                    String maxPatientId = patientRepository.findMaxPatientId()
-                            .orElse("00-00000");
+                    PatientRepository patientRepository = context
+                                                            .getBean(PatientRepository.class);
+                    String maxPatientId = patientRepository
+                                            .findMaxPatientId()
+                                            .orElse("00-00000");
                     int maxId = Integer.parseInt(maxPatientId.substring(3));
                     counter = new AtomicInteger(maxId);
                 }

@@ -35,11 +35,11 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
 
         if (response.status() >= 400 && response.status() < 500) {
             return new CustomException(
-                    new ResponseMessageDto("Client error: " + errorMessage, HttpStatus.valueOf(response.status())),
+                    new ResponseMessageDto(errorMessage, HttpStatus.valueOf(response.status())),
                     HttpStatus.valueOf(response.status()));
         } else if (response.status() >= 500 && response.status() < 600) {
             return new CustomException(
-                    new ResponseMessageDto("Server error: " + errorMessage, HttpStatus.valueOf(response.status())),
+                    new ResponseMessageDto(errorMessage, HttpStatus.valueOf(response.status())),
                     HttpStatus.valueOf(response.status()));
         }
         return new Exception(errorMessage);

@@ -53,7 +53,6 @@ public class PatientServiceImplementation implements PatientService {
             return modelMapper.map(savedEntity, PatientDto.class);
         } catch (CustomException e) {
             log.error("Error occurred during patient registration: {}", e.getMessage());
-            // Further handling of the exception, like rethrowing it or converting to a response DTO
             throw e;
         }
     }
