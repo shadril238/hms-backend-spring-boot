@@ -1,6 +1,5 @@
 package com.shadril.doctorservice.config;
 
-
 import com.shadril.doctorservice.networkmanager.CustomFeignErrorDecoder;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
