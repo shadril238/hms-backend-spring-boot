@@ -1,11 +1,10 @@
 package com.shadril.patientservice.networkmanager;
 
-import com.shadril.patientservice.dto.UserLoginRequestDto;
-import com.shadril.patientservice.dto.UserLoginResponseDto;
-import com.shadril.patientservice.dto.UserRegistrationRequestDto;
-import com.shadril.patientservice.dto.UserRegistrationResponseDto;
+import com.shadril.patientservice.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,4 +15,7 @@ public interface SecurityServiceFeignClient {
 
     @PostMapping("/users/login")
     ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto);
+
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<ResponseMessageDto> deleteUser(@PathVariable Long id);
 }

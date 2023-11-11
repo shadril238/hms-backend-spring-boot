@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,8 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<UserRegistrationResponseDto> register(@RequestBody UserRegistrationRequestDto userDto) throws CustomException{
+    public ResponseEntity<UserRegistrationResponseDto> register(@RequestBody UserRegistrationRequestDto userDto)
+            throws CustomException{
         log.info("Inside register method of UserController");
         UserDto responseUser = userService.createUser(userDto);
         UserRegistrationResponseDto userRegistrationResponse = new UserRegistrationResponseDto(
@@ -40,8 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) throws CustomException{
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequestDto.getEmail(), userLoginRequestDto.getPassword()));
+    public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto)
+            throws CustomException{
+        log.info("Inside register method of UserController");
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLoginRequestDto.getEmail(), userLoginRequestDto.getPassword())
+        );
         UserDto userDto = userService.getUserByEmail(userLoginRequestDto.getEmail());
 
         List<String> userRoles = new ArrayList<>();
@@ -56,12 +58,19 @@ public class UserController {
                 AppConstants.TOKEN_PREFIX + accessToken
         );
 
-        UserLoginResponseDto loginResponseDto = UserLoginResponseDto.builder()
-                .message("Login successful")
-                .status(HttpStatus.OK)
-                .userLoginDetails(responseDto)
-                .build();
+        UserLoginResponseDto loginResponseDto = new UserLoginResponseDto(
+                "Login successful", HttpStatus.OK, responseDto);
 
         return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseMessageDto> deleteUser(@PathVariable Long id)
+            throws CustomException{
+        log.info("Received request to delete user with ID: {}", id);
+        userService.deleteUserById(id);
+
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto("User deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
     }
 }

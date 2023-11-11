@@ -18,31 +18,31 @@ import java.time.LocalDate;
 @Builder
 public class PatientRegistrationRequestDto {
     @Email
-    @NotBlank
+    @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "Date of birth is required")
     private LocalDate dateOfBirth;
 
-    @NotNull
+    @NotNull(message = "Gender is required")
     private Gender gender;
 
-    @NotNull
+    @NotNull(message = "Blood group is required")
     private BloodGroup bloodGroup;
 
-    @NotBlank
+    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
-    @NotBlank
+    @NotBlank(message = "Address is required")
     private String address;
 
     @NotNull

@@ -9,5 +9,5 @@ public interface UserService {
     UserDto getUserById(Long id) throws CustomException;
     UserDto getUserByEmail(String email) throws CustomException;
     UserDto updateUser(UserRegistrationRequestDto userDto);
-    UserDto deleteUserById(Long id);
+    void deleteUserById(Long id) throws CustomException;
 }

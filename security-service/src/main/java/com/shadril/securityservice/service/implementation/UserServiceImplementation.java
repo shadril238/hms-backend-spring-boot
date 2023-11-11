@@ -95,8 +95,16 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
-    public UserDto deleteUserById(Long id) {
-        return null;
+    public void deleteUserById(Long id)
+            throws CustomException {
+
+        if (!userRepository.existsById(id)) {
+            log.warn("Attempted to delete a user that does not exist with ID: {}", id);
+            throw new CustomException(new ResponseMessageDto("No user found with id: " + id, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
+
+        userRepository.deleteById(id);
+        log.info("User deleted with id: {}", id);
     }
 
 }

@@ -5,6 +5,7 @@ import com.shadril.patientservice.dto.PatientRegistrationRequestDto;
 import com.shadril.patientservice.dto.PatientRegistrationResponseDto;
 import com.shadril.patientservice.exception.CustomException;
 import com.shadril.patientservice.service.PatientService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
     @PostMapping("/patient/register")
-    public ResponseEntity<PatientRegistrationResponseDto> registerPatient(@RequestBody PatientRegistrationRequestDto registrationDto)
+    public ResponseEntity<PatientRegistrationResponseDto> registerPatient(@Valid @RequestBody PatientRegistrationRequestDto registrationDto)
             throws CustomException{
         log.info("Inside registerPatient method of PatientController");
         PatientDto createdPatient = patientService.registerPatient(registrationDto);
