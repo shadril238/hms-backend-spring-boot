@@ -22,7 +22,7 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         String errorDetails = extractBody(response);
-        String errorMessage = "Unknown error";
+        String errorMessage = "Error occurred while processing the request";
 
         if (response.body() != null) {
             try {
@@ -41,8 +41,15 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
             return new CustomException(
                     new ResponseMessageDto(errorMessage, HttpStatus.valueOf(response.status())),
                     HttpStatus.valueOf(response.status()));
+        } else if (response.status() >= 300 && response.status() < 400) {
+            return new CustomException(
+                    new ResponseMessageDto(errorMessage, HttpStatus.valueOf(response.status())),
+                    HttpStatus.valueOf(response.status()));
+        } else {
+            return new CustomException(
+                    new ResponseMessageDto(errorMessage, HttpStatus.valueOf(response.status())),
+                    HttpStatus.valueOf(response.status()));
         }
-        return new Exception(errorMessage);
     }
 
     private String extractBody(Response response) {

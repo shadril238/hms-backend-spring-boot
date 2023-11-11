@@ -1,6 +1,7 @@
 package com.shadril.doctorservice.generator;
 
 import com.shadril.doctorservice.repository.DoctorRepository;
+import lombok.NonNull;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
@@ -40,7 +41,7 @@ public class DoctorIdGenerator implements IdentifierGenerator, ApplicationContex
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
         DoctorIdGenerator.context = applicationContext;
     }
 }
