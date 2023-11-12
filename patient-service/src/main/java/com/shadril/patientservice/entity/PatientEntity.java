@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,6 +24,16 @@ public class PatientEntity {
             strategy = "com.shadril.patientservice.generator.PatientIdGenerator"
     )
     private String patientId;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "patient_health_records",
+            joinColumns = {
+                    @JoinColumn(name = "patient_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "health_record_id")
+            })
+    private List<HealthRecordsEntity> healthRecords;
 
     @Column(nullable = false, unique = true)
     private Long userId;
