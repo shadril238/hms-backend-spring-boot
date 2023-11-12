@@ -6,4 +6,6 @@ import com.shadril.patientservice.exception.CustomException;
 
 public interface PatientService {
     PatientDto registerPatient(PatientRegistrationRequestDto registrationDto) throws CustomException;
+
+    PatientDto getPatientById(String patientId) throws CustomException;
 }

@@ -10,16 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/patients")
 @Slf4j
 public class PatientController {
     @Autowired
     private PatientService patientService;
-    @PostMapping("/patient/register")
+    @PostMapping("/register")
     public ResponseEntity<PatientRegistrationResponseDto> registerPatient(@Valid @RequestBody PatientRegistrationRequestDto registrationDto)
             throws CustomException{
         log.info("Inside registerPatient method of PatientController");
@@ -27,5 +26,13 @@ public class PatientController {
         PatientRegistrationResponseDto responseDto =
                 new PatientRegistrationResponseDto("Patient registered successfully", HttpStatus.CREATED, createdPatient);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{patientId}")
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable String patientId)
+            throws CustomException{
+        log.info("Inside getPatientById method of PatientController");
+        PatientDto patientDto = patientService.getPatientById(patientId);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 }

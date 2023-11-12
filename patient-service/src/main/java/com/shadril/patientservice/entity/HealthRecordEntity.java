@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "health_records")
-public class HealthRecordsEntity {
+public class HealthRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "health_record_id")
@@ -24,9 +24,6 @@ public class HealthRecordsEntity {
 
     @Column(nullable = false, name = "checkup_date")
     private LocalDate checkupDate;
-
-    @Column(name = "next_checkup_date")
-    private LocalDate nextCheckupDate;
 
     @Column(nullable = false, name = "checkup_doctor_id")
     private String checkupDoctorId;
@@ -93,5 +90,4 @@ public class HealthRecordsEntity {
 
     @Column(nullable = false, name = "is_active")
     private Boolean isActive;
-
 }

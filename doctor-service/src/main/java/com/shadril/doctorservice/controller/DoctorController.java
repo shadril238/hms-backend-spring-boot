@@ -12,15 +12,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+@RequestMapping("/doctors")
 public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    @PostMapping("/doctor/register")
+    @PostMapping("/register")
     public ResponseEntity<DoctorRegistrationResponseDto> registerDoctor(@Valid @RequestBody DoctorRegistrationRequestDto doctorRegistrationRequestDto)
             throws CustomException {
         log.info("Received request to register doctor with email: {}", doctorRegistrationRequestDto.getEmail());

@@ -26,7 +26,7 @@ public class PatientEntity {
     private String patientId;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<HealthRecordsEntity> healthRecords;
+    private List<HealthRecordEntity> healthRecords;
 
     @Column(nullable = false, unique = true)
     private Long userId;
