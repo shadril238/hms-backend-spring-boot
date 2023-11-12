@@ -25,14 +25,7 @@ public class PatientEntity {
     )
     private String patientId;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "patient_health_records",
-            joinColumns = {
-                    @JoinColumn(name = "patient_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "health_record_id")
-            })
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<HealthRecordsEntity> healthRecords;
 
     @Column(nullable = false, unique = true)

@@ -18,6 +18,10 @@ public class HealthRecordsEntity {
     @Column(name = "health_record_id")
     private Long healthRecordId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
+    private PatientEntity patient;
+
     @Column(nullable = false, name = "checkup_date")
     private LocalDate checkupDate;
 
