@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -56,6 +58,17 @@ public class DoctorServiceImplementation implements DoctorService {
         } catch (CustomException e) {
             log.error("Error occurred during patient registration: {}", e.getMessage());
             throw e;
+        }
+    }
+
+    @Override
+    public DoctorDto getDoctorById(String doctorId)
+            throws CustomException {
+        Optional<DoctorEntity> doctorEntity = doctorRepository.findById(doctorId);
+        if (doctorEntity.isPresent()) {
+            return modelMapper.map(doctorEntity.get(), DoctorDto.class);
+        } else {
+            throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
     }
 }
