@@ -66,22 +66,22 @@ public class PatientServiceImplementation implements PatientService {
     public PatientDto getPatientById(String patientId)
             throws CustomException {
         Optional<PatientEntity> patientEntity = patientRepository.findById(patientId);
-        if (patientEntity.isPresent()) {
-            return modelMapper.map(patientEntity.get(), PatientDto.class);
-        } else {
+        if(patientEntity.isEmpty() || !patientEntity.get().isActive()){
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
+        log.info("Patient found with ID: {}", patientId);
+        return modelMapper.map(patientEntity.get(), PatientDto.class);
     }
 
     @Override
     public PatientDto getPatientByEmail(String email)
             throws CustomException {
         Optional<PatientEntity> patientEntity = patientRepository.findByEmail(email);
-        if (patientEntity.isPresent()) {
-            return modelMapper.map(patientEntity.get(), PatientDto.class);
-        } else {
+        if(patientEntity.isEmpty() || !patientEntity.get().isActive()){
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
+        log.info("Patient found with email: {}", email);
+        return modelMapper.map(patientEntity.get(), PatientDto.class);
     }
 
     @Override
