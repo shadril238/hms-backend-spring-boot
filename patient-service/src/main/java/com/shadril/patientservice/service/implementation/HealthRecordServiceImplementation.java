@@ -32,13 +32,36 @@ public class HealthRecordServiceImplementation implements HealthRecordService {
     @Override
     public void createHealthRecord(HealthRecordDto healthRecordDto)
             throws CustomException {
+        log.info("Inside createHealthRecord method of HealthRecordServiceImplementation");
         Optional<PatientEntity> patientEntity = patientRepository.findById(healthRecordDto.getPatientId());
         if (patientEntity.isEmpty() || !patientEntity.get().isActive()) {
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
 
-        HealthRecordEntity healthRecordEntity = modelMapper.map(healthRecordDto, HealthRecordEntity.class);
+        HealthRecordEntity healthRecordEntity = new HealthRecordEntity();
+
         healthRecordEntity.setPatient(patientEntity.get());
+        healthRecordEntity.setCheckupDate(healthRecordDto.getCheckupDate());
+        healthRecordEntity.setHeightInCm(healthRecordDto.getHeightInCm());
+        healthRecordEntity.setWeightInKg(healthRecordDto.getWeightInKg());
+        healthRecordEntity.setBloodPressure(healthRecordDto.getBloodPressure());
+        healthRecordEntity.setBloodSugar(healthRecordDto.getBloodSugar());
+        healthRecordEntity.setBodyTemperature(healthRecordDto.getBodyTemperature());
+        healthRecordEntity.setPulseRate(healthRecordDto.getPulseRate());
+        healthRecordEntity.setAllergies(healthRecordDto.getAllergies());
+        healthRecordEntity.setPastSurgeries(healthRecordDto.getPastSurgeries());
+        healthRecordEntity.setHasDiabetes(healthRecordDto.getHasDiabetes());
+        healthRecordEntity.setIsHypertensive(healthRecordDto.getIsHypertensive());
+        healthRecordEntity.setHasHeartDisease(healthRecordDto.getHasHeartDisease());
+        healthRecordEntity.setHasKidneyDisease(healthRecordDto.getHasKidneyDisease());
+        healthRecordEntity.setHasLiverDisease(healthRecordDto.getHasLiverDisease());
+        healthRecordEntity.setHasCancer(healthRecordDto.getHasCancer());
+        healthRecordEntity.setHasHiv(healthRecordDto.getHasHiv());
+        healthRecordEntity.setHasTb(healthRecordDto.getHasTb());
+        healthRecordEntity.setPhysicalDisability(healthRecordDto.getPhysicalDisability());
+        healthRecordEntity.setVaccineInfo(healthRecordDto.getVaccineInfo());
+        healthRecordEntity.setIsSmoker(healthRecordDto.getIsSmoker());
+        healthRecordEntity.setIsAlcoholic(healthRecordDto.getIsAlcoholic());
         healthRecordEntity.setIsActive(true);
 
         HealthRecordEntity savedEntity = healthRecordRepository.save(healthRecordEntity);

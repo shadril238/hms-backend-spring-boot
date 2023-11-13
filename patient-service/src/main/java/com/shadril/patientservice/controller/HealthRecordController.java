@@ -21,7 +21,7 @@ public class HealthRecordController {
     private HealthRecordService healthRecordService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseMessageDto> createHealthRecord(@Valid @RequestBody HealthRecordDto healthRecordDto)
+    public ResponseEntity<ResponseMessageDto> createHealthRecord(@RequestBody HealthRecordDto healthRecordDto)
             throws CustomException{
         log.info("Inside createHealthRecord method of HealthRecordController");
         healthRecordService.createHealthRecord(healthRecordDto);
