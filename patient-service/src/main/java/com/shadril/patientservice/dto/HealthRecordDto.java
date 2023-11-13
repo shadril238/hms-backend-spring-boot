@@ -1,11 +1,19 @@
 package com.shadril.patientservice.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class HealthRecordDto {
-    private Long patientId;
+    private String patientId;
     private LocalDate checkupDate;
-    private String checkupDoctorId;
     private Integer heightInCm;
     private Integer weightInKg;
     private String bloodPressure;
@@ -19,7 +27,7 @@ public class HealthRecordDto {
     private Boolean hasHeartDisease;
     private Boolean hasKidneyDisease;
     private Boolean hasLiverDisease;
-    private Boolean isCancer;
+    private Boolean hasCancer;
     private Boolean hasHiv;
     private Boolean hasTb;
     private String physicalDisability;

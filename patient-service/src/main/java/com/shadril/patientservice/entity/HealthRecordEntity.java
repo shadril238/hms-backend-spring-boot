@@ -25,9 +25,6 @@ public class HealthRecordEntity {
     @Column(nullable = false, name = "checkup_date")
     private LocalDate checkupDate;
 
-    @Column(nullable = false, name = "checkup_doctor_id")
-    private String checkupDoctorId;
-
     @Column(nullable = false, name = "height_in_cm")
     private Integer heightInCm;
 
@@ -68,7 +65,7 @@ public class HealthRecordEntity {
     private Boolean hasLiverDisease;
 
     @Column(nullable = false, name = "has_cancer")
-    private Boolean isCancer;
+    private Boolean hasCancer;
 
     @Column(nullable = false, name = "has_hiv")
     private Boolean hasHiv;
