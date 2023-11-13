@@ -1,9 +1,6 @@
 package com.shadril.communityportalservice.controller;
 
-import com.shadril.communityportalservice.dto.CommentDto;
-import com.shadril.communityportalservice.dto.PostDto;
-import com.shadril.communityportalservice.dto.ResponseMessageDto;
-import com.shadril.communityportalservice.dto.VoteDto;
+import com.shadril.communityportalservice.dto.*;
 import com.shadril.communityportalservice.exception.CustomException;
 import com.shadril.communityportalservice.service.CommentService;
 import com.shadril.communityportalservice.service.PostService;
@@ -13,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -54,5 +48,13 @@ public class CommunityPortalController {
         voteService.castVote(voteDto);
         log.info("vote casted successfully");
         return new ResponseEntity<>(new ResponseMessageDto("Voted successfully", HttpStatus.CREATED), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/posts/{postId}/votes/count")
+    public ResponseEntity<VoteCountDto> countVotes(@PathVariable Long postId)
+            throws CustomException {
+        log.info("inside countVotes method of CommunityPortalController");
+        VoteCountDto voteCountDto = voteService.countVotes(postId);
+        return new ResponseEntity<>(voteCountDto, HttpStatus.OK);
     }
 }
