@@ -39,7 +39,7 @@ public class CommentServiceImplementation implements CommentService {
             log.info("inside createComment method of CommentServiceImplementation");
             ResponseEntity<PatientDto> patientDtoResponse = patientServiceFeignClient.getCurrentPatient();
             if(patientDtoResponse.getBody() == null || patientDtoResponse.getStatusCode() != HttpStatus.OK) {
-                throw new CustomException(new ResponseMessageDto("You are not authorized to create a post", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+                throw new CustomException(new ResponseMessageDto("You are not authorized to create a comment", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
             }
 
             Optional<PostEntity> postEntity = postRepository.findById(commentDto.getPostId());

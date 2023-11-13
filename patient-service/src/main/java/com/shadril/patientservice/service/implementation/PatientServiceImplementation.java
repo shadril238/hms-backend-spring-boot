@@ -86,14 +86,23 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public PatientDto getCurrentPatient() throws CustomException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        log.info("Getting patient by email: {}", email);
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new CustomException(new ResponseMessageDto("You are not authorized to access this resource", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+            }
 
-        Optional<PatientEntity> patientEntity = patientRepository.findByEmail(email);
+            String email = authentication.getName();
+            log.info("Getting patient by email: {}", email);
 
-        return patientEntity.map(entity -> modelMapper.map(entity, PatientDto.class))
-                .orElseThrow(() -> new CustomException(new ResponseMessageDto("Token is invalid", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST));
+            Optional<PatientEntity> patientEntity = patientRepository.findByEmail(email);
+
+            return patientEntity.map(entity -> modelMapper.map(entity, PatientDto.class))
+                    .orElseThrow(() -> new CustomException(new ResponseMessageDto("Token is invalid", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST));
+        } catch (Exception ex) {
+            log.error("Error occurred while getting current patient: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Token is invalid", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
