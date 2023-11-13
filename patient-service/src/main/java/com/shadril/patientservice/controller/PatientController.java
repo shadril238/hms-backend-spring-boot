@@ -3,6 +3,7 @@ package com.shadril.patientservice.controller;
 import com.shadril.patientservice.dto.PatientDto;
 import com.shadril.patientservice.dto.PatientRegistrationRequestDto;
 import com.shadril.patientservice.dto.PatientRegistrationResponseDto;
+import com.shadril.patientservice.dto.ResponseMessageDto;
 import com.shadril.patientservice.exception.CustomException;
 import com.shadril.patientservice.service.PatientService;
 import jakarta.validation.Valid;
@@ -51,4 +52,14 @@ public class PatientController {
         PatientDto patientDto = patientService.getCurrentPatient();
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
+
+    @PutMapping("/profile/update")
+    public ResponseEntity<ResponseMessageDto> updatePatientProfile(@Valid @RequestBody PatientDto patientDto)
+            throws CustomException{
+        log.info("Inside updatePatientProfile method of PatientController");
+        patientService.updatePatientProfile(patientDto);
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto("Patient profile updated successfully", HttpStatus.OK);
+        return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
+    }
+
 }

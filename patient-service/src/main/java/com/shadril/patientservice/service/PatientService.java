@@ -12,4 +12,6 @@ public interface PatientService {
     PatientDto getPatientByEmail(String email) throws CustomException;
 
     PatientDto getCurrentPatient() throws CustomException;
+
+    void updatePatientProfile(PatientDto patientDto) throws CustomException;
 }
