@@ -41,6 +41,7 @@ public class PostServiceImplementation implements PostService {
             postEntity.setPostTitle(postDto.getPostTitle());
             postEntity.setPostContent(postDto.getPostContent());
             postEntity.setCreatedAt(LocalDateTime.now());
+            postEntity.setActive(true);
             postEntity.setPatientId(patientDtoResponse.getBody().getPatientId());
             postRepository.save(postEntity);
             log.info("post created successfully");

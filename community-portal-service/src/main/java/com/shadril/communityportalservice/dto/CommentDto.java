@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDto {
+public class CommentDto {
     private String patientId;
-    private String postTitle;
-    private String postContent;
+    private Long postId;
+    private String commentContent;
     private LocalDateTime createdAt;
     private boolean isActive;
 }

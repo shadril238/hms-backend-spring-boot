@@ -27,4 +27,7 @@ public class VoteEntity {
     @Column(name = "vote_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private VoteType voteType;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 }
