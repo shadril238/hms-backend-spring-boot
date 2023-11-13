@@ -100,18 +100,21 @@ public class PatientServiceImplementation implements PatientService {
     public void updatePatientProfile(PatientDto patientDto)
             throws CustomException {
         Optional<PatientEntity> patientEntityOptional = patientRepository.findById(patientDto.getPatientId());
-        if (patientEntityOptional.isPresent()) {
-            PatientEntity patientEntity = patientEntityOptional.get();
-            patientEntity.setFirstName(patientDto.getFirstName() != null ? patientDto.getFirstName() : patientEntity.getFirstName());
-            patientEntity.setLastName(patientDto.getLastName() != null ? patientDto.getLastName() : patientEntity.getLastName());
-            patientEntity.setDateOfBirth(patientDto.getDateOfBirth() != null ? patientDto.getDateOfBirth() : patientEntity.getDateOfBirth());
-            patientEntity.setGender(patientDto.getGender() != null ? patientDto.getGender() : patientEntity.getGender());
-            patientEntity.setBloodGroup(patientDto.getBloodGroup() != null ? patientDto.getBloodGroup() : patientEntity.getBloodGroup());
-            patientEntity.setPhoneNumber(patientDto.getPhoneNumber() != null ? patientDto.getPhoneNumber() : patientEntity.getPhoneNumber());
-            patientEntity.setAddress(patientDto.getAddress() != null ? patientDto.getAddress() : patientEntity.getAddress());
-        } else {
+        if (patientEntityOptional.isEmpty() || !patientEntityOptional.get().isActive()) {
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
+        log.info("Patient found with ID: {}", patientDto.getPatientId());
+
+        PatientEntity patientEntity = patientEntityOptional.get();
+        patientEntity.setFirstName(patientDto.getFirstName() != null ? patientDto.getFirstName() : patientEntity.getFirstName());
+        patientEntity.setLastName(patientDto.getLastName() != null ? patientDto.getLastName() : patientEntity.getLastName());
+        patientEntity.setDateOfBirth(patientDto.getDateOfBirth() != null ? patientDto.getDateOfBirth() : patientEntity.getDateOfBirth());
+        patientEntity.setGender(patientDto.getGender() != null ? patientDto.getGender() : patientEntity.getGender());
+        patientEntity.setBloodGroup(patientDto.getBloodGroup() != null ? patientDto.getBloodGroup() : patientEntity.getBloodGroup());
+        patientEntity.setPhoneNumber(patientDto.getPhoneNumber() != null ? patientDto.getPhoneNumber() : patientEntity.getPhoneNumber());
+        patientEntity.setAddress(patientDto.getAddress() != null ? patientDto.getAddress() : patientEntity.getAddress());
+
+        patientRepository.save(patientEntity);
     }
 
 }
