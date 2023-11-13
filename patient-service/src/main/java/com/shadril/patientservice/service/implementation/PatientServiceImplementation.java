@@ -1,5 +1,6 @@
 package com.shadril.patientservice.service.implementation;
 
+import com.shadril.patientservice.constants.AppConstants;
 import com.shadril.patientservice.dto.*;
 import com.shadril.patientservice.entity.PatientEntity;
 import com.shadril.patientservice.enums.Role;
@@ -13,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -79,5 +82,17 @@ public class PatientServiceImplementation implements PatientService {
         } else {
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public PatientDto getCurrentPatient() throws CustomException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        log.info("Getting patient by email: {}", email);
+
+        Optional<PatientEntity> patientEntity = patientRepository.findByEmail(email);
+
+        return patientEntity.map(entity -> modelMapper.map(entity, PatientDto.class))
+                .orElseThrow(() -> new CustomException(new ResponseMessageDto("Token is invalid", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST));
     }
 }

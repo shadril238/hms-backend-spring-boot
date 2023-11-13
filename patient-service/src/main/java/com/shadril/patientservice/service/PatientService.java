@@ -10,4 +10,6 @@ public interface PatientService {
     PatientDto getPatientById(String patientId) throws CustomException;
 
     PatientDto getPatientByEmail(String email) throws CustomException;
+
+    PatientDto getCurrentPatient() throws CustomException;
 }

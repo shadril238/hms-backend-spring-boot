@@ -43,4 +43,12 @@ public class PatientController {
         PatientDto patientDto = patientService.getPatientByEmail(email);
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<PatientDto> getCurrentPatient()
+            throws CustomException{
+        log.info("Inside getCurrentPatient method of PatientController");
+        PatientDto patientDto = patientService.getCurrentPatient();
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
 }
