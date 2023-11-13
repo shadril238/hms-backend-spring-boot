@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "3251f5d4-085c-4df3-ad6e-748a8e5d3cd2",
+		"name": "Healthcare Management System (HMS)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26502327"
+	},
+	"item": [
+		{
+			"name": "security-service",
+			"item": [
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john.doe@example.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john.doe@example.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"Patient\",\r\n    \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient-service",
+			"item": [
+				{
+					"name": "Patient Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"dateOfBirth\": \"1990-01-01\",\n    \"gender\": \"Male\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"12345678901\",\n    \"address\": \"123 Main St, Anytown, AN 12345\",\n    \"isApproved\": false,\n    \"isActive\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/patients/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/id/00-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"id",
+								"00-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient Get By Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/email/john.doe@example.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"email",
+								"john.doe@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzExMDg1fQ.YCcVg-Mwz7zUhwhcrN5K8KdpRf519iLYbGuz5g_hkcs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patientId\": \"00-00001\",\r\n    \"userId\": 1,\r\n    \"email\": \"john.doe@example.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"dateOfBirth\": \"1990-01-01\",\r\n    \"gender\": \"Male\",\r\n    \"bloodGroup\": \"A_Positive\",\r\n    \"phoneNumber\": \"12345678901\",\r\n    \"address\": \"123 Main St, Anytown, AN 12345\",\r\n    \"active\": true,\r\n    \"approved\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/patients/profile/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"profile",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HealthRecord Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzExMDg1fQ.YCcVg-Mwz7zUhwhcrN5K8KdpRf519iLYbGuz5g_hkcs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patientId\": \"00-00001\",\r\n    \"checkupDate\": \"2023-11-13\",\r\n    \"heightInCm\": 175,\r\n    \"weightInKg\": 70,\r\n    \"bloodPressure\": \"120/80\",\r\n    \"bloodSugar\": \"5.5\",\r\n    \"bodyTemperature\": \"36.6\",\r\n    \"pulseRate\": \"72\",\r\n    \"allergies\": \"Pollen\",\r\n    \"pastSurgeries\": \"Appendectomy\",\r\n    \"hasDiabetes\": false,\r\n    \"isHypertensive\": true,\r\n    \"hasHeartDisease\": false,\r\n    \"hasKidneyDisease\": false,\r\n    \"hasLiverDisease\": false,\r\n    \"hasCancer\": false,\r\n    \"hasHiv\": false,\r\n    \"hasTb\": false,\r\n    \"physicalDisability\": \"None\",\r\n    \"vaccineInfo\": \"COVID-19, Influenza\",\r\n    \"isSmoker\": false,\r\n    \"isAlcoholic\": true,\r\n    \"isActive\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8092/health-records/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"health-records",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HealthRecord Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/health-records/id/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"health-records",
+								"id",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HealthRecord Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/health-records/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"health-records",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HealthRecord By PatientId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/health-records/patient/00-00001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"health-records",
+								"patient",
+								"00-00001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "doctor-service",
+			"item": [
+				{
+					"name": "Doctor Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"doctor@example.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"careerTitle\": \"Senior Surgeon\",\n    \"department\": \"Cardiology\",\n    \"specialization\": \"Cardiac Surgery\",\n    \"designation\": \"Lead Surgeon\",\n    \"institute\": \"City Hospital\",\n    \"experienceYears\": 15,\n    \"qualifications\": \"MBBS, MD\",\n    \"licenseNumber\": \"MED123456\",\n    \"dateOfBirth\": \"1975-01-15\",\n    \"gender\": \"Male\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"1234567890\",\n    \"biography\": \"A brief biography of the doctor\",\n    \"address\": \"123 Main St, Anytown, AN 12345\",\n    \"isApproved\": true,\n    \"isActive\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/doctors/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doctor Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/11-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"11-00001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "community-portal-service",
+			"item": [
+				{
+					"name": "Community Create Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzM4MjEyfQ.BGSdP6IirHWuDb16mALkX0SXTGlc_S18903qpUKbIH0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postTitle\": \"Great Experience at the Hospital\",\r\n    \"postContent\": \"I had a surgery last week and the care I received was exceptional. The staff was caring and attentive, and the facilities were top-notch.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/community-portal/posts/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"community-portal",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Community Create Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzQyMDQ3fQ.wz-IxUOL3xfzxp19AedAcvMZVIRM8HiXd8OE1HIXnfg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postId\": 1,\r\n    \"commentContent\": \"This is my comment on the post.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/community-portal/comments/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"community-portal",
+								"comments",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Community Cast Vote",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzQyMDQ3fQ.wz-IxUOL3xfzxp19AedAcvMZVIRM8HiXd8OE1HIXnfg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\" : 1,\n    \"voteType\" : \"Downvote\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/community-portal/posts/vote",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"community-portal",
+								"posts",
+								"vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Community Count Votes For Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/community-portal/posts/1/votes/count",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"community-portal",
+								"posts",
+								"1",
+								"votes",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
