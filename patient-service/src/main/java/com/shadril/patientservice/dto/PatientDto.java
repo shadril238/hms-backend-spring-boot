@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Builder
 public class PatientDto {
     private String patientId;
-//    private Long userId;
+    private Long userId;
     private String email;
     private String firstName;
     private String lastName;
@@ -24,6 +24,6 @@ public class PatientDto {
     private BloodGroup bloodGroup;
     private String phoneNumber;
     private String address;
-//    private boolean isApproved;
-//    private boolean isActive;
+    private boolean isApproved;
+    private boolean isActive;
 }

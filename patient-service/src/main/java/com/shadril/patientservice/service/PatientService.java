@@ -8,4 +8,6 @@ public interface PatientService {
     PatientDto registerPatient(PatientRegistrationRequestDto registrationDto) throws CustomException;
 
     PatientDto getPatientById(String patientId) throws CustomException;
+
+    PatientDto getPatientByEmail(String email) throws CustomException;
 }

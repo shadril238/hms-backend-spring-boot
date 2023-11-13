@@ -28,11 +28,19 @@ public class PatientController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{patientId}")
+    @GetMapping("/id/{patientId}")
     public ResponseEntity<PatientDto> getPatientById(@PathVariable String patientId)
             throws CustomException{
         log.info("Inside getPatientById method of PatientController");
         PatientDto patientDto = patientService.getPatientById(patientId);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<PatientDto> getPatientByEmail(@PathVariable String email)
+            throws CustomException{
+        log.info("Inside getPatientByEmail method of PatientController");
+        PatientDto patientDto = patientService.getPatientByEmail(email);
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 }

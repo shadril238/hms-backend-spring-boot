@@ -69,4 +69,15 @@ public class PatientServiceImplementation implements PatientService {
             throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
     }
+
+    @Override
+    public PatientDto getPatientByEmail(String email)
+            throws CustomException {
+        Optional<PatientEntity> patientEntity = patientRepository.findByEmail(email);
+        if (patientEntity.isPresent()) {
+            return modelMapper.map(patientEntity.get(), PatientDto.class);
+        } else {
+            throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
+    }
 }
