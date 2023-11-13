@@ -22,5 +22,4 @@ public class GlobalExceptionHandler {
         ResponseMessageDto responseMessage = new ResponseMessageDto(e.getReason(), (HttpStatus) e.getStatusCode());
         return new ResponseEntity<>(responseMessage, e.getStatusCode());
     }
-
 }
