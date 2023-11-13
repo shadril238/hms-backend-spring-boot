@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class PostDto {
+    private Long postId;
     private String patientId;
     private String postTitle;
     private String postContent;

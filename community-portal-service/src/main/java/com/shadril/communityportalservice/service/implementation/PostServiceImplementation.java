@@ -8,7 +8,6 @@ import com.shadril.communityportalservice.exception.CustomException;
 import com.shadril.communityportalservice.networkmanager.PatientServiceFeignClient;
 import com.shadril.communityportalservice.repository.PostRepository;
 import com.shadril.communityportalservice.service.PostService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

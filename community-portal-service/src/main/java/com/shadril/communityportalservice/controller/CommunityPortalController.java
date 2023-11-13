@@ -3,9 +3,11 @@ package com.shadril.communityportalservice.controller;
 import com.shadril.communityportalservice.dto.CommentDto;
 import com.shadril.communityportalservice.dto.PostDto;
 import com.shadril.communityportalservice.dto.ResponseMessageDto;
+import com.shadril.communityportalservice.dto.VoteDto;
 import com.shadril.communityportalservice.exception.CustomException;
 import com.shadril.communityportalservice.service.CommentService;
 import com.shadril.communityportalservice.service.PostService;
+import com.shadril.communityportalservice.service.VoteService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class CommunityPortalController {
     private PostService postService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private VoteService voteService;
 
     @PostMapping("/posts/create")
     public ResponseEntity<ResponseMessageDto> createPost(@Valid @RequestBody PostDto postDto)
@@ -41,5 +45,14 @@ public class CommunityPortalController {
         commentService.createComment(commentDto);
         log.info("comment created successfully");
         return new ResponseEntity<>(new ResponseMessageDto("Comment created successfully", HttpStatus.CREATED), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/posts/vote")
+    public ResponseEntity<ResponseMessageDto> castVote(@Valid @RequestBody VoteDto voteDto)
+            throws CustomException {
+        log.info("inside castVote method of CommunityPortalController");
+        voteService.castVote(voteDto);
+        log.info("vote casted successfully");
+        return new ResponseEntity<>(new ResponseMessageDto("Voted successfully", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 }
