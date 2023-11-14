@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -48,5 +51,80 @@ public class PostServiceImplementation implements PostService {
             log.error("error occurred while creating post: " + ex.getMessage());
             throw ex;
         }
+    }
+
+    @Override
+    public PostDto getPostById(Long postId) throws CustomException {
+        try{
+            log.info("inside getPostById method of PostServiceImplementation");
+            PostEntity postEntity = postRepository.findById(postId)
+                    .orElseThrow(() -> new CustomException(
+                            new ResponseMessageDto("Post not found", HttpStatus.NOT_FOUND),
+                            HttpStatus.NOT_FOUND));
+
+            return modelMapper.map(postEntity, PostDto.class);
+        } catch (CustomException ex) {
+            log.error("error occurred while fetching post: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public List<PostDto> getAllPosts() throws CustomException {
+        try{
+            log.info("inside getAllPosts method of PostServiceImplementation");
+            List<PostEntity> postEntities = postRepository.findAll();
+
+            if (postEntities.isEmpty()) {
+                throw new CustomException(
+                        new ResponseMessageDto("No posts found", HttpStatus.NOT_FOUND),
+                        HttpStatus.NOT_FOUND);
+            }
+
+            return postEntities.stream()
+                    .map(postEntity -> modelMapper.map(postEntity, PostDto.class))
+                    .collect(Collectors.toList());
+        } catch (CustomException ex) {
+            log.error("error occurred while fetching posts: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public void updatePost(PostDto postDto) throws CustomException {
+        try{
+            log.info("inside updatePost method of PostServiceImplementation");
+            ResponseEntity<PatientDto> patientDtoResponse = patientServiceFeignClient.getCurrentPatient();
+            if(patientDtoResponse.getBody() == null || patientDtoResponse.getStatusCode() != HttpStatus.OK) {
+                throw new CustomException(new ResponseMessageDto("You are not authorized to update the post", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+            }
+
+            Optional<PostEntity> postEntity = postRepository.findById(postDto.getPostId());
+            if(postEntity.isEmpty() || !postEntity.get().isActive()){
+                throw new CustomException(new ResponseMessageDto("Post not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+
+            // check if the post belongs to the user
+            if(!postEntity.get().getPatientId().equals(patientDtoResponse.getBody().getPatientId())){
+                throw new CustomException(new ResponseMessageDto("You are not authorized to update the post", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+            }
+            log.info("All validations passed, updating post");
+
+            PostEntity updatedPostEntity = postEntity.get();
+            updatedPostEntity.setPostTitle(postDto.getPostTitle() != null ? postDto.getPostTitle() : updatedPostEntity.getPostTitle());
+            updatedPostEntity.setPostContent(postDto.getPostContent() != null ? postDto.getPostContent() : updatedPostEntity.getPostContent());
+            updatedPostEntity.setActive(true);
+
+            postRepository.save(updatedPostEntity);
+            log.info("post updated successfully");
+        } catch (CustomException ex) {
+            log.error("error occurred while updating post: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public void deletePost(Long postId) throws CustomException {
+        // will be implemented later
     }
 }

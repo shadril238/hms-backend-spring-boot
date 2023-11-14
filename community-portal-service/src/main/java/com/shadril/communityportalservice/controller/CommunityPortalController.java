@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/community-portal")
@@ -30,6 +32,31 @@ public class CommunityPortalController {
         postService.createPost(postDto);
         log.info("post created successfully");
         return new ResponseEntity<>(new ResponseMessageDto("Post created successfully", HttpStatus.CREATED), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long postId)
+            throws CustomException {
+        log.info("inside getPostById method of CommunityPortalController");
+        PostDto postDto = postService.getPostById(postId);
+        return new ResponseEntity<>(postDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts()
+            throws CustomException {
+        log.info("inside getAllPosts method of CommunityPortalController");
+        List<PostDto> postsDtoList = postService.getAllPosts();
+        return new ResponseEntity<>(postsDtoList, HttpStatus.OK);
+    }
+
+    @PutMapping("/posts/update")
+    public ResponseEntity<ResponseMessageDto> updatePost(@Valid @RequestBody PostDto postDto)
+            throws CustomException {
+        log.info("inside updatePost method of CommunityPortalController");
+        postService.updatePost(postDto);
+        log.info("post updated successfully");
+        return new ResponseEntity<>(new ResponseMessageDto("Post updated successfully", HttpStatus.OK), HttpStatus.OK);
     }
 
     @PostMapping("/comments/create")
