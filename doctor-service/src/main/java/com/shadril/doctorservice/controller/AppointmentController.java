@@ -1,9 +1,9 @@
 package com.shadril.doctorservice.controller;
 
-import com.shadril.doctorservice.dto.AvailabilitySlotRequestDto;
+import com.shadril.doctorservice.dto.AppointmentSlotRequestDto;
 import com.shadril.doctorservice.dto.ResponseMessageDto;
 import com.shadril.doctorservice.exception.CustomException;
-import com.shadril.doctorservice.service.DoctorAvailabilityService;
+import com.shadril.doctorservice.service.DoctorAppointmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/appointments")
 public class AppointmentController {
     @Autowired
-    private DoctorAvailabilityService doctorAvailabilityService;
+    private DoctorAppointmentService doctorAppointmentService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseMessageDto> createAvailabilitySlots(@RequestBody AvailabilitySlotRequestDto availabilitySlotRequest)
+    public ResponseEntity<ResponseMessageDto> createAppointmentSlots(@RequestBody AppointmentSlotRequestDto slotRequest)
             throws CustomException {
-        log.info("Received request to create availability slots");
-        doctorAvailabilityService.createAvailabilitySlots(availabilitySlotRequest);
-        log.info("Availability slots created successfully");
+        log.info("Received request to create appointment slots");
+        doctorAppointmentService.createAppointmentSlot(slotRequest);
+        log.info("Appointment slots created successfully");
 
         ResponseMessageDto responseMessageDto = new ResponseMessageDto("Appointments created successfully", HttpStatus.CREATED);
 

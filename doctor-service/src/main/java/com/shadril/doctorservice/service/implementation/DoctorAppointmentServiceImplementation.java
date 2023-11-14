@@ -1,13 +1,13 @@
 package com.shadril.doctorservice.service.implementation;
 
-import com.shadril.doctorservice.dto.AvailabilitySlotRequestDto;
+import com.shadril.doctorservice.dto.AppointmentSlotRequestDto;
 import com.shadril.doctorservice.dto.DoctorDto;
 import com.shadril.doctorservice.dto.ResponseMessageDto;
 import com.shadril.doctorservice.entitiy.DoctorAvailabilityEntity;
 import com.shadril.doctorservice.entitiy.DoctorEntity;
 import com.shadril.doctorservice.exception.CustomException;
 import com.shadril.doctorservice.repository.DoctorAvailabilityRepository;
-import com.shadril.doctorservice.service.DoctorAvailabilityService;
+import com.shadril.doctorservice.service.DoctorAppointmentService;
 import com.shadril.doctorservice.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +26,16 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class DoctorAvailabilityServiceImplementation implements DoctorAvailabilityService {
+public class DoctorAppointmentServiceImplementation implements DoctorAppointmentService {
     private final DoctorAvailabilityRepository doctorAvailabilityRepository;
     private final DoctorService doctorService;
     private final ModelMapper modelMapper;
 
     @Override
-    public void createAvailabilitySlots(AvailabilitySlotRequestDto requestDto)
+    public void createAppointmentSlot(AppointmentSlotRequestDto requestDto)
             throws CustomException {
         try {
-            log.info("inside createAvailabilitySlots method in DoctorAvailabilityServiceImplementation");
+            log.info("inside createAppointmentSlots method in DoctorAppointmentServiceImplementation");
             DoctorDto doctorDto = doctorService.getCurrentDoctor();
             log.info("Doctor found with id: {}", doctorDto.getDoctorId());
 
@@ -80,7 +80,7 @@ public class DoctorAvailabilityServiceImplementation implements DoctorAvailabili
         }
     }
 
-    private boolean isSlotOverlapping(AvailabilitySlotRequestDto requestDto) throws CustomException {
+    private boolean isSlotOverlapping(AppointmentSlotRequestDto requestDto) throws CustomException {
         DoctorDto doctorDto = doctorService.getCurrentDoctor();
         List<DoctorAvailabilityEntity> existingSlots = doctorAvailabilityRepository.findByDoctorIdAndDate(
                 doctorDto.getDoctorId(), requestDto.getDate());
