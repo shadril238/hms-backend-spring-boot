@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface DoctorRepository extends JpaRepository<DoctorEntity, String> {
     @Query("SELECT MAX(d.doctorId) FROM DoctorEntity d")
     Optional<String> findMaxDoctorId();
+
+    Optional<DoctorEntity> findByEmail(String email);
 }

@@ -3,6 +3,7 @@ package com.shadril.doctorservice.controller;
 import com.shadril.doctorservice.dto.DoctorDto;
 import com.shadril.doctorservice.dto.DoctorRegistrationRequestDto;
 import com.shadril.doctorservice.dto.DoctorRegistrationResponseDto;
+import com.shadril.doctorservice.dto.ResponseMessageDto;
 import com.shadril.doctorservice.exception.CustomException;
 import com.shadril.doctorservice.service.DoctorService;
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ public class DoctorController {
         return new ResponseEntity<>(doctorRegistrationResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{doctorId}")
+    @GetMapping("/id/{doctorId}")
     public ResponseEntity<DoctorDto> getDoctorById(@PathVariable String doctorId)
             throws CustomException {
         log.info("Received request to get doctor with id: {}", doctorId);
@@ -40,5 +41,35 @@ public class DoctorController {
         log.info("Doctor found with id: {}", doctorId);
 
         return new ResponseEntity<>(doctorDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<DoctorDto> getDoctorByEmail(@PathVariable String email)
+            throws CustomException {
+        log.info("Received request to get doctor with email: {}", email);
+        DoctorDto doctorDto = doctorService.getDoctorByEmail(email);
+        log.info("Doctor found with email: {}", email);
+
+        return new ResponseEntity<>(doctorDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<DoctorDto> getCurrentDoctor()
+            throws CustomException {
+        log.info("Received request to get current doctor");
+        DoctorDto doctorDto = doctorService.getCurrentDoctor();
+        log.info("Current doctor found");
+
+        return new ResponseEntity<>(doctorDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/profile/update")
+    public ResponseEntity<ResponseMessageDto> updateDoctorProfile(@Valid @RequestBody DoctorDto doctorDto)
+            throws CustomException {
+        log.info("Received request to update doctor profile");
+        doctorService.updateDoctorProfile(doctorDto);
+        log.info("Doctor profile updated successfully");
+
+        return new ResponseEntity<>(new ResponseMessageDto("Doctor profile updated successfully", HttpStatus.OK), HttpStatus.OK);
     }
 }
