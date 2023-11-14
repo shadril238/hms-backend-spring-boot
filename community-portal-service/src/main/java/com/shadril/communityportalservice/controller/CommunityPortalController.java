@@ -68,6 +68,22 @@ public class CommunityPortalController {
         return new ResponseEntity<>(new ResponseMessageDto("Comment created successfully", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 
+    @GetMapping("/comments/{commentId}")
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable Long commentId)
+            throws CustomException {
+        log.info("inside getCommentById method of CommunityPortalController");
+        CommentDto commentDto = commentService.getCommentById(commentId);
+        return new ResponseEntity<>(commentDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<List<CommentDto>> getAllCommentsByPostId(@PathVariable Long postId)
+            throws CustomException {
+        log.info("inside getAllCommentsByPostId method of CommunityPortalController");
+        List<CommentDto> commentsDtoList = commentService.getAllCommentsByPostId(postId);
+        return new ResponseEntity<>(commentsDtoList, HttpStatus.OK);
+    }
+
     @PostMapping("/posts/vote")
     public ResponseEntity<ResponseMessageDto> castVote(@Valid @RequestBody VoteDto voteDto)
             throws CustomException {

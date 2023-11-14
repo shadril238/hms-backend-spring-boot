@@ -57,10 +57,10 @@ public class PostServiceImplementation implements PostService {
     public PostDto getPostById(Long postId) throws CustomException {
         try{
             log.info("inside getPostById method of PostServiceImplementation");
-            PostEntity postEntity = postRepository.findById(postId)
-                    .orElseThrow(() -> new CustomException(
-                            new ResponseMessageDto("Post not found", HttpStatus.NOT_FOUND),
-                            HttpStatus.NOT_FOUND));
+            Optional<PostEntity> postEntity = postRepository.findById(postId);
+            if(postEntity.isEmpty() || !postEntity.get().isActive()){
+                throw new CustomException(new ResponseMessageDto("Post not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
 
             return modelMapper.map(postEntity, PostDto.class);
         } catch (CustomException ex) {
@@ -82,6 +82,7 @@ public class PostServiceImplementation implements PostService {
             }
 
             return postEntities.stream()
+                    .filter(PostEntity::isActive)
                     .map(postEntity -> modelMapper.map(postEntity, PostDto.class))
                     .collect(Collectors.toList());
         } catch (CustomException ex) {

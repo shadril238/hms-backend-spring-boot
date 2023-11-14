@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,6 +58,76 @@ public class CommentServiceImplementation implements CommentService {
             log.info("comment created successfully");
         } catch (CustomException ex) {
             log.error("error occurred while creating comment: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public void updateComment(CommentDto commentDto) throws CustomException {
+        // will be implemented in future
+    }
+
+    @Override
+    public void deleteComment(Long commentId) throws CustomException {
+        // will be implemented in future
+    }
+
+    @Override
+    public CommentDto getCommentById(Long commentId) throws CustomException {
+        try{
+            log.info("inside getCommentById method of CommentServiceImplementation");
+            Optional<CommentEntity> commentEntity = commentRepository.findById(commentId);
+            if(commentEntity.isEmpty() || !commentEntity.get().isActive()){
+                throw new CustomException(new ResponseMessageDto("Comment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+
+            CommentDto commentDto = new CommentDto();
+            commentDto.setCommentId(commentEntity.get().getCommentId());
+            commentDto.setPatientId(commentEntity.get().getPatientId());
+            commentDto.setPostId(commentEntity.get().getPost().getPostId());
+            commentDto.setCommentContent(commentEntity.get().getCommentContent());
+            commentDto.setCreatedAt(commentEntity.get().getCreatedAt());
+            commentDto.setActive(commentEntity.get().isActive());
+
+            return commentDto;
+        } catch (CustomException ex) {
+            log.error("error occurred while fetching comment: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public List<CommentDto> getAllCommentsByPostId(Long postId) throws CustomException {
+        try{
+            log.info("inside getAllCommentsByPostId method of CommentServiceImplementation");
+            Optional<PostEntity> postEntity = postRepository.findById(postId);
+            if(postEntity.isEmpty() || !postEntity.get().isActive()){
+                throw new CustomException(new ResponseMessageDto("Post not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("post found, fetching comments");
+
+            List<CommentEntity> commentEntities = commentRepository.findByPostId(postId);
+            if(commentEntities.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("No comments found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("comments fetched successfully");
+
+            return commentEntities.stream()
+                    .filter(CommentEntity::isActive)
+                    .map(commentEntity -> {
+                        CommentDto commentDto = new CommentDto();
+                        commentDto.setCommentId(commentEntity.getCommentId());
+                        commentDto.setPatientId(commentEntity.getPatientId());
+                        commentDto.setCommentContent(commentEntity.getCommentContent());
+                        commentDto.setCreatedAt(commentEntity.getCreatedAt());
+                        commentDto.setActive(commentEntity.isActive());
+                        commentDto.setPostId(commentEntity.getPost().getPostId());
+                        return commentDto;
+                    })
+                    .toList();
+
+        } catch (CustomException ex) {
+            log.error("error occurred while fetching comments: " + ex.getMessage());
             throw ex;
         }
     }
