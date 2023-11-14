@@ -39,12 +39,21 @@ public class DoctorAvailabilityServiceImplementation implements DoctorAvailabili
             DoctorDto doctorDto = doctorService.getCurrentDoctor();
             log.info("Doctor found with id: {}", doctorDto.getDoctorId());
 
+            if (isSlotOverlapping(requestDto)) {
+                throw new CustomException(new ResponseMessageDto("Time slot for appointment overlaps with existing slot", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
             DoctorEntity doctorEntity = modelMapper.map(doctorDto, DoctorEntity.class);
             List<DoctorAvailabilityEntity> availabilitySlots = new ArrayList<>();
             LocalTime slotTime = requestDto.getStartTime();
             Long perPatientTime = requestDto.getPerPatientTimeInMinutes();
+            LocalTime endTime = requestDto.getEndTime();
 
-            while (slotTime.isBefore(requestDto.getEndTime())) {
+            if (Duration.between(slotTime, endTime).toMinutes() < perPatientTime) {
+                throw new CustomException(new ResponseMessageDto("Per patient time exceeds the slot window", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
+            while (slotTime.isBefore(endTime)) {
                 LocalTime slotEndTime = slotTime.plus(Duration.ofMinutes(perPatientTime));
                 if (!slotEndTime.isAfter(requestDto.getEndTime())) {
                     DoctorAvailabilityEntity slot = new DoctorAvailabilityEntity();
@@ -70,5 +79,27 @@ public class DoctorAvailabilityServiceImplementation implements DoctorAvailabili
             throw new CustomException(new ResponseMessageDto("Unexpected error occurred while creating availability slots", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    private boolean isSlotOverlapping(AvailabilitySlotRequestDto requestDto) throws CustomException {
+        DoctorDto doctorDto = doctorService.getCurrentDoctor();
+        List<DoctorAvailabilityEntity> existingSlots = doctorAvailabilityRepository.findByDoctorIdAndDate(
+                doctorDto.getDoctorId(), requestDto.getDate());
+
+        LocalTime newSlotStartTime = requestDto.getStartTime();
+        LocalTime newSlotEndTime = requestDto.getEndTime();
+
+        return existingSlots.stream().anyMatch(existingSlot -> {
+            LocalTime existingSlotStartTime = existingSlot.getStartTime();
+            LocalTime existingSlotEndTime = existingSlot.getEndTime();
+            // if new slot starts or ends during an existing slot
+            boolean overlaps = newSlotStartTime.isBefore(existingSlotEndTime) && newSlotEndTime.isAfter(existingSlotStartTime);
+            // for exact match
+            overlaps |= newSlotStartTime.equals(existingSlotStartTime) && newSlotEndTime.equals(existingSlotEndTime);
+
+            return overlaps;
+        });
+    }
+
+
 
 }
