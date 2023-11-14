@@ -57,7 +57,7 @@ public class DoctorEntity {
     @Column(nullable = false)
     private String qualifications;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String licenseNumber;
 
     @Column(nullable = false)
