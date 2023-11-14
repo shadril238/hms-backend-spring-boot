@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -15,5 +16,5 @@ public class AvailabilitySlotRequestDto {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Duration perPatientTime;
+    private Long perPatientTimeInMinutes;
 }
