@@ -45,6 +45,10 @@ dependencies {
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+
+	// Twilio SDK dependency for SMS sending
+	implementation 'com.twilio.sdk:twilio:8.30.0'
+
 }
 
 dependencyManagement {
