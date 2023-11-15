@@ -12,6 +12,14 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/cdss-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/cdss-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/community-portal-service" />
         <option name="modules">
           <set>
