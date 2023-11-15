@@ -48,7 +48,8 @@ dependencies {
 
 	// Twilio SDK dependency for SMS sending
 	implementation 'com.twilio.sdk:twilio:8.30.0'
-
+	// Spring Mail dependency for email sending
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 dependencyManagement {
