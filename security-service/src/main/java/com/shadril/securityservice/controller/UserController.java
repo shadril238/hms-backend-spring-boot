@@ -73,4 +73,12 @@ public class UserController {
         ResponseMessageDto responseMessageDto = new ResponseMessageDto("User deleted successfully", HttpStatus.OK);
         return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
     }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id)
+            throws CustomException{
+        log.info("Received request to get user with ID: {}", id);
+        UserDto userDto = userService.getUserById(id);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
 }
