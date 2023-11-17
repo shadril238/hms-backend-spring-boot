@@ -1,5 +1,6 @@
 package com.shadril.notificationservice.entity;
 
+import com.shadril.notificationservice.enums.PreferenceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,8 @@ public class NotificationPreferenceEntity {
     private Long userId;
 
     @Column(name = "pref_type")
-    private String prefType;
+    @Enumerated(EnumType.STRING)
+    private PreferenceType prefType;
 
     @Column(name = "enabled")
     private boolean enabled;

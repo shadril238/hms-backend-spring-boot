@@ -77,12 +77,44 @@ public class NotificationPreferenceServiceImplementation implements Notification
     }
 
     @Override
-    public void updateNotificationPreference(NotificationPreferenceDto notificationPreferenceDto) throws CustomException {
-        //  will be implemented later
+    public void updateNotificationPreference(NotificationPreferenceDto notificationPreferenceDto)
+            throws CustomException {
+        try {
+            log.info("inside updateNotificationPreference method of NotificationPreferenceServiceImplementation class");
+
+            Long id = notificationPreferenceDto.getNotificationPreferenceId();
+            Optional<NotificationPreferenceEntity> existingEntity = notificationPreferenceRepository.findById(id);
+
+            if (existingEntity.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Notification preference not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+
+            NotificationPreferenceEntity updatedEntity = modelMapper.map(notificationPreferenceDto, NotificationPreferenceEntity.class);
+            notificationPreferenceRepository.save(updatedEntity);
+
+            log.info("notification preference entity updated successfully for id: {}", id);
+        } catch (Exception e) {
+            log.error("error occurred while updating notification preference entity for id: {}", notificationPreferenceDto.getNotificationPreferenceId());
+            throw new CustomException(new ResponseMessageDto("Notification preference could not be updated", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
     public void deleteNotificationPreference(Long notificationPreferenceId) throws CustomException {
-        //  will be implemented later
+        try {
+            log.info("inside deleteNotificationPreference method of NotificationPreferenceServiceImplementation class");
+
+            Optional<NotificationPreferenceEntity> entity = notificationPreferenceRepository.findById(notificationPreferenceId);
+            if (entity.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Notification preference not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+
+            notificationPreferenceRepository.deleteById(notificationPreferenceId);
+
+            log.info("notification preference entity deleted successfully for id: {}", notificationPreferenceId);
+        } catch (Exception e) {
+            log.error("error occurred while deleting notification preference entity for id: {}", notificationPreferenceId);
+            throw new CustomException(new ResponseMessageDto("Notification preference could not be deleted", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
