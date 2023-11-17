@@ -3,7 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/hms-backend.iml" filepath="$PROJECT_DIR$/.idea/hms-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/community-portal-service/hms-backend-spring-boot.community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/community-portal-service/hms-backend-spring-boot.community-portal-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/doctor-service/hms-backend-spring-boot.doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/doctor-service/hms-backend-spring-boot.doctor-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification-service/hms-backend-spring-boot.notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification-service/hms-backend-spring-boot.notification-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hms-backend-spring-boot.patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/hms-backend-spring-boot.patient-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pharmaceutical-inventory-service/hms-backend-spring-boot.pharmaceutical-inventory-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pharmaceutical-inventory-service/hms-backend-spring-boot.pharmaceutical-inventory-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/security-service/hms-backend-spring-boot.security-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/security-service/hms-backend-spring-boot.security-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/patient-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/security-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/security-service.main.iml" />

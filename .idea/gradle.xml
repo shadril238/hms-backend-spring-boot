@@ -4,7 +4,27 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/api-gateway" />
+            <option value="$PROJECT_DIR$/cdss-service" />
+            <option value="$PROJECT_DIR$/community-portal-service" />
+            <option value="$PROJECT_DIR$/config-server" />
+            <option value="$PROJECT_DIR$/doctor-service" />
+            <option value="$PROJECT_DIR$/eureka-service-discovery" />
+            <option value="$PROJECT_DIR$/notification-service" />
+            <option value="$PROJECT_DIR$/patient-service" />
+            <option value="$PROJECT_DIR$/pharmaceutical-inventory-service" />
+            <option value="$PROJECT_DIR$/security-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/api-gateway" />
+        <option name="gradleHome" value="$USER_HOME$/gradle-8.2/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/api-gateway" />

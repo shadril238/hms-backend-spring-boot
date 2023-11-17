@@ -8,8 +8,46 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="notification-service.main" />
+        <module name="hms-backend-spring-boot.security-service.main" />
+        <module name="hms-backend-spring-boot.doctor-service.main" />
+        <module name="hms-backend-spring-boot.patient-service.main" />
+        <module name="hms-backend-spring-boot.community-portal-service.main" />
+        <module name="hms-backend-spring-boot.cdss-service.main" />
+        <module name="hms-backend-spring-boot.notification-service.main" />
+        <module name="hms-backend-spring-boot.pharmaceutical-inventory-service.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hms-backend.api-gateway" target="17" />
+      <module name="hms-backend.api-gateway.main" target="17" />
+      <module name="hms-backend.api-gateway.test" target="17" />
+      <module name="hms-backend.cdss-service" target="17" />
+      <module name="hms-backend.cdss-service.main" target="17" />
+      <module name="hms-backend.cdss-service.test" target="17" />
+      <module name="hms-backend.community-portal-service" target="17" />
+      <module name="hms-backend.community-portal-service.main" target="17" />
+      <module name="hms-backend.community-portal-service.test" target="17" />
+      <module name="hms-backend.config-server" target="17" />
+      <module name="hms-backend.config-server.main" target="17" />
+      <module name="hms-backend.config-server.test" target="17" />
+      <module name="hms-backend.doctor-service" target="17" />
+      <module name="hms-backend.doctor-service.main" target="17" />
+      <module name="hms-backend.doctor-service.test" target="17" />
+      <module name="hms-backend.eureka-service-discovery" target="17" />
+      <module name="hms-backend.eureka-service-discovery.main" target="17" />
+      <module name="hms-backend.eureka-service-discovery.test" target="17" />
+      <module name="hms-backend.notification-service" target="17" />
+      <module name="hms-backend.notification-service.main" target="17" />
+      <module name="hms-backend.notification-service.test" target="17" />
+      <module name="hms-backend.patient-service" target="17" />
+      <module name="hms-backend.patient-service.main" target="17" />
+      <module name="hms-backend.patient-service.test" target="17" />
+      <module name="hms-backend.pharmaceutical-inventory-service" target="17" />
+      <module name="hms-backend.pharmaceutical-inventory-service.main" target="17" />
+      <module name="hms-backend.pharmaceutical-inventory-service.test" target="17" />
+      <module name="hms-backend.security-service" target="17" />
+      <module name="hms-backend.security-service.main" target="17" />
+      <module name="hms-backend.security-service.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
