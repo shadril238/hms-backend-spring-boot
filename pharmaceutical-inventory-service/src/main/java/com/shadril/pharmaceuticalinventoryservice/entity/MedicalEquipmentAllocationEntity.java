@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "medicine_allocation")
-public class MedicineAllocation {
+@Table(name = "medical_equipment_allocation")
+public class MedicalEquipmentAllocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long medicineAllocationId;
+    private Long equipmentAllocationId;
 
     @Column(nullable = false)
     private String patientId;
@@ -24,17 +24,17 @@ public class MedicineAllocation {
     private String doctorId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicine_id", nullable = false)
-    private MedicineEntity medicine;
+    @JoinColumn(name = "medical_equipment_id", nullable = false)
+    private MedicalEquipmentEntity medicalEquipment;
+
+    @Column(nullable = false)
+    private Boolean isReturned = false;
 
     @Column(nullable = false)
     private LocalDate allocatedDate;
 
     @Column(nullable = true)
     private LocalDate returnedDate;
-
-    @Column(nullable = false)
-    private Boolean isReturned = false;
 
     @Column(nullable = false)
     private Boolean isActive = true;

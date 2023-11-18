@@ -1,11 +1,18 @@
 package com.shadril.pharmaceuticalinventoryservice.service.implementation;
 
+import com.shadril.pharmaceuticalinventoryservice.dto.DoctorDto;
 import com.shadril.pharmaceuticalinventoryservice.dto.MedicineDto;
+import com.shadril.pharmaceuticalinventoryservice.dto.PatientDto;
 import com.shadril.pharmaceuticalinventoryservice.dto.ResponseMessageDto;
+import com.shadril.pharmaceuticalinventoryservice.entity.MedicineAllocationEntity;
 import com.shadril.pharmaceuticalinventoryservice.entity.MedicineEntity;
 import com.shadril.pharmaceuticalinventoryservice.exception.CustomException;
+import com.shadril.pharmaceuticalinventoryservice.networkmanager.DoctorServiceFeignClient;
+import com.shadril.pharmaceuticalinventoryservice.networkmanager.PatientServiceFeignClient;
+import com.shadril.pharmaceuticalinventoryservice.repository.MedicineAllocationRepository;
 import com.shadril.pharmaceuticalinventoryservice.repository.MedicineRepository;
 import com.shadril.pharmaceuticalinventoryservice.service.MedicineService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +24,18 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 public class MedicineServiceImplementation implements MedicineService {
     @Autowired
     private MedicineRepository medicineRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private DoctorServiceFeignClient doctorServiceFeignClient;
+    @Autowired
+    private MedicineAllocationRepository medicineAllocationRepository;
+    @Autowired
+    private PatientServiceFeignClient patientServiceFeignClient;
 
 
     @Override
@@ -109,6 +123,87 @@ public class MedicineServiceImplementation implements MedicineService {
         catch (Exception e){
             log.error("Error while getting all medicines: ", e);
             throw new CustomException(new ResponseMessageDto("Error while getting all medicines", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseMessageDto bookMedicine(Long medicineId, String patientId) throws CustomException {
+        try {
+            Optional<MedicineEntity> medicineEntity = medicineRepository.findById(medicineId);
+            if(medicineEntity.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            MedicineEntity medicine = medicineEntity.get();
+            if(medicine.getIsOccupied()){
+                throw new CustomException(new ResponseMessageDto("Medicine is already occupied", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
+            DoctorDto doctorDto = doctorServiceFeignClient.getCurrentDoctor().getBody();
+            if(doctorDto == null){
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            PatientDto patientDto = patientServiceFeignClient.getPatientById(patientId).getBody();
+            if(patientDto == null){
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            medicine.setIsOccupied(true);
+            medicineRepository.save(medicine);
+
+            MedicineAllocationEntity medicineAllocationEntity = new MedicineAllocationEntity();
+            medicineAllocationEntity.setMedicine(medicine);
+            medicineAllocationEntity.setDoctorId(doctorDto.getDoctorId());
+            medicineAllocationEntity.setPatientId(patientId);
+            medicineAllocationRepository.save(medicineAllocationEntity);
+            return new ResponseMessageDto("Medicine booked successfully", HttpStatus.OK);
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while booking medicine: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while booking medicine", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseMessageDto returnMedicine(Long medicineId, String patientId) throws CustomException {
+        try{
+            Optional<MedicineEntity> medicineEntity = medicineRepository.findById(medicineId);
+            if(medicineEntity.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            MedicineEntity medicine = medicineEntity.get();
+            if(!medicine.getIsOccupied()){
+                throw new CustomException(new ResponseMessageDto("Medicine is not occupied", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
+            DoctorDto doctorDto = doctorServiceFeignClient.getCurrentDoctor().getBody();
+            if(doctorDto == null){
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            PatientDto patientDto = patientServiceFeignClient.getPatientById(patientId).getBody();
+            if(patientDto == null){
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            medicine.setIsOccupied(false);
+            medicineRepository.save(medicine);
+
+            Optional<MedicineAllocationEntity> medicineAllocationEntity = medicineAllocationRepository.findByMedicineAndPatientId(medicine, patientId);
+            if(medicineAllocationEntity.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine allocation not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            MedicineAllocationEntity medicineAllocation = medicineAllocationEntity.get();
+            medicineAllocation.setIsReturned(true);
+            medicineAllocationRepository.save(medicineAllocation);
+            return new ResponseMessageDto("Medicine returned successfully", HttpStatus.OK);
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while returning medicine: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while returning medicine", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+
         }
     }
 }

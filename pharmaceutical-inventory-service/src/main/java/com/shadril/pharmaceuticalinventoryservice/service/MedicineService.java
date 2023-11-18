@@ -1,6 +1,7 @@
 package com.shadril.pharmaceuticalinventoryservice.service;
 
 import com.shadril.pharmaceuticalinventoryservice.dto.MedicineDto;
+import com.shadril.pharmaceuticalinventoryservice.dto.ResponseMessageDto;
 import com.shadril.pharmaceuticalinventoryservice.exception.CustomException;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface MedicineService {
     void deleteMedicine(Long id) throws CustomException;
     MedicineDto getMedicine(Long id) throws CustomException;
     List<MedicineDto> getAllMedicines() throws CustomException;
+    ResponseMessageDto bookMedicine(Long medicineId, String patientId) throws CustomException;
+    ResponseMessageDto returnMedicine(Long medicineId, String patientId) throws CustomException;
 }
