@@ -25,6 +25,7 @@
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/api-gateway" />
         <option name="gradleHome" value="$USER_HOME$/gradle-8.2/gradle-8.2" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/api-gateway" />
