@@ -8,6 +8,7 @@ import com.shadril.cdssservice.networkmanager.PatientServiceFeignClient;
 import com.shadril.cdssservice.repository.HealthRecommendationRepository;
 import com.shadril.cdssservice.service.CdssService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -25,6 +28,8 @@ public class CdssServiceImplementation implements CdssService {
     private PatientServiceFeignClient patientServiceFeignClient;
     @Autowired
     private HealthRecommendationRepository healthRecommendationRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     private String getResponseFromOpenAi(String prompt)
@@ -91,7 +96,7 @@ public class CdssServiceImplementation implements CdssService {
 
 
     @Override
-    public String getHealthRecommendation()
+    public String generateHealthRecommendation()
             throws CustomException {
         log.info("inside getHealthRecommendation method from CdssServiceImplementation class");
 
@@ -120,5 +125,60 @@ public class CdssServiceImplementation implements CdssService {
         healthRecommendationRepository.save(healthRecommendationEntity);
 
         return recommendationResponse;
+    }
+
+    @Override
+    public List<HealthRecommendationDto> getAllHealthRecommendations() throws CustomException {
+        try {
+            log.info("inside getAllHealthRecommendations method from CdssServiceImplementation class");
+            List<HealthRecommendationEntity> healthRecommendationList = healthRecommendationRepository.findAll();
+            if (healthRecommendationList.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No health recommendations found.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            return healthRecommendationList.stream()
+                    .map(entity -> modelMapper.map(entity, HealthRecommendationDto.class))
+                    .toList();
+
+        } catch (Exception e) {
+            log.error("error in getAllHealthRecommendations method from CdssServiceImplementation class: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("The cdss service is not available right now. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public HealthRecommendationDto getHealthRecommendationById(Long id) throws CustomException {
+        try{
+            log.info("inside getHealthRecommendationById method from CdssServiceImplementation class");
+            Optional<HealthRecommendationEntity> healthRecommendationEntity = healthRecommendationRepository.findById(id);
+            if (healthRecommendationEntity.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No health recommendation found with the given id.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            return modelMapper.map(healthRecommendationEntity, HealthRecommendationDto.class);
+
+        } catch (Exception e) {
+            log.error("error in getHealthRecommendationById method from CdssServiceImplementation class: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("The cdss service is not available right now. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<HealthRecommendationDto> getHealthRecommendationByPatientId(String patientId) throws CustomException {
+        try{
+            log.info("inside getHealthRecommendationByPatientId method from CdssServiceImplementation class");
+            List<HealthRecommendationEntity> healthRecommendationList = healthRecommendationRepository.findAllByPatientId(patientId);
+            if (healthRecommendationList.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No health recommendations found for the given patient id.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            return healthRecommendationList.stream()
+                    .map(entity -> modelMapper.map(entity, HealthRecommendationDto.class))
+                    .toList();
+
+        } catch (Exception e) {
+            log.error("error in getHealthRecommendationByPatientId method from CdssServiceImplementation class: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("The cdss service is not available right now. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
