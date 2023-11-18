@@ -1,16 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/api-gateway" />
-    <file type="web" url="file://$PROJECT_DIR$/cdss-service" />
-    <file type="web" url="file://$PROJECT_DIR$/community-portal-service" />
-    <file type="web" url="file://$PROJECT_DIR$/config-server" />
-    <file type="web" url="file://$PROJECT_DIR$/doctor-service" />
-    <file type="web" url="file://$PROJECT_DIR$/eureka-service-discovery" />
-    <file type="web" url="file://$PROJECT_DIR$/notification-service" />
-    <file type="web" url="file://$PROJECT_DIR$/patient-service" />
-    <file type="web" url="file://$PROJECT_DIR$/pharmaceutical-inventory-service" />
-    <file type="web" url="file://$PROJECT_DIR$/security-service" />
+    <file type="web" url="file://$PROJECT_DIR$" />
     <file type="web" url="file://$USER_HOME$/YSD_B03_J2EE_MidTerm_DevTetra/api-gateway" />
   </component>
   <component name="NullableNotNullManager">

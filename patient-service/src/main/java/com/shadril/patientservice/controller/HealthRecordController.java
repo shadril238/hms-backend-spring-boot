@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/health-records")
+@RequestMapping("/patients/health-records")
 @Slf4j
 public class HealthRecordController {
     @Autowired

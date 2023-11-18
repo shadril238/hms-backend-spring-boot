@@ -17,10 +17,10 @@ public class CdssController {
     private CdssService cdssService;
 
     @GetMapping("/health-recommendation")
-    public ResponseEntity<ResponseMessageDto> getHealthRecommendation(@RequestBody(required = true) String prompt)
+    public ResponseEntity<ResponseMessageDto> getHealthRecommendation()
             throws CustomException {
         log.info("inside getHealthRecommendation method from CdssController class");
-        String response = cdssService.getResponseFromOpenAi(prompt);
+        String response = cdssService.getHealthRecommendation();
         return new ResponseEntity<>(new ResponseMessageDto(response, HttpStatus.OK), HttpStatus.OK);
     }
 }
