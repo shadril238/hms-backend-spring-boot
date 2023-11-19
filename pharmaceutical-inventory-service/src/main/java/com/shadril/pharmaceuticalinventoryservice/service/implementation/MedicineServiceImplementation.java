@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -194,6 +195,7 @@ public class MedicineServiceImplementation implements MedicineService {
             }
             MedicineAllocationEntity medicineAllocation = medicineAllocationEntity.get();
             medicineAllocation.setIsReturned(true);
+            medicineAllocation.setReturnedDate(LocalDate.now());
             medicineAllocationRepository.save(medicineAllocation);
             return new ResponseMessageDto("Medicine returned successfully", HttpStatus.OK);
         }

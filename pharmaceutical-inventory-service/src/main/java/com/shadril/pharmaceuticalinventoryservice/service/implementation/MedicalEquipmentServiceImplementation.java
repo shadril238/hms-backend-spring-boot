@@ -1,9 +1,15 @@
 package com.shadril.pharmaceuticalinventoryservice.service.implementation;
 
+import com.shadril.pharmaceuticalinventoryservice.dto.DoctorDto;
 import com.shadril.pharmaceuticalinventoryservice.dto.MedicalEquipmentDto;
+import com.shadril.pharmaceuticalinventoryservice.dto.PatientDto;
 import com.shadril.pharmaceuticalinventoryservice.dto.ResponseMessageDto;
+import com.shadril.pharmaceuticalinventoryservice.entity.MedicalEquipmentAllocationEntity;
 import com.shadril.pharmaceuticalinventoryservice.entity.MedicalEquipmentEntity;
 import com.shadril.pharmaceuticalinventoryservice.exception.CustomException;
+import com.shadril.pharmaceuticalinventoryservice.networkmanager.DoctorServiceFeignClient;
+import com.shadril.pharmaceuticalinventoryservice.networkmanager.PatientServiceFeignClient;
+import com.shadril.pharmaceuticalinventoryservice.repository.MedicalEquipmentAllocationRepository;
 import com.shadril.pharmaceuticalinventoryservice.repository.MedicalEquipmentRepository;
 import com.shadril.pharmaceuticalinventoryservice.service.MedicalEquipmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +29,12 @@ public class MedicalEquipmentServiceImplementation implements MedicalEquipmentSe
     private MedicalEquipmentRepository medicalEquipmentRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private MedicalEquipmentAllocationRepository medicalEquipmentAllocationRepository;
+    @Autowired
+    private PatientServiceFeignClient patientServiceFeignClient;
+    @Autowired
+    private DoctorServiceFeignClient doctorServiceFeignClient;
 
     @Override
     public void createMedicalEquipment(MedicalEquipmentDto medicalEquipmentDto) throws CustomException {
@@ -106,6 +119,91 @@ public class MedicalEquipmentServiceImplementation implements MedicalEquipmentSe
         } catch (Exception e) {
             log.error("Error while getting all medical equipments: ", e);
             throw new CustomException(new ResponseMessageDto("Error while getting all medical equipments", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseMessageDto bookMedicalEquipment(Long medicalEquipmentId, String patientId) throws CustomException {
+        try{
+            Optional<MedicalEquipmentEntity> existingMedicalEquipment = medicalEquipmentRepository.findById(medicalEquipmentId);
+            if (existingMedicalEquipment.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Medical equipment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            MedicalEquipmentEntity medicalEquipmentEntity = existingMedicalEquipment.get();
+            if (medicalEquipmentEntity.getIsOccupied()) {
+                throw new CustomException(new ResponseMessageDto("Medical equipment is already occupied", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+            PatientDto patientResponse = patientServiceFeignClient.getPatientById(patientId).getBody();
+            if (patientResponse == null) {
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            DoctorDto doctorResponse = doctorServiceFeignClient.getCurrentDoctor().getBody();
+            if (doctorResponse == null) {
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            medicalEquipmentEntity.setIsOccupied(true);
+            medicalEquipmentRepository.save(medicalEquipmentEntity);
+
+            MedicalEquipmentAllocationEntity medicalEquipmentAllocationEntity = new MedicalEquipmentAllocationEntity();
+            medicalEquipmentAllocationEntity.setMedicalEquipment(medicalEquipmentEntity);
+            medicalEquipmentAllocationEntity.setPatientId(patientId);
+            medicalEquipmentAllocationEntity.setDoctorId(doctorResponse.getDoctorId());
+            medicalEquipmentAllocationEntity.setAllocatedDate(LocalDate.now());
+            medicalEquipmentAllocationEntity.setIsReturned(false);
+            medicalEquipmentAllocationEntity.setIsActive(true);
+
+            medicalEquipmentAllocationRepository.save(medicalEquipmentAllocationEntity);
+
+            return new ResponseMessageDto("Medical equipment booked successfully", HttpStatus.OK);
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error while booking medical equipment: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while booking medical equipment", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseMessageDto returnMedicalEquipment(Long medicalEquipmentId, String patientId) throws CustomException {
+        try{
+            Optional<MedicalEquipmentEntity> existingMedicalEquipment = medicalEquipmentRepository.findById(medicalEquipmentId);
+            if (existingMedicalEquipment.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Medical equipment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            MedicalEquipmentEntity medicalEquipmentEntity = existingMedicalEquipment.get();
+            if (!medicalEquipmentEntity.getIsOccupied()) {
+                throw new CustomException(new ResponseMessageDto("Medical equipment is not occupied", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+            PatientDto patientResponse = patientServiceFeignClient.getPatientById(patientId).getBody();
+            if (patientResponse == null) {
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            DoctorDto doctorResponse = doctorServiceFeignClient.getCurrentDoctor().getBody();
+            if (doctorResponse == null) {
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            medicalEquipmentEntity.setIsOccupied(false);
+            medicalEquipmentRepository.save(medicalEquipmentEntity);
+
+            Optional<MedicalEquipmentAllocationEntity> existingMedicalEquipmentAllocation = medicalEquipmentAllocationRepository.findByMedicalEquipmentAndPatientId(medicalEquipmentEntity, patientId);
+            if (existingMedicalEquipmentAllocation.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Medical equipment allocation not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+
+            MedicalEquipmentAllocationEntity medicalEquipmentAllocationEntity = existingMedicalEquipmentAllocation.get();
+            medicalEquipmentAllocationEntity.setIsReturned(true);
+            medicalEquipmentAllocationEntity.setReturnedDate(LocalDate.now());
+            medicalEquipmentAllocationRepository.save(medicalEquipmentAllocationEntity);
+
+            medicalEquipmentEntity.setIsOccupied(false);
+            medicalEquipmentRepository.save(medicalEquipmentEntity);
+
+            return new ResponseMessageDto("Medical equipment returned successfully", HttpStatus.OK);
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error while returning medical equipment: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while returning medical equipment", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
     }
 }
