@@ -31,15 +31,18 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 @Slf4j
 public class DoctorAppointmentServiceImplementation implements DoctorAppointmentService {
-    private final DoctorAvailabilityRepository doctorAvailabilityRepository;
-    private final DoctorAppointmentRepository doctorAppointmentRepository;
-    private final DoctorService doctorService;
-    private final ModelMapper modelMapper;
     @Autowired
-    private final PatientServiceFeignClient patientServiceFeignClient;
+    private DoctorAvailabilityRepository doctorAvailabilityRepository;
+    @Autowired
+    private DoctorAppointmentRepository doctorAppointmentRepository;
+    @Autowired
+    private DoctorService doctorService;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private PatientServiceFeignClient patientServiceFeignClient;
 
     @Override
     public void createAppointmentSlot(AppointmentSlotRequestDto requestDto)

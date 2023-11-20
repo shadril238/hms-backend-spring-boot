@@ -28,7 +28,7 @@ public class DoctorController {
         log.info("Doctor registered successfully with email: {}", doctorRegistrationRequestDto.getEmail());
 
         DoctorRegistrationResponseDto doctorRegistrationResponseDto =
-                new DoctorRegistrationResponseDto("Doctor registered successfully", HttpStatus.CREATED, createdDoctor);
+                new DoctorRegistrationResponseDto("Doctor registered successfully", HttpStatus.CREATED);
 
         return new ResponseEntity<>(doctorRegistrationResponseDto, HttpStatus.CREATED);
     }

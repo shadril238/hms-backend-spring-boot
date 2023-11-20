@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/inventory")
+@RequestMapping("/pharmaceutical-inventory")
 public class PharmaceuticalInventoryController {
     @Autowired
     private MedicalEquipmentService medicalEquipmentService;

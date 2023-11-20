@@ -10,5 +10,5 @@ import org.springframework.http.HttpStatus;
 public class DoctorRegistrationResponseDto {
     private String message;
     private HttpStatus status;
-    private DoctorDto registeredDoctorData;
+//    private DoctorDto registeredDoctorData;
 }

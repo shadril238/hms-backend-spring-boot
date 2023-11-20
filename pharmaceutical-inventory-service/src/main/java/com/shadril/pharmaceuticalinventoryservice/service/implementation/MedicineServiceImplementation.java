@@ -152,6 +152,7 @@ public class MedicineServiceImplementation implements MedicineService {
 
             MedicineAllocationEntity medicineAllocationEntity = new MedicineAllocationEntity();
             medicineAllocationEntity.setMedicine(medicine);
+            medicineAllocationEntity.setAllocatedDate(LocalDate.now());
             medicineAllocationEntity.setDoctorId(doctorDto.getDoctorId());
             medicineAllocationEntity.setPatientId(patientId);
             medicineAllocationRepository.save(medicineAllocationEntity);

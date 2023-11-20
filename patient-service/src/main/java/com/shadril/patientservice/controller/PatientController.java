@@ -25,7 +25,7 @@ public class PatientController {
         log.info("Inside registerPatient method of PatientController");
         PatientDto createdPatient = patientService.registerPatient(registrationDto);
         PatientRegistrationResponseDto responseDto =
-                new PatientRegistrationResponseDto("Patient registered successfully", HttpStatus.CREATED, createdPatient);
+                new PatientRegistrationResponseDto("Patient registered successfully", HttpStatus.CREATED);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
