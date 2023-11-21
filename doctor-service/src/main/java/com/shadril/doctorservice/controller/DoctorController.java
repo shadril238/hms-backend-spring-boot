@@ -72,4 +72,15 @@ public class DoctorController {
 
         return new ResponseEntity<>(new ResponseMessageDto("Doctor profile updated successfully", HttpStatus.OK), HttpStatus.OK);
     }
+
+    @PostMapping("/approve/{doctorId}/{roomNo}")
+    public ResponseEntity<ResponseMessageDto> approveDoctor(@PathVariable String doctorId, @PathVariable String roomNo)
+            throws CustomException {
+        log.info("Received request to approve doctor with id: {}", doctorId);
+        doctorService.approveDoctor(doctorId, roomNo);
+        log.info("Doctor approved successfully with id: {}", doctorId);
+
+        return new ResponseEntity<>(new ResponseMessageDto("Doctor approved successfully", HttpStatus.OK), HttpStatus.OK);
+    }
+
 }

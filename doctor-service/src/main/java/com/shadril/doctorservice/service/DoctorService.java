@@ -10,4 +10,6 @@ public interface DoctorService {
     DoctorDto getDoctorByEmail(String email) throws CustomException;
     DoctorDto getCurrentDoctor() throws CustomException;
     void updateDoctorProfile(DoctorDto doctorDto) throws CustomException;
+    void approveDoctor(String doctorId, String roomNo) throws CustomException;
 }
+
