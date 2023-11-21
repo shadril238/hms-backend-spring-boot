@@ -4,6 +4,8 @@ import com.shadril.patientservice.dto.PatientDto;
 import com.shadril.patientservice.dto.PatientRegistrationRequestDto;
 import com.shadril.patientservice.exception.CustomException;
 
+import java.util.List;
+
 public interface PatientService {
     PatientDto registerPatient(PatientRegistrationRequestDto registrationDto) throws CustomException;
 
@@ -14,4 +16,6 @@ public interface PatientService {
     PatientDto getCurrentPatient() throws CustomException;
 
     void updatePatientProfile(PatientDto patientDto) throws CustomException;
+
+    List<PatientDto> getAllPatients() throws CustomException;
 }

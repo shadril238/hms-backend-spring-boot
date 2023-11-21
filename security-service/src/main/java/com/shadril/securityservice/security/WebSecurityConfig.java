@@ -52,7 +52,7 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:5173");
-        //config.addAllowedHeader("Authorization");
+        config.addAllowedHeader("Authorization");
         config.setAllowedHeaders(Arrays.asList(
                 "Authorization",
                 "Content-Type",

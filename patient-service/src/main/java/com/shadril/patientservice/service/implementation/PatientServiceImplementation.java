@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -124,6 +125,17 @@ public class PatientServiceImplementation implements PatientService {
         patientEntity.setAddress(patientDto.getAddress() != null ? patientDto.getAddress() : patientEntity.getAddress());
 
         patientRepository.save(patientEntity);
+    }
+
+    @Override
+    public List<PatientDto> getAllPatients() throws CustomException {
+        try{
+            List<PatientEntity> patientEntities = patientRepository.findAll();
+            return patientEntities.stream().map(entity -> modelMapper.map(entity, PatientDto.class)).toList();
+        } catch (Exception ex) {
+            log.error("Error occurred while getting all patients: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while getting all patients", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

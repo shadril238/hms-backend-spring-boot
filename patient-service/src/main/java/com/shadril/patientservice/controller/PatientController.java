@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/patients")
 @Slf4j
@@ -60,6 +62,14 @@ public class PatientController {
         patientService.updatePatientProfile(patientDto);
         ResponseMessageDto responseMessageDto = new ResponseMessageDto("Patient profile updated successfully", HttpStatus.OK);
         return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PatientDto>> getAllPatients()
+            throws CustomException{
+        log.info("Inside getAllPatients method of PatientController");
+        List<PatientDto> patientDto = patientService.getAllPatients();
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 
 }
