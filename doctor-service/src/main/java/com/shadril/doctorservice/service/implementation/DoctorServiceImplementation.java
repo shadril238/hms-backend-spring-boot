@@ -2,10 +2,12 @@ package com.shadril.doctorservice.service.implementation;
 
 import com.shadril.doctorservice.dto.*;
 import com.shadril.doctorservice.entitiy.DoctorEntity;
+import com.shadril.doctorservice.entitiy.RoomEntity;
 import com.shadril.doctorservice.enums.Role;
 import com.shadril.doctorservice.exception.CustomException;
 import com.shadril.doctorservice.networkmanager.SecurityServiceFeignClient;
 import com.shadril.doctorservice.repository.DoctorRepository;
+import com.shadril.doctorservice.repository.RoomRepository;
 import com.shadril.doctorservice.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class DoctorServiceImplementation implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final SecurityServiceFeignClient securityServiceFeignClient;
     private final ModelMapper modelMapper;
+    private final RoomRepository roomRepository;
 
     @Override
     public DoctorDto registerDoctor(DoctorRegistrationRequestDto doctorRegistrationRequestDto)
@@ -152,6 +155,35 @@ public class DoctorServiceImplementation implements DoctorService {
             log.info("Doctor updated successfully with id: {}", doctorDto.getDoctorId());
         } catch (CustomException ex) {
             log.error("Error occurred during updating doctor profile: {}", ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public void approveDoctor(String doctorId, String roomNo) throws CustomException {
+        try{
+            log.info("inside assignRoom method in DoctorServiceImplementation");
+            Optional<DoctorEntity> doctorEntityOptional = doctorRepository.findById(doctorId);
+            if (doctorEntityOptional.isEmpty() || !doctorEntityOptional.get().isActive()) {
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Doctor found with id: {}", doctorId);
+
+            Optional<RoomEntity> roomEntity = roomRepository.isRoomAvailable(roomNo);
+            if (roomEntity.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Room not found or not available", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Room found with id: {}", roomEntity.get().getRoomId());
+
+            DoctorEntity doctorEntity = doctorEntityOptional.get();
+            doctorEntity.setRoom(roomEntity.get());
+            doctorEntity.setApproved(true);
+
+            log.info("Saving updated doctor data to database");
+            doctorRepository.save(doctorEntity);
+            log.info("Doctor updated successfully with id: {}", doctorId);
+        } catch (CustomException ex) {
+            log.error("Error occurred during assigning room to doctor: {}", ex.getMessage());
             throw ex;
         }
     }

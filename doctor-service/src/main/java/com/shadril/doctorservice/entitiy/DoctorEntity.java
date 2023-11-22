@@ -87,4 +87,8 @@ public class DoctorEntity {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @OneToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "roomId")
+    private RoomEntity room;
 }
