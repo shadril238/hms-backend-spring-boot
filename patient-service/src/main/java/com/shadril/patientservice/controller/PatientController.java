@@ -97,4 +97,11 @@ public class PatientController {
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<PatientDto> getPatientByUserId(@PathVariable Long userId)
+            throws CustomException{
+        log.info("Inside getPatientByUserId method of PatientController");
+        PatientDto patientDto = patientService.getPatientByUserId(userId);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
 }

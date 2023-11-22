@@ -17,4 +17,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, String> 
 
     @Query("SELECT p FROM PatientEntity p WHERE p.isApproved = :approved")
     List<PatientEntity> findAllByApproved(@Param("approved") Boolean approved);
+
+    @Query("SELECT p FROM PatientEntity p WHERE p.userId = :userId")
+    Optional<PatientEntity> findByUserId(@Param("userId") Long userId);
 }

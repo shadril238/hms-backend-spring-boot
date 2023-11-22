@@ -21,4 +21,5 @@ public interface PatientService {
     List<PatientDto> getAllApprovedPatients() throws CustomException;
     List<PatientDto> getAllUnapprovedPatients() throws CustomException;
     void approvePatient(String patientId) throws CustomException;
+    PatientDto getPatientByUserId(Long userId) throws CustomException;
 }

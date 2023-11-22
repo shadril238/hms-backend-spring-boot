@@ -183,4 +183,20 @@ public class PatientServiceImplementation implements PatientService {
         }
     }
 
+    @Override
+    public PatientDto getPatientByUserId(Long userId) throws CustomException {
+        try{
+            Optional<PatientEntity> patientEntityOptional = patientRepository.findByUserId(userId);
+            if (patientEntityOptional.isEmpty() || !patientEntityOptional.get().isActive()) {
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Patient found with ID: {}", patientEntityOptional.get().getPatientId());
+
+            return modelMapper.map(patientEntityOptional.get(), PatientDto.class);
+        } catch (Exception ex) {
+            log.error("Error occurred while getting patient by user ID: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while getting patient by user ID", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
