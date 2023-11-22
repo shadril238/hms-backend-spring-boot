@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +17,5 @@ public interface DoctorAppointmentRepository extends JpaRepository<AppointmentEn
     @Query("SELECT a FROM AppointmentEntity a WHERE a.doctor.doctorId = :doctorId")
     List<AppointmentEntity> findAllByDoctorId(@Param("doctorId") String doctorId);
     @Query("SELECT a FROM AppointmentEntity a WHERE a.doctor.doctorId = :doctorId AND a.doctorAvailability.date = :date")
-    List<AppointmentEntity> findAllByDoctorIdAndDate(@Param("doctorId") String doctorId, @Param("date") String date);
+    List<AppointmentEntity> findAllByDoctorIdAndDate(@Param("doctorId") String doctorId, @Param("date") LocalDate date);
 }

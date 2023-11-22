@@ -256,7 +256,7 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
     public List<AppointmentDto> getAppointmentByDoctorIdAndDate(String doctorId, String date) throws CustomException {
         try{
             log.info("inside getAppointmentByDoctorIdAndDate method in DoctorAppointmentServiceImplementation");
-            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, date);
+            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, LocalDate.parse(date));
             if (appointments.isEmpty()) {
                 throw new CustomException(new ResponseMessageDto("Appointment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
@@ -306,7 +306,7 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
     public List<AppointmentDto> getBookedAppointmentByDoctorIdAndDate(String doctorId, String date) throws CustomException {
         try {
             log.info("inside getBookedAppointmentByDoctorIdAndDate method in DoctorAppointmentServiceImplementation");
-            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, date);
+            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, LocalDate.parse(date));
             if (appointments.isEmpty()) {
                 throw new CustomException(new ResponseMessageDto("Appointment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
@@ -325,6 +325,54 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
         } catch (Exception ex) {
             log.error("An unexpected error occurred while getting appointment: {}", ex.getMessage());
             throw new CustomException(new ResponseMessageDto("Unexpected error occurred while getting appointment", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<DoctorAvailabilityDto> getDoctorAvailibilityByDoctorIdAndDate(String doctorId, String date) throws CustomException {
+        try{
+            log.info("inside getDoctorAvailibilityByDoctorIdAndDate method in DoctorAppointmentServiceImplementation");
+            List<DoctorAvailabilityEntity> availabilitySlots = doctorAvailabilityRepository.findByDoctorIdAndDate(doctorId, LocalDate.parse(date));
+            if (availabilitySlots.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Appointment slots not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Availability slots found with doctor id: {}", doctorId);
+
+            List<DoctorAvailabilityDto> availabilityDtos = new ArrayList<>();
+            for (DoctorAvailabilityEntity slot : availabilitySlots) {
+                if(slot.getIsAvailable())
+                    availabilityDtos.add(modelMapper.map(slot, DoctorAvailabilityDto.class));
+            }
+            return availabilityDtos;
+        } catch (CustomException ex) {
+            log.error("Error occurred while getting availability slots: {}", ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred while getting availability slots: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Unexpected error occurred while getting availability slots", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public void deleteDoctorAvailabilitySlot(Long doctorAvailabilityId) throws CustomException {
+        try{
+            log.info("inside deleteDoctorAvailabilitySlot method in DoctorAppointmentServiceImplementation");
+            Optional<DoctorAvailabilityEntity> appointmentSlotOptional = doctorAvailabilityRepository.findById(doctorAvailabilityId);
+            if (appointmentSlotOptional.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Appointment slot not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Appointment slot found with id: {}", doctorAvailabilityId);
+            DoctorAvailabilityEntity appointmentSlot = appointmentSlotOptional.get();
+
+            appointmentSlot.setIsAvailable(false);
+            doctorAvailabilityRepository.save(appointmentSlot);
+            log.info("Appointment slot deleted successfully");
+        } catch (CustomException ex) {
+            log.error("Error occurred while deleting appointment slot: {}", ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred while deleting appointment slot: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Unexpected error occurred while deleting appointment slot", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

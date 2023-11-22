@@ -1,9 +1,6 @@
 package com.shadril.doctorservice.controller;
 
-import com.shadril.doctorservice.dto.AppointmentDto;
-import com.shadril.doctorservice.dto.AppointmentSlotRequestDto;
-import com.shadril.doctorservice.dto.BookAppointmentRequestDto;
-import com.shadril.doctorservice.dto.ResponseMessageDto;
+import com.shadril.doctorservice.dto.*;
 import com.shadril.doctorservice.exception.CustomException;
 import com.shadril.doctorservice.service.DoctorAppointmentService;
 import lombok.Getter;
@@ -73,5 +70,42 @@ public class AppointmentController {
         return new ResponseEntity<>(appointmentList, HttpStatus.OK);
     }
 
+    @GetMapping("/get/doctor/{doctorId}/{date}")
+    public ResponseEntity<List<AppointmentDto>> getAppointmentByDoctorIdAndDate(@PathVariable String doctorId, @PathVariable String date)
+            throws CustomException {
+        log.info("Received request to get appointment by doctor id and date");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.getAppointmentByDoctorIdAndDate(doctorId, date);
+        log.info("Appointment fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
 
+    @GetMapping("/get/booked/doctor/{doctorId}")
+    public ResponseEntity<List<AppointmentDto>> getBookedAppointmentByDoctorId(@PathVariable String doctorId)
+            throws CustomException {
+        log.info("Received request to get booked appointment by doctor id");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.getBookedAppointmentByDoctorId(doctorId);
+        log.info("Appointment fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
+
+    @GetMapping("/slots/get/doctor/{doctorId}/{date}")
+    public ResponseEntity<List<DoctorAvailabilityDto>> getDoctorAvailibilityByDoctorIdAndDate(@PathVariable String doctorId, @PathVariable String date)
+            throws CustomException {
+        log.info("Received request to get doctor availability by doctor id and date");
+        List<DoctorAvailabilityDto> doctorAvailabilityList = doctorAppointmentService.getDoctorAvailibilityByDoctorIdAndDate(doctorId, date);
+        log.info("Doctor availability fetched successfully");
+        return new ResponseEntity<>(doctorAvailabilityList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/slots/delete/{doctorAvailabilityId}")
+    public ResponseEntity<ResponseMessageDto> deleteDoctorAvailabilitySlot(@PathVariable Long doctorAvailabilityId)
+            throws CustomException {
+        log.info("Received request to delete doctor availability slot");
+        doctorAppointmentService.deleteDoctorAvailabilitySlot(doctorAvailabilityId);
+        log.info("Doctor availability slot deleted successfully");
+
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto("Doctor availability slot deleted successfully", HttpStatus.OK);
+
+        return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
+    }
 }
