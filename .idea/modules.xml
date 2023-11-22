@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop.hms-backend-spring-boot.notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop.hms-backend-spring-boot.notification-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop.hms-backend-spring-boot.patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop.hms-backend-spring-boot.patient-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdss-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.cdss-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.community-portal-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.doctor-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdss-service/com.shadril.hms-backend-spring-boot.cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdss-service/com.shadril.hms-backend-spring-boot.cdss-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/community-portal-service/com.shadril.hms-backend-spring-boot.community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/community-portal-service/com.shadril.hms-backend-spring-boot.community-portal-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/doctor-service/com.shadril.hms-backend-spring-boot.doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/doctor-service/com.shadril.hms-backend-spring-boot.doctor-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pharmaceutical-inventory-service/com.shadril.hms-backend-spring-boot.pharmaceutical-inventory-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pharmaceutical-inventory-service/com.shadril.hms-backend-spring-boot.pharmaceutical-inventory-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/security-service/com.shadril.hms-backend-spring-boot.security-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/security-service/com.shadril.hms-backend-spring-boot.security-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.notification-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.patient-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.pharmaceutical-inventory-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.pharmaceutical-inventory-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/community-portal-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/doctor-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" />

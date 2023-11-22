@@ -169,6 +169,10 @@ public class PatientServiceImplementation implements PatientService {
             }
             log.info("Patient found with ID: {}", patientId);
 
+            if (patientEntityOptional.get().isApproved()) {
+                throw new CustomException(new ResponseMessageDto("Patient is already approved", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
             PatientEntity patientEntity = patientEntityOptional.get();
             patientEntity.setApproved(true);
 

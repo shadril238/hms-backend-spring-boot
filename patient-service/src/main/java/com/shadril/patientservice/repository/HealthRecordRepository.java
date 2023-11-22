@@ -13,5 +13,5 @@ import java.util.List;
 public interface HealthRecordRepository extends JpaRepository<HealthRecordEntity, Long> {
     @Query("SELECT h FROM HealthRecordEntity h WHERE h.patient.patientId = :patientId")
 
-    List<HealthRecordEntity> findByPatientId(String patientId);
+    List<HealthRecordEntity> findByPatientId(@Param("patientId") String patientId);
 }
