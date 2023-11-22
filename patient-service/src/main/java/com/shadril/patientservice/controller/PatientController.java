@@ -72,4 +72,29 @@ public class PatientController {
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 
+    @PostMapping("/approve/{patientId}")
+    public ResponseEntity<ResponseMessageDto> approvePatient(@PathVariable String patientId)
+            throws CustomException{
+        log.info("Inside approvePatient method of PatientController");
+        patientService.approvePatient(patientId);
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto("Patient approved successfully", HttpStatus.OK);
+        return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/approved")
+    public ResponseEntity<List<PatientDto>> getAllApprovedPatients()
+            throws CustomException{
+        log.info("Inside getAllApprovedPatients method of PatientController");
+        List<PatientDto> patientDto = patientService.getAllApprovedPatients();
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/unapproved")
+    public ResponseEntity<List<PatientDto>> getAllUnapprovedPatients()
+            throws CustomException{
+        log.info("Inside getAllUnapprovedPatients method of PatientController");
+        List<PatientDto> patientDto = patientService.getAllUnapprovedPatients();
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
+
 }

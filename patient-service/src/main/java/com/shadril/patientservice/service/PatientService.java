@@ -18,4 +18,7 @@ public interface PatientService {
     void updatePatientProfile(PatientDto patientDto) throws CustomException;
 
     List<PatientDto> getAllPatients() throws CustomException;
+    List<PatientDto> getAllApprovedPatients() throws CustomException;
+    List<PatientDto> getAllUnapprovedPatients() throws CustomException;
+    void approvePatient(String patientId) throws CustomException;
 }

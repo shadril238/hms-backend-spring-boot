@@ -138,4 +138,45 @@ public class PatientServiceImplementation implements PatientService {
         }
     }
 
+    @Override
+    public List<PatientDto> getAllApprovedPatients() throws CustomException {
+        try{
+            List<PatientEntity> patientEntities = patientRepository.findAllByApproved(true);
+            return patientEntities.stream().map(entity -> modelMapper.map(entity, PatientDto.class)).toList();
+        } catch (Exception ex) {
+            log.error("Error occurred while getting all approved patients: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while getting all approved patients", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public List<PatientDto> getAllUnapprovedPatients() throws CustomException {
+        try{
+            List<PatientEntity> patientEntities = patientRepository.findAllByApproved(false);
+            return patientEntities.stream().map(entity -> modelMapper.map(entity, PatientDto.class)).toList();
+        } catch (Exception ex) {
+            log.error("Error occurred while getting all unapproved patients: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while getting all unapproved patients", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public void approvePatient(String patientId) throws CustomException {
+        try{
+            Optional<PatientEntity> patientEntityOptional = patientRepository.findById(patientId);
+            if (patientEntityOptional.isEmpty() || !patientEntityOptional.get().isActive()) {
+                throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Patient found with ID: {}", patientId);
+
+            PatientEntity patientEntity = patientEntityOptional.get();
+            patientEntity.setApproved(true);
+
+            patientRepository.save(patientEntity);
+        } catch (Exception ex) {
+            log.error("Error occurred while approving patient: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while approving patient", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

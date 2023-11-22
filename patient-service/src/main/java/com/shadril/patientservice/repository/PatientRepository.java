@@ -3,8 +3,10 @@ package com.shadril.patientservice.repository;
 import com.shadril.patientservice.entity.PatientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 public interface PatientRepository extends JpaRepository<PatientEntity, String> {
@@ -12,4 +14,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, String> 
     Optional<String> findMaxPatientId();
 
     Optional<PatientEntity> findByEmail(String email);
+
+    @Query("SELECT p FROM PatientEntity p WHERE p.isApproved = :approved")
+    List<PatientEntity> findAllByApproved(@Param("approved") Boolean approved);
 }
