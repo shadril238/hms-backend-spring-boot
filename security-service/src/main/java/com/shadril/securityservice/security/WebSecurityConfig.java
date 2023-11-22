@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                             .anyRequest().permitAll();
                 })
                 .addFilter(new CustomAuthenticationFilter(authenticationManager))
-//                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
         ;
         return http.build();
     }
@@ -64,8 +64,8 @@ public class WebSecurityConfig {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("OPTIONS");
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
 }
