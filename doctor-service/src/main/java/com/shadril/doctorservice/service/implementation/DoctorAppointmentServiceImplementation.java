@@ -95,21 +95,42 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
 
     @Override
     public void bookAppointmentSlot(BookAppointmentRequestDto bookAppointmentRequestDto) throws CustomException {
-        try{
+        try {
             log.info("inside bookAppointmentSlot method in DoctorAppointmentServiceImplementation");
+
+            // Fetch the patient details
             ResponseEntity<PatientDto> patientDto = patientServiceFeignClient.getPatientById(bookAppointmentRequestDto.getPatientId());
             if (patientDto.getStatusCode() != HttpStatus.OK || patientDto.getBody() == null || !patientDto.getBody().isActive()) {
                 throw new CustomException(new ResponseMessageDto("Patient not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
             log.info("Patient found with id: {}", bookAppointmentRequestDto.getPatientId());
 
+            // Fetch the appointment slot
             Optional<DoctorAvailabilityEntity> appointmentSlotOptional = doctorAvailabilityRepository.findById(bookAppointmentRequestDto.getAvailabilityId());
             if (appointmentSlotOptional.isEmpty() || !appointmentSlotOptional.get().getIsAvailable()) {
                 throw new CustomException(new ResponseMessageDto("Appointment slot not available", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
             log.info("Appointment slot found with id: {}", bookAppointmentRequestDto.getAvailabilityId());
+
             DoctorAvailabilityEntity appointmentSlot = appointmentSlotOptional.get();
 
+            // Check if the patient has already booked an appointment with the same doctor on the same day
+            log.info("Checking existing appointment for patientId: {}, doctorId: {}, date: {}",
+                    bookAppointmentRequestDto.getPatientId(),
+                    appointmentSlot.getDoctor().getDoctorId(),
+                    appointmentSlot.getDate());
+
+            boolean isExistingAppointment = doctorAppointmentRepository.existsByPatientIdAndDoctorAndDate(
+                    bookAppointmentRequestDto.getPatientId(),
+                    appointmentSlot.getDoctor().getDoctorId(),
+                    appointmentSlot.getDate());
+
+            if (isExistingAppointment) {
+                log.error("Appointment already booked with this doctor on the same day");
+                throw new CustomException(new ResponseMessageDto("Appointment already booked with this doctor on the same day", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+
+            // Book the appointment
             appointmentSlot.setIsAvailable(false);
             doctorAvailabilityRepository.save(appointmentSlot);
             log.info("Appointment slot booked successfully");
@@ -132,6 +153,7 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
             throw new CustomException(new ResponseMessageDto("Unexpected error occurred while booking appointment slot", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @Override
     public void deleteAppointmentSlot(Long appointmentSlotId) throws CustomException {

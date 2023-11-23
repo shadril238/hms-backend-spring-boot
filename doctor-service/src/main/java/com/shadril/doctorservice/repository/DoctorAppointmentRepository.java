@@ -18,4 +18,15 @@ public interface DoctorAppointmentRepository extends JpaRepository<AppointmentEn
     List<AppointmentEntity> findAllByDoctorId(@Param("doctorId") String doctorId);
     @Query("SELECT a FROM AppointmentEntity a WHERE a.doctor.doctorId = :doctorId AND a.doctorAvailability.date = :date")
     List<AppointmentEntity> findAllByDoctorIdAndDate(@Param("doctorId") String doctorId, @Param("date") LocalDate date);
+    @Query("SELECT COUNT(a) > 0 FROM AppointmentEntity a " +
+            "JOIN a.doctor d " +
+            "JOIN a.doctorAvailability da " +
+            "WHERE a.patientId = :patientId " +
+            "AND d.doctorId = :doctorId " +
+            "AND da.date = :date " +
+            "AND a.appointmentStatus = com.shadril.doctorservice.enums.AppointmentStatus.Booked")
+    boolean existsByPatientIdAndDoctorAndDate(@Param("patientId") String patientId,
+                                              @Param("doctorId") String doctorId,
+                                              @Param("date") LocalDate date);
+
 }
