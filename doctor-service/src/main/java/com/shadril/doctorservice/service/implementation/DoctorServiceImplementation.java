@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -184,6 +185,76 @@ public class DoctorServiceImplementation implements DoctorService {
             log.info("Doctor updated successfully with id: {}", doctorId);
         } catch (CustomException ex) {
             log.error("Error occurred during assigning room to doctor: {}", ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    public List<String> getDoctorDepartmentList() throws CustomException {
+        try {
+            log.info("inside getDoctorDepartmentList method in DoctorServiceImplementation");
+            return doctorRepository.findDistinctDepartment();
+        } catch (Exception e) {
+            log.error("Error occurred during getting doctor department list: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during getting doctor department list", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<DoctorDto> getDoctorListByDepartment(String department) throws CustomException {
+        try{
+            log.info("inside getDoctorListByDepartment method in DoctorServiceImplementation");
+            List<DoctorEntity> doctorEntityList = doctorRepository.findByDepartment(department);
+            return doctorEntityList.stream()
+                    .map(entity -> modelMapper.map(entity, DoctorDto.class))
+                    .toList();
+        } catch (Exception e) {
+            log.error("Error occurred during getting doctor list by department: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during getting doctor list by department", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<DoctorDto> getDoctorList() throws CustomException {
+        try{
+            log.info("inside getDoctorList method in DoctorServiceImplementation");
+            List<DoctorEntity> doctorEntityList = doctorRepository.findAll();
+            return doctorEntityList.stream()
+                    .map(entity -> modelMapper.map(entity, DoctorDto.class))
+                    .toList();
+        } catch (Exception e) {
+            log.error("Error occurred during getting doctor list: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during getting doctor list", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public void approveDoctorAndAllocateRoom(String doctorId, String roomNo) throws CustomException {
+        try{
+            log.info("inside approveDoctorAndAllocateRoom method in DoctorServiceImplementation");
+            Optional<DoctorEntity> doctorEntityOptional = doctorRepository.findById(doctorId);
+            if (doctorEntityOptional.isEmpty() || !doctorEntityOptional.get().isActive()) {
+                throw new CustomException(new ResponseMessageDto("Doctor not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Doctor found with id: {}", doctorId);
+
+            Optional<RoomEntity> roomEntity = roomRepository.isRoomAvailable(roomNo);
+            if (roomEntity.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Room not found or not available", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Room found with id: {}", roomEntity.get().getRoomId());
+            RoomEntity room = roomEntity.get();
+            room.setIsAvailable(false);
+            roomRepository.save(room);
+            DoctorEntity doctorEntity = doctorEntityOptional.get();
+            doctorEntity.setRoom(roomEntity.get());
+            doctorEntity.setApproved(true);
+
+            log.info("Saving updated doctor data to database");
+            doctorRepository.save(doctorEntity);
+            log.info("Doctor updated successfully with id: {}", doctorId);
+        } catch (CustomException ex) {
+            log.error("Error occurred during approving doctor and allocating room: {}", ex.getMessage());
             throw ex;
         }
     }

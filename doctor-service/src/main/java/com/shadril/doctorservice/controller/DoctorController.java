@@ -1,9 +1,6 @@
 package com.shadril.doctorservice.controller;
 
-import com.shadril.doctorservice.dto.DoctorDto;
-import com.shadril.doctorservice.dto.DoctorRegistrationRequestDto;
-import com.shadril.doctorservice.dto.DoctorRegistrationResponseDto;
-import com.shadril.doctorservice.dto.ResponseMessageDto;
+import com.shadril.doctorservice.dto.*;
 import com.shadril.doctorservice.exception.CustomException;
 import com.shadril.doctorservice.service.DoctorService;
 import jakarta.validation.Valid;
@@ -12,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -83,4 +82,43 @@ public class DoctorController {
         return new ResponseEntity<>(new ResponseMessageDto("Doctor approved successfully", HttpStatus.OK), HttpStatus.OK);
     }
 
+    @GetMapping("/department/list")
+    public ResponseEntity<List<String>> getDoctorDepartmentList()
+            throws CustomException {
+        log.info("Received request to get doctor department list");
+        List<String> departmentList = doctorService.getDoctorDepartmentList();
+        log.info("Doctor department list fetched successfully");
+
+        return new ResponseEntity<>(departmentList, HttpStatus.OK);
+    }
+
+    @GetMapping("/department/{department}")
+    public ResponseEntity<List<DoctorDto>> getDoctorListByDepartment(@PathVariable String department)
+            throws CustomException {
+        log.info("Received request to get doctor list by department");
+        List<DoctorDto> doctorList = doctorService.getDoctorListByDepartment(department);
+        log.info("Doctor list fetched successfully");
+
+        return new ResponseEntity<>(doctorList, HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<DoctorDto>> getDoctorList()
+            throws CustomException {
+        log.info("Received request to get doctor list");
+        List<DoctorDto> doctorList = doctorService.getDoctorList();
+        log.info("Doctor list fetched successfully");
+
+        return new ResponseEntity<>(doctorList, HttpStatus.OK);
+    }
+
+    @PostMapping("/approve/allocate/{doctorId}/{roomNo}")
+    public ResponseEntity<ResponseMessageDto> approveDoctorAndAllocateRoom(@PathVariable String doctorId, @PathVariable String roomNo)
+            throws CustomException {
+        log.info("Received request to approve doctor and allocate room with id: {}", doctorId);
+        doctorService.approveDoctorAndAllocateRoom(doctorId, roomNo);
+        log.info("Doctor approved and room allocated successfully with id: {}", doctorId);
+
+        return new ResponseEntity<>(new ResponseMessageDto("Doctor approved and room allocated successfully", HttpStatus.OK), HttpStatus.OK);
+    }
 }

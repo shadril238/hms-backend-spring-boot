@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<RoomEntity, Long> {
     @Query("SELECT r FROM RoomEntity r WHERE r.roomNo = :roomNo AND r.isAvailable = true")
     Optional<RoomEntity> isRoomAvailable(@Param("roomNo") String roomNo);
+
+    @Query("SELECT r FROM RoomEntity r WHERE r.isAvailable = :isAvailable")
+    List<RoomEntity> findAllByIsAvailable(@Param("isAvailable") boolean isAvailable);
 }

@@ -73,29 +73,29 @@ public class RoomAllocationServiceImplementation implements RoomAllocationServic
     }
 
     @Override
-    public void createRoom(String roomNo) throws CustomException {
+    public void createRoom(RoomDto roomDto) throws CustomException {
         try{
-            Optional<RoomEntity> roomEntityOptional = roomRepository.findById(Long.parseLong(roomNo));
+            Optional<RoomEntity> roomEntityOptional = roomRepository.isRoomAvailable(roomDto.getRoomNo());
             if(roomEntityOptional.isPresent()){
                 throw new CustomException(new ResponseMessageDto("Room already exists", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
             }
 
             RoomEntity roomEntity = new RoomEntity();
-            roomEntity.setRoomNo(roomNo);
+            roomEntity.setRoomNo(roomDto.getRoomNo());
             roomEntity.setIsAvailable(true);
             roomRepository.save(roomEntity);
         } catch (CustomException e){
             throw e;
         } catch (Exception e){
-            log.error("Error occurred while creating room with room no: {}", roomNo);
+            log.error("Error occurred while creating room with room no: {}", roomDto.getRoomNo());
             throw new CustomException(new ResponseMessageDto("Error occurred while creating room", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public void deleteRoom(String roomNo) throws CustomException {
+    public void deleteRoom(Long id) throws CustomException {
         try{
-            Optional<RoomEntity> roomEntityOptional = roomRepository.findById(Long.parseLong(roomNo));
+            Optional<RoomEntity> roomEntityOptional = roomRepository.findById(id);
             if(roomEntityOptional.isEmpty()){
                 throw new CustomException(new ResponseMessageDto("Room not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
@@ -105,7 +105,7 @@ public class RoomAllocationServiceImplementation implements RoomAllocationServic
         } catch (CustomException e){
             throw e;
         } catch (Exception e){
-            log.error("Error occurred while deleting room with room no: {}", roomNo);
+            log.error("Error occurred while deleting room with room no: {}", id);
             throw new CustomException(new ResponseMessageDto("Error occurred while deleting room", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -138,6 +138,19 @@ public class RoomAllocationServiceImplementation implements RoomAllocationServic
         } catch (Exception e){
             log.error("Error occurred while getting room with room no: {}", roomNo);
             throw new CustomException(new ResponseMessageDto("Error occurred while getting room", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<RoomDto> getAvailableRooms() throws CustomException {
+        try{
+            List<RoomEntity> roomEntityList = roomRepository.findAllByIsAvailable(true);
+            return roomEntityList.stream()
+                    .map(roomEntity -> modelMapper.map(roomEntity, RoomDto.class))
+                    .toList();
+        } catch (Exception e){
+            log.error("Error occurred while getting available rooms");
+            throw new CustomException(new ResponseMessageDto("Error occurred while getting available rooms", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

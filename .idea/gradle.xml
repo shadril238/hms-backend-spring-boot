@@ -5,6 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -24,7 +25,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/api-gateway" />
-        <option name="gradleHome" value="$USER_HOME$/gradle-8.2/gradle-8.2" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/api-gateway" />
@@ -33,6 +34,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/cdss-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/cdss-service" />
@@ -41,6 +43,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/community-portal-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/community-portal-service" />
@@ -50,6 +53,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/config-server" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
@@ -59,6 +63,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/doctor-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/doctor-service" />
@@ -68,6 +73,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/eureka-service-discovery" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
@@ -77,6 +83,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/notification-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/notification-service" />
@@ -85,6 +92,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/patient-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/patient-service" />
@@ -93,6 +101,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/pharmaceutical-inventory-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/pharmaceutical-inventory-service" />
@@ -101,6 +110,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/security-service" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/security-service" />
