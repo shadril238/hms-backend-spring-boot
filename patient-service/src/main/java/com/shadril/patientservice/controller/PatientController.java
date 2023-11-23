@@ -104,4 +104,12 @@ public class PatientController {
         PatientDto patientDto = patientService.getPatientByUserId(userId);
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countTotalPatients()
+            throws CustomException{
+        log.info("Inside countTotalPatients method of PatientController");
+        Long count = patientService.countTotalPatients();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
 }

@@ -19,5 +19,6 @@ public interface DoctorService {
     List<DoctorDto> getDoctorList() throws CustomException;
     void approveDoctorAndAllocateRoom(String doctorId, String roomNo) throws CustomException;
     List<DoctorDto> getApprovedDoctorList() throws CustomException;
+    Long countTotalDoctors() throws CustomException;
 }
 

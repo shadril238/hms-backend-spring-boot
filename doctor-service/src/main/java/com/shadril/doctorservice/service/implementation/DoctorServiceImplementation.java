@@ -272,4 +272,15 @@ public class DoctorServiceImplementation implements DoctorService {
             throw new CustomException(new ResponseMessageDto("Error occurred during getting approved doctor list", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public Long countTotalDoctors() throws CustomException {
+        try{
+            log.info("inside countTotalDoctors method in DoctorServiceImplementation");
+            return doctorRepository.count();
+        } catch (Exception e) {
+            log.error("Error occurred during counting total doctors: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during counting total doctors", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

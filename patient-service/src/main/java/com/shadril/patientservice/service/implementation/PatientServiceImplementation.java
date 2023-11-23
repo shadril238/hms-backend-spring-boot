@@ -199,4 +199,14 @@ public class PatientServiceImplementation implements PatientService {
         }
     }
 
+    @Override
+    public Long countTotalPatients() throws CustomException {
+        try{
+            return patientRepository.count();
+        } catch (Exception ex) {
+            log.error("Error occurred while counting total patients: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while counting total patients", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -131,4 +131,14 @@ public class DoctorController {
 
         return new ResponseEntity<>(doctorList, HttpStatus.OK);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countTotalDoctors()
+            throws CustomException {
+        log.info("Received request to count total doctors");
+        Long count = doctorService.countTotalDoctors();
+        log.info("Total doctors counted successfully");
+
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
 }
