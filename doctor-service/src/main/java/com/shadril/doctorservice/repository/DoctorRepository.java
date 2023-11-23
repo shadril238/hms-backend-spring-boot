@@ -22,4 +22,7 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, String> {
 
     @Query("SELECT d FROM DoctorEntity d WHERE d.department = :department AND d.isApproved = true")
     List<DoctorEntity> findByDepartment(String department);
+
+    @Query("SELECT d FROM DoctorEntity d WHERE d.isApproved = true")
+    List<DoctorEntity> findAllApprovedDoctor();
 }

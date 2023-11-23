@@ -258,4 +258,18 @@ public class DoctorServiceImplementation implements DoctorService {
             throw ex;
         }
     }
+
+    @Override
+    public List<DoctorDto> getApprovedDoctorList() throws CustomException {
+        try{
+            log.info("inside getApprovedDoctorList method in DoctorServiceImplementation");
+            List<DoctorEntity> doctorEntityList = doctorRepository.findAllApprovedDoctor();
+            return doctorEntityList.stream()
+                    .map(entity -> modelMapper.map(entity, DoctorDto.class))
+                    .toList();
+        } catch (Exception e) {
+            log.error("Error occurred during getting approved doctor list: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during getting approved doctor list", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

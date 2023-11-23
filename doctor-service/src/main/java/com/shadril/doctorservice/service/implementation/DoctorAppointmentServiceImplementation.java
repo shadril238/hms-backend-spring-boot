@@ -333,7 +333,7 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
         try{
             log.info("inside getDoctorAvailibilityByDoctorIdAndDate method in DoctorAppointmentServiceImplementation");
             List<DoctorAvailabilityEntity> availabilitySlots = doctorAvailabilityRepository.findByDoctorIdAndDate(doctorId, LocalDate.parse(date));
-            if (availabilitySlots.isEmpty()) {
+            if (availabilitySlots.isEmpty() || availabilitySlots.stream().noneMatch(DoctorAvailabilityEntity::getIsAvailable)) {
                 throw new CustomException(new ResponseMessageDto("Appointment slots not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
             log.info("Availability slots found with doctor id: {}", doctorId);

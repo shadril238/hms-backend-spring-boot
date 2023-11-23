@@ -121,4 +121,14 @@ public class DoctorController {
 
         return new ResponseEntity<>(new ResponseMessageDto("Doctor approved and room allocated successfully", HttpStatus.OK), HttpStatus.OK);
     }
+
+    @GetMapping("/approved/list")
+    public ResponseEntity<List<DoctorDto>> getApprovedDoctorList()
+            throws CustomException {
+        log.info("Received request to get approved doctor list");
+        List<DoctorDto> doctorList = doctorService.getApprovedDoctorList();
+        log.info("Approved doctor list fetched successfully");
+
+        return new ResponseEntity<>(doctorList, HttpStatus.OK);
+    }
 }
