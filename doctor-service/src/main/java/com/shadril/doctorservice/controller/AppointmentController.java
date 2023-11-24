@@ -108,4 +108,22 @@ public class AppointmentController {
 
         return new ResponseEntity<>(responseMessageDto, HttpStatus.OK);
     }
+
+    @GetMapping("/get/all/patient/{patientId}")
+    public ResponseEntity<List<AppointmentAllDataDto>> getPatientsBookedAppointment(@PathVariable String patientId)
+            throws CustomException {
+        log.info("Received request to get all appointments of patient");
+        List<AppointmentAllDataDto> appointmentList = doctorAppointmentService.getPatientsBookedAppointment(patientId);
+        log.info("Appointments fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/booked/doctor/{doctorId}/{date}")
+    public ResponseEntity<List<AppointmentDto>> getDoctorBookedAppointmentByDate(@PathVariable String doctorId, @PathVariable String date)
+            throws CustomException {
+        log.info("Received request to get booked appointment by doctor id and date");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.getDoctorBookedAppointmentByDate(doctorId, date);
+        log.info("Appointment fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
 }

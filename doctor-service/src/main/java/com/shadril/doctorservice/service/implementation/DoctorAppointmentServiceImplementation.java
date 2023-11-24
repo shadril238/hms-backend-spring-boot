@@ -398,6 +398,63 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
         }
     }
 
+    @Override
+    public List<AppointmentAllDataDto> getPatientsBookedAppointment(String patientId) throws CustomException {
+        try{
+            log.info("inside getPatientsBookedAppointment method in DoctorAppointmentServiceImplementation");
+            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByPatientId(patientId);
+            if (appointments.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Appointment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Appointment found with patient id: {}", patientId);
+
+            List<AppointmentAllDataDto> appointmentDtos = new ArrayList<>();
+
+            for (AppointmentEntity appointment : appointments) {
+                if (appointment.getIsActive() && appointment.getAppointmentStatus().equals(AppointmentStatus.Booked)) {
+                    AppointmentAllDataDto appointmentAllDataDto = new AppointmentAllDataDto();
+                    appointmentAllDataDto.setAppointment(modelMapper.map(appointment, AppointmentDto.class));
+                    appointmentAllDataDto.setDoctorAvailability(modelMapper.map(appointment.getDoctorAvailability(), DoctorAvailabilityDto.class));
+                    appointmentDtos.add(appointmentAllDataDto);
+                }
+            }
+
+            return appointmentDtos;
+        } catch (CustomException ex) {
+            log.error("Error occurred while getting appointment: {}", ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred while getting appointment: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Unexpected error occurred while getting appointment", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<AppointmentDto> getDoctorBookedAppointmentByDate(String doctorId, String date) throws CustomException {
+        try {
+            log.info("inside getDoctorBookedAppointmentByDate method in DoctorAppointmentServiceImplementation");
+            List<AppointmentEntity> appointments = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, LocalDate.parse(date));
+            if (appointments.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("Appointment not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            log.info("Appointment found with doctor id: {}", doctorId);
+
+            List<AppointmentDto> appointmentDtos = new ArrayList<>();
+            for (AppointmentEntity appointment : appointments) {
+                if (appointment.getIsActive() && appointment.getAppointmentStatus().equals(AppointmentStatus.Booked)) {
+                    appointmentDtos.add(modelMapper.map(appointment, AppointmentDto.class));
+                }
+            }
+            return appointmentDtos;
+        } catch (CustomException ex) {
+            log.error("Error occurred while getting appointment: {}", ex.getMessage());
+            throw ex;
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred while getting appointment: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Unexpected error occurred while getting appointment", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     private boolean isSlotOverlapping(AppointmentSlotRequestDto requestDto) throws CustomException {
         DoctorDto doctorDto = doctorService.getCurrentDoctor();
         List<DoctorAvailabilityEntity> existingSlots = doctorAvailabilityRepository.findByDoctorIdAndDate(

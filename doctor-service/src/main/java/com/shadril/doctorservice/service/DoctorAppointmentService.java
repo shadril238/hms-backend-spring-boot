@@ -1,9 +1,6 @@
 package com.shadril.doctorservice.service;
 
-import com.shadril.doctorservice.dto.AppointmentDto;
-import com.shadril.doctorservice.dto.AppointmentSlotRequestDto;
-import com.shadril.doctorservice.dto.BookAppointmentRequestDto;
-import com.shadril.doctorservice.dto.DoctorAvailabilityDto;
+import com.shadril.doctorservice.dto.*;
 import com.shadril.doctorservice.exception.CustomException;
 
 import java.util.List;
@@ -22,4 +19,6 @@ public interface DoctorAppointmentService {
     List<AppointmentDto> getBookedAppointmentByDoctorIdAndDate(String doctorId, String date) throws CustomException;
     List<DoctorAvailabilityDto> getDoctorAvailibilityByDoctorIdAndDate(String doctorId, String date) throws CustomException;
     void deleteDoctorAvailabilitySlot(Long doctorAvailabilityId) throws CustomException;
+    List<AppointmentAllDataDto> getPatientsBookedAppointment(String patientId) throws CustomException;
+    List<AppointmentDto> getDoctorBookedAppointmentByDate(String doctorId, String date) throws CustomException;
 }
