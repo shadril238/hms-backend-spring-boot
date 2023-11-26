@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -100,6 +101,7 @@ public class PostServiceImplementation implements PostService {
 
             return postEntities.stream()
                     .filter(PostEntity::isActive)
+                    .sorted(Comparator.comparing(PostEntity::getCreatedAt).reversed())
                     .map(postEntity -> modelMapper.map(postEntity, PostDto.class))
                     .collect(Collectors.toList());
         } catch (CustomException ex) {
