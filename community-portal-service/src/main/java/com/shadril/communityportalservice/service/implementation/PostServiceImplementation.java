@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,22 @@ public class PostServiceImplementation implements PostService {
             ResponseEntity<PatientDto> patientDtoResponse = patientServiceFeignClient.getCurrentPatient();
             if(patientDtoResponse.getBody() == null || patientDtoResponse.getStatusCode() != HttpStatus.OK) {
                 throw new CustomException(new ResponseMessageDto("You are not authorized to create a post", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+            }
+            //check if the patient is approved
+            if(!patientDtoResponse.getBody().isApproved()){
+                throw new CustomException(new ResponseMessageDto("You are not authorized to create a post", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
+            }
+            if(postDto.getPostTitle() == null || postDto.getPostContent() == null){
+                throw new CustomException(new ResponseMessageDto("Post title and content cannot be null", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+            if(Objects.equals(postDto.getPostTitle(), "") || Objects.equals(postDto.getPostContent(), "")){
+                throw new CustomException(new ResponseMessageDto("Post title and content cannot be empty", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+            if(postDto.getPostTitle().length() > 100 || postDto.getPostTitle().length() < 5){
+                throw new CustomException(new ResponseMessageDto("Post title must be between 5 and 100 characters", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+            }
+            if(postDto.getPostContent().length() > 200 || postDto.getPostContent().length() < 10){
+                throw new CustomException(new ResponseMessageDto("Post content must be between 10 and 200 characters", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
             }
 
             PostEntity postEntity = new PostEntity();
