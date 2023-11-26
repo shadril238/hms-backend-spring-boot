@@ -4,6 +4,7 @@ import com.shadril.cdssservice.dto.*;
 import com.shadril.cdssservice.entity.HealthRecommendationEntity;
 import com.shadril.cdssservice.enums.RecommendationType;
 import com.shadril.cdssservice.exception.CustomException;
+import com.shadril.cdssservice.networkmanager.NotificationServiceFeignClient;
 import com.shadril.cdssservice.networkmanager.PatientServiceFeignClient;
 import com.shadril.cdssservice.repository.HealthRecommendationRepository;
 import com.shadril.cdssservice.service.CdssService;
@@ -30,6 +31,8 @@ public class CdssServiceImplementation implements CdssService {
     private HealthRecommendationRepository healthRecommendationRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private NotificationServiceFeignClient notificationServiceFeignClient;
 
 
     private String getResponseFromOpenAi(String prompt)
@@ -123,6 +126,17 @@ public class CdssServiceImplementation implements CdssService {
         healthRecommendationEntity.setRecommendationType(RecommendationType.HealthRecommendation);
         healthRecommendationEntity.setCreatedAt(LocalDateTime.now());
         healthRecommendationRepository.save(healthRecommendationEntity);
+        try {
+            NotificationDto notificationDto = new NotificationDto();
+            notificationDto.setUserId(patientDto.getUserId());
+            notificationDto.setNotificationType("HealthRecommendation");
+            notificationDto.setNotificationText(recommendationResponse);
+            notificationDto.setIsRead(false);
+            notificationServiceFeignClient.createNotification(notificationDto);
+        } catch (Exception e) {
+            log.error("error in generateHealthRecommendation method from CdssServiceImplementation class: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("The cdss service is not available right now. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         return recommendationResponse;
     }

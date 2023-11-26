@@ -1,6 +1,7 @@
 package com.shadril.notificationservice.repository;
 
 import com.shadril.notificationservice.entity.NotificationPreferenceEntity;
+import com.shadril.notificationservice.enums.PreferenceType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +15,6 @@ public interface NotificationPreferenceRepository extends JpaRepository<Notifica
     List<NotificationPreferenceEntity> findAllByUserId(Long userId);
 
     @Query("SELECT n FROM NotificationPreferenceEntity n WHERE n.userId = :userId AND n.prefType = :prefType")
-    Optional<NotificationPreferenceEntity> findByUserIdAndPrefType(@Param("userId") Long userId, @Param("prefType") String prefType);
+    Optional<NotificationPreferenceEntity> findByUserIdAndPrefType(@Param("userId") Long userId, @Param("prefType") PreferenceType prefType);
+
 }

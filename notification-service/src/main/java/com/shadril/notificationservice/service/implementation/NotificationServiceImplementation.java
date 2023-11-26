@@ -57,7 +57,7 @@ public class NotificationServiceImplementation implements NotificationService {
 
             // Check if user has email notification preference enabled and send email
             Optional<NotificationPreferenceEntity> emailPreference = notificationPreferenceRepository
-                    .findByUserIdAndPrefType(user.getId(), String.valueOf(PreferenceType.Email_Notification));
+                    .findByUserIdAndPrefType(user.getId(), PreferenceType.valueOf(String.valueOf(PreferenceType.Email_Notification)));
 
             if (emailPreference.isPresent() && emailPreference.get().isEnabled()) {
                 String email = user.getEmail();

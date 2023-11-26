@@ -3,6 +3,7 @@ package com.shadril.notificationservice.service.implementation;
 import com.shadril.notificationservice.dto.NotificationPreferenceDto;
 import com.shadril.notificationservice.dto.ResponseMessageDto;
 import com.shadril.notificationservice.entity.NotificationPreferenceEntity;
+import com.shadril.notificationservice.enums.PreferenceType;
 import com.shadril.notificationservice.exception.CustomException;
 import com.shadril.notificationservice.repository.NotificationPreferenceRepository;
 import com.shadril.notificationservice.service.NotificationPreferenceService;
@@ -44,12 +45,12 @@ public class NotificationPreferenceServiceImplementation implements Notification
     public NotificationPreferenceDto getNotificationPreferenceByPreferenceType(Long userId, String preferenceType) throws CustomException {
         try{
             log.info("inside getNotificationPreferenceByPreferenceType method of NotificationPreferenceServiceImplementation class");
-            Optional<NotificationPreferenceEntity> entity = notificationPreferenceRepository.findByUserIdAndPrefType(userId, preferenceType);
+            Optional<NotificationPreferenceEntity> entity = notificationPreferenceRepository.findByUserIdAndPrefType(userId, PreferenceType.valueOf(preferenceType));
             if(entity.isEmpty()) {
                 throw new CustomException(new ResponseMessageDto("Notification preference not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
             }
             log.info("notification preference entity fetched successfully for user id: {}", userId);
-            return modelMapper.map(entity.get(), NotificationPreferenceDto.class);
+            return new NotificationPreferenceDto(entity.get().getNotificationPreferenceId(), entity.get().getUserId(), entity.get().getPrefType(), entity.get().isEnabled());
         } catch (Exception e){
             log.error("error occurred while fetching notification preference entity for user id: {}", userId);
             throw new CustomException(new ResponseMessageDto("Notification preference could not be fetched", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);

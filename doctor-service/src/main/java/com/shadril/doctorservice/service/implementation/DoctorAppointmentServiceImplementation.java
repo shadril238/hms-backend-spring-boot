@@ -6,6 +6,7 @@ import com.shadril.doctorservice.entitiy.DoctorAvailabilityEntity;
 import com.shadril.doctorservice.entitiy.DoctorEntity;
 import com.shadril.doctorservice.enums.AppointmentStatus;
 import com.shadril.doctorservice.exception.CustomException;
+import com.shadril.doctorservice.networkmanager.NotificationServiceFeignClient;
 import com.shadril.doctorservice.networkmanager.PatientServiceFeignClient;
 import com.shadril.doctorservice.repository.DoctorAppointmentRepository;
 import com.shadril.doctorservice.repository.DoctorAvailabilityRepository;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
     private ModelMapper modelMapper;
     @Autowired
     private PatientServiceFeignClient patientServiceFeignClient;
+    @Autowired
+    private NotificationServiceFeignClient notificationServiceFeignClient;
 
     @Override
     public void createAppointmentSlot(AppointmentSlotRequestDto requestDto)
@@ -145,6 +149,21 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
             doctorAppointmentRepository.save(appointment);
             log.info("Appointment booked successfully");
 
+            // Send notification to the patient
+            try {
+                log.info("Sending notification to patient");
+                NotificationDto notificationDto = new NotificationDto();
+                notificationDto.setUserId(patientDto.getBody().getUserId());
+                notificationDto.setNotificationType("Book Appointment");
+                notificationDto.setNotificationText("Your appointment with Dr. " + appointmentSlot.getDoctor().getFirstName() + " " + appointmentSlot.getDoctor().getLastName() + " has been booked successfully");
+                notificationDto.setTimestamp(LocalDateTime.now());
+                notificationDto.setIsRead(false);
+                notificationServiceFeignClient.createNotification(notificationDto);
+            } catch (Exception ex) {
+                log.error("Error occurred while sending notification to patient: {}", ex.getMessage());
+                throw new CustomException(new ResponseMessageDto("Error occurred while sending notification to patient", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            log.info("Notification sent successfully");
         } catch (CustomException ex) {
             log.error("Error occurred while booking appointment slot: {}", ex.getMessage());
             throw ex;
