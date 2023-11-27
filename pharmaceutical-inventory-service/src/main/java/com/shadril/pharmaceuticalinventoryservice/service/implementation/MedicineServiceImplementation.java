@@ -263,4 +263,22 @@ public class MedicineServiceImplementation implements MedicineService {
             throw new CustomException(new ResponseMessageDto("Error while searching medicine by generic name", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public List<MedicineDto> alertMedicineExpiry() throws CustomException {
+        try{
+            List<MedicineEntity> medicineEntities = medicineRepository.findAll();
+            if(medicineEntities.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicineEntities.stream().filter(medicineEntity -> medicineEntity.getExpiryDate().isBefore(LocalDate.now().plusDays(7))).map(medicineEntity -> modelMapper.map(medicineEntity, MedicineDto.class)).toList();
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while alerting medicine expiry: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while alerting medicine expiry", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

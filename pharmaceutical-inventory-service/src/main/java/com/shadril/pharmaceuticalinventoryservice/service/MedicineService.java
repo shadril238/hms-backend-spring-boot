@@ -17,4 +17,5 @@ public interface MedicineService {
     List<MedicineDto> searchMedicineByName(String name) throws CustomException;
     List<MedicineDto> searchMedicineByManufacturer(String manufacturer) throws CustomException;
     List<MedicineDto> searchMedicineByGenericName(String genericName) throws CustomException;
+    List<MedicineDto> alertMedicineExpiry() throws CustomException;
 }

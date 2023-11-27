@@ -244,4 +244,24 @@ public class MedicalEquipmentServiceImplementation implements MedicalEquipmentSe
             throw new CustomException(new ResponseMessageDto("Error while searching medical equipment by manufacturer", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public List<MedicalEquipmentDto> alertMedicalEquipmentExpiry() throws CustomException {
+        try {
+            List<MedicalEquipmentEntity> medicalEquipmentEntities = medicalEquipmentRepository.findAll();
+            if (medicalEquipmentEntities.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No medical equipment found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicalEquipmentEntities
+                    .stream()
+                    .filter(medicalEquipmentEntity -> medicalEquipmentEntity.getExpiryDate().isBefore(LocalDate.now().plusDays(7)))
+                    .map(medicalEquipmentEntity -> modelMapper.map(medicalEquipmentEntity, MedicalEquipmentDto.class))
+                    .toList();
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error while alerting medical equipment expiry: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while alerting medical equipment expiry", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

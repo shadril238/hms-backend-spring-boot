@@ -129,4 +129,14 @@ public class PharmaceuticalInventoryController {
     public ResponseEntity<Iterable<MedicalEquipmentDto>> searchMedicalEquipmentByManufacturer(@PathVariable String manufacturer) throws CustomException {
         return new ResponseEntity<>(medicalEquipmentService.searchMedicalEquipmentByManufacturer(manufacturer), HttpStatus.OK);
     }
+
+    @GetMapping("/medicine/alert-expiry")
+    public ResponseEntity<Iterable<MedicineDto>> alertMedicineExpiry() throws CustomException {
+        return new ResponseEntity<>(medicineService.alertMedicineExpiry(), HttpStatus.OK);
+    }
+
+    @GetMapping("/medical-equipment/alert-expiry")
+    public ResponseEntity<Iterable<MedicalEquipmentDto>> alertMedicalEquipmentExpiry() throws CustomException {
+        return new ResponseEntity<>(medicalEquipmentService.alertMedicalEquipmentExpiry(), HttpStatus.OK);
+    }
 }
