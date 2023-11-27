@@ -16,4 +16,5 @@ include 'cdss-service'
 include 'community-portal-service'
 include 'notification-service'
 include 'pharmaceutical-inventory-service'
+include 'analytic-research-service'
 
