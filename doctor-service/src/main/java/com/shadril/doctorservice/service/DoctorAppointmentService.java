@@ -22,4 +22,7 @@ public interface DoctorAppointmentService {
     List<AppointmentAllDataDto> getPatientsBookedAppointment(String patientId) throws CustomException;
     List<AppointmentDto> getDoctorBookedAppointmentByDate(String doctorId, String date) throws CustomException;
     Long countTotalAppointments() throws CustomException;
+    List<AppointmentDto> patientUpcomingAppointments(String patientId) throws CustomException;
+    List<AppointmentDto> todayAppointments(String doctorId) throws CustomException;
+    List<AppointmentDto> doctorAllAppointments(String doctorId) throws CustomException;
 }

@@ -135,4 +135,31 @@ public class AppointmentController {
         log.info("Total appointments counted successfully");
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
+
+    @GetMapping("/get/upcoming/patient/{patientId}")
+    public ResponseEntity<List<AppointmentDto>> patientUpcomingAppointments(@PathVariable String patientId)
+            throws CustomException {
+        log.info("Received request to get upcoming appointments of patient");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.patientUpcomingAppointments(patientId);
+        log.info("Appointments fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/today/doctor/{doctorId}")
+    public ResponseEntity<List<AppointmentDto>> todayAppointments(@PathVariable String doctorId)
+            throws CustomException {
+        log.info("Received request to get today appointments of doctor");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.todayAppointments(doctorId);
+        log.info("Appointments fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/all/doctor/{doctorId}")
+    public ResponseEntity<List<AppointmentDto>> doctorAllAppointments(@PathVariable String doctorId)
+            throws CustomException {
+        log.info("Received request to get all appointments of doctor");
+        List<AppointmentDto> appointmentList = doctorAppointmentService.doctorAllAppointments(doctorId);
+        log.info("Appointments fetched successfully");
+        return new ResponseEntity<>(appointmentList, HttpStatus.OK);
+    }
 }
