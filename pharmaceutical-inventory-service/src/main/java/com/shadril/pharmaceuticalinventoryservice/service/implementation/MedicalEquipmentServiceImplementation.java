@@ -206,4 +206,42 @@ public class MedicalEquipmentServiceImplementation implements MedicalEquipmentSe
             throw new CustomException(new ResponseMessageDto("Error while returning medical equipment", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public List<MedicalEquipmentDto> searchMedicalEquipmentByName(String name) throws CustomException {
+        try{
+            List<MedicalEquipmentEntity> medicalEquipmentEntities = medicalEquipmentRepository.findByMedicalEquipmentName(name);
+            if (medicalEquipmentEntities.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No medical equipment found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicalEquipmentEntities
+                    .stream()
+                    .map(medicalEquipmentEntity -> modelMapper.map(medicalEquipmentEntity, MedicalEquipmentDto.class))
+                    .toList();
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error while searching medical equipment by name: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while searching medical equipment by name", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public List<MedicalEquipmentDto> searchMedicalEquipmentByManufacturer(String manufacturer) throws CustomException {
+        try{
+            List<MedicalEquipmentEntity> medicalEquipmentEntities = medicalEquipmentRepository.findByManufacturer(manufacturer);
+            if (medicalEquipmentEntities.isEmpty()) {
+                throw new CustomException(new ResponseMessageDto("No medical equipment found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicalEquipmentEntities
+                    .stream()
+                    .map(medicalEquipmentEntity -> modelMapper.map(medicalEquipmentEntity, MedicalEquipmentDto.class))
+                    .toList();
+        } catch (CustomException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Error while searching medical equipment by manufacturer: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while searching medical equipment by manufacturer", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

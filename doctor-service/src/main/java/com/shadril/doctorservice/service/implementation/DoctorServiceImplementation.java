@@ -283,4 +283,32 @@ public class DoctorServiceImplementation implements DoctorService {
             throw new CustomException(new ResponseMessageDto("Error occurred during counting total doctors", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public List<DoctorDto> searchDoctorByName(String name) throws CustomException {
+        try{
+            log.info("inside searchDoctorByName method in DoctorServiceImplementation");
+            List<DoctorEntity> doctorEntityList = doctorRepository.searchByFirstNameOrLastNameContainingIgnoreCase(name);
+            return doctorEntityList.stream()
+                    .map(entity -> modelMapper.map(entity, DoctorDto.class))
+                    .toList();
+        } catch (Exception e) {
+            log.error("Error occurred during searching doctor by name: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during searching doctor by name", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public List<DoctorDto> searchDoctorByDepartment(String department) throws CustomException {
+        try{
+            log.info("inside searchDoctorByDepartment method in DoctorServiceImplementation");
+            List<DoctorEntity> doctorEntityList = doctorRepository.findByDepartment(department);
+            return doctorEntityList.stream()
+                    .map(entity -> modelMapper.map(entity, DoctorDto.class))
+                    .toList();
+        } catch (Exception e) {
+            log.error("Error occurred during searching doctor by department: {}", e.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred during searching doctor by department", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

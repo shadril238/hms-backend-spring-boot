@@ -209,4 +209,58 @@ public class MedicineServiceImplementation implements MedicineService {
 
         }
     }
+
+    @Override
+    public List<MedicineDto> searchMedicineByName(String name) throws CustomException {
+        try{
+            List<MedicineEntity> medicineEntities = medicineRepository.findByMedicineNameContainingIgnoreCase(name);
+            if(medicineEntities.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicineEntities.stream().map(medicineEntity -> modelMapper.map(medicineEntity, MedicineDto.class)).toList();
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while searching medicine by name: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while searching medicine by name", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public List<MedicineDto> searchMedicineByManufacturer(String manufacturer) throws CustomException {
+        try{
+            List<MedicineEntity> medicineEntities = medicineRepository.findByManufacturerContainingIgnoreCase(manufacturer);
+            if(medicineEntities.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicineEntities.stream().map(medicineEntity -> modelMapper.map(medicineEntity, MedicineDto.class)).toList();
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while searching medicine by manufacturer: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while searching medicine by manufacturer", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public List<MedicineDto> searchMedicineByGenericName(String genericName) throws CustomException {
+        try{
+            List<MedicineEntity> medicineEntities = medicineRepository.findByGenericNameContainingIgnoreCase(genericName);
+            if(medicineEntities.isEmpty()){
+                throw new CustomException(new ResponseMessageDto("Medicine not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            }
+            return medicineEntities.stream().map(medicineEntity -> modelMapper.map(medicineEntity, MedicineDto.class)).toList();
+        }
+        catch (CustomException e){
+            throw e;
+        }
+        catch (Exception e){
+            log.error("Error while searching medicine by generic name: ", e);
+            throw new CustomException(new ResponseMessageDto("Error while searching medicine by generic name", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

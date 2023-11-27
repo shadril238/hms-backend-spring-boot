@@ -20,9 +20,13 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, String> {
     @Query("SELECT DISTINCT d.department FROM DoctorEntity d WHERE d.department IS NOT NULL AND d.department <> '' AND d.isApproved = true")
     List<String> findDistinctDepartment();
 
-    @Query("SELECT d FROM DoctorEntity d WHERE d.department = :department AND d.isApproved = true")
+    @Query("SELECT d FROM DoctorEntity d WHERE LOWER(d.department) LIKE LOWER(CONCAT('%', :department, '%')) AND d.isApproved = true")
     List<DoctorEntity> findByDepartment(String department);
+
 
     @Query("SELECT d FROM DoctorEntity d WHERE d.isApproved = true")
     List<DoctorEntity> findAllApprovedDoctor();
+
+    @Query("SELECT d FROM DoctorEntity d WHERE LOWER(d.firstName) LIKE LOWER(CONCAT('%', :name, '%')) OR LOWER(d.lastName) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<DoctorEntity> searchByFirstNameOrLastNameContainingIgnoreCase(String name);
 }

@@ -20,4 +20,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, String> 
 
     @Query("SELECT p FROM PatientEntity p WHERE p.userId = :userId")
     Optional<PatientEntity> findByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT p FROM PatientEntity p WHERE LOWER(p.firstName) LIKE LOWER(CONCAT('%', :name, '%')) OR LOWER(p.lastName) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<PatientEntity> searchByFirstNameOrLastNameContainingIgnoreCase(String name);
 }

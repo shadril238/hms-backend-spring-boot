@@ -14,4 +14,7 @@ public interface MedicineService {
     List<MedicineDto> getAllMedicines() throws CustomException;
     ResponseMessageDto bookMedicine(Long medicineId, String patientId) throws CustomException;
     ResponseMessageDto returnMedicine(Long medicineId, String patientId) throws CustomException;
+    List<MedicineDto> searchMedicineByName(String name) throws CustomException;
+    List<MedicineDto> searchMedicineByManufacturer(String manufacturer) throws CustomException;
+    List<MedicineDto> searchMedicineByGenericName(String genericName) throws CustomException;
 }

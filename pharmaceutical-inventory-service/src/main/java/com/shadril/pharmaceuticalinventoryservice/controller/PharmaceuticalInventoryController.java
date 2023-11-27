@@ -104,4 +104,29 @@ public class PharmaceuticalInventoryController {
             throws CustomException {
         return new ResponseEntity<>(medicineService.returnMedicine(medicineId, patientId), HttpStatus.OK);
     }
+
+    @GetMapping("/medicine/search/name/{name}")
+    public ResponseEntity<Iterable<MedicineDto>> searchMedicineByName(@PathVariable String name) throws CustomException {
+        return new ResponseEntity<>(medicineService.searchMedicineByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("/medicine/search/manufacturer/{manufacturer}")
+    public ResponseEntity<Iterable<MedicineDto>> searchMedicineByManufacturer(@PathVariable String manufacturer) throws CustomException {
+        return new ResponseEntity<>(medicineService.searchMedicineByManufacturer(manufacturer), HttpStatus.OK);
+    }
+
+    @GetMapping("/medicine/search/generic-name/{genericName}")
+    public ResponseEntity<Iterable<MedicineDto>> searchMedicineByGenericName(@PathVariable String genericName) throws CustomException {
+        return new ResponseEntity<>(medicineService.searchMedicineByGenericName(genericName), HttpStatus.OK);
+    }
+
+    @GetMapping("/medical-equipment/search/name/{name}")
+    public ResponseEntity<Iterable<MedicalEquipmentDto>> searchMedicalEquipmentByName(@PathVariable String name) throws CustomException {
+        return new ResponseEntity<>(medicalEquipmentService.searchMedicalEquipmentByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("/medical-equipment/search/manufacturer/{manufacturer}")
+    public ResponseEntity<Iterable<MedicalEquipmentDto>> searchMedicalEquipmentByManufacturer(@PathVariable String manufacturer) throws CustomException {
+        return new ResponseEntity<>(medicalEquipmentService.searchMedicalEquipmentByManufacturer(manufacturer), HttpStatus.OK);
+    }
 }

@@ -112,4 +112,12 @@ public class PatientController {
         Long count = patientService.countTotalPatients();
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<PatientDto>> searchPatientByName(@PathVariable String name)
+            throws CustomException{
+        log.info("Inside searchPatientByName method of PatientController");
+        List<PatientDto> patientDto = patientService.searchPatientByName(name);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
 }

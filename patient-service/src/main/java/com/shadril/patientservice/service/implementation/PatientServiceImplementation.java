@@ -209,4 +209,15 @@ public class PatientServiceImplementation implements PatientService {
         }
     }
 
+    @Override
+    public List<PatientDto> searchPatientByName(String name) throws CustomException {
+        try{
+            List<PatientEntity> patientEntities = patientRepository.searchByFirstNameOrLastNameContainingIgnoreCase(name);
+            return patientEntities.stream().map(entity -> modelMapper.map(entity, PatientDto.class)).toList();
+        } catch (Exception ex) {
+            log.error("Error occurred while searching patient by name: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Error occurred while searching patient by name", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

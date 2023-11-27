@@ -141,4 +141,24 @@ public class DoctorController {
 
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
+
+    @GetMapping("/search/name/{name}")
+    public ResponseEntity<List<DoctorDto>> searchDoctorByName(@PathVariable String name)
+            throws CustomException {
+        log.info("Received request to search doctor by name");
+        List<DoctorDto> doctorList = doctorService.searchDoctorByName(name);
+        log.info("Doctor list fetched successfully");
+
+        return new ResponseEntity<>(doctorList, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/department/{department}")
+    public ResponseEntity<List<DoctorDto>> searchDoctorByDepartment(@PathVariable String department)
+            throws CustomException {
+        log.info("Received request to search doctor by department");
+        List<DoctorDto> doctorList = doctorService.searchDoctorByDepartment(department);
+        log.info("Doctor list fetched successfully");
+
+        return new ResponseEntity<>(doctorList, HttpStatus.OK);
+    }
 }

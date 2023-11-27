@@ -14,4 +14,6 @@ public interface MedicalEquipmentService {
     List<MedicalEquipmentDto> getAllMedicalEquipments() throws CustomException;
     ResponseMessageDto bookMedicalEquipment(Long medicalEquipmentId, String patientId) throws CustomException;
     ResponseMessageDto returnMedicalEquipment(Long medicalEquipmentId, String patientId) throws CustomException;
+    List<MedicalEquipmentDto> searchMedicalEquipmentByName(String name) throws CustomException;
+    List<MedicalEquipmentDto> searchMedicalEquipmentByManufacturer(String manufacturer) throws CustomException;
 }
