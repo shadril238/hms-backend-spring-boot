@@ -126,4 +126,13 @@ public class AppointmentController {
         log.info("Appointment fetched successfully");
         return new ResponseEntity<>(appointmentList, HttpStatus.OK);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countTotalAppointments()
+            throws CustomException {
+        log.info("Received request to count total appointments");
+        Long count = doctorAppointmentService.countTotalAppointments();
+        log.info("Total appointments counted successfully");
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
 }

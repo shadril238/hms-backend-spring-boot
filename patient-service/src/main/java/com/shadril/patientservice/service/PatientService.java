@@ -24,5 +24,4 @@ public interface PatientService {
     PatientDto getPatientByUserId(Long userId) throws CustomException;
     Long countTotalPatients() throws CustomException;
     List<PatientDto> searchPatientByName(String name) throws CustomException;
-
 }

@@ -21,4 +21,5 @@ public interface DoctorAppointmentService {
     void deleteDoctorAvailabilitySlot(Long doctorAvailabilityId) throws CustomException;
     List<AppointmentAllDataDto> getPatientsBookedAppointment(String patientId) throws CustomException;
     List<AppointmentDto> getDoctorBookedAppointmentByDate(String doctorId, String date) throws CustomException;
+    Long countTotalAppointments() throws CustomException;
 }

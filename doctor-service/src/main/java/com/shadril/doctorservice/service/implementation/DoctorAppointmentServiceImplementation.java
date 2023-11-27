@@ -474,6 +474,17 @@ public class DoctorAppointmentServiceImplementation implements DoctorAppointment
         }
     }
 
+    @Override
+    public Long countTotalAppointments() throws CustomException {
+        try {
+            log.info("inside countTotalAppointments method in DoctorAppointmentServiceImplementation");
+            return doctorAppointmentRepository.count();
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred while counting appointments: {}", ex.getMessage());
+            throw new CustomException(new ResponseMessageDto("Unexpected error occurred while counting appointments", HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     private boolean isSlotOverlapping(AppointmentSlotRequestDto requestDto) throws CustomException {
         DoctorDto doctorDto = doctorService.getCurrentDoctor();
         List<DoctorAvailabilityEntity> existingSlots = doctorAvailabilityRepository.findByDoctorIdAndDate(
