@@ -1,7 +1,9 @@
 package com.shadril.securityservice.security;
 
+import com.shadril.securityservice.constants.AppConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,7 +40,12 @@ public class WebSecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->{
                     auth
+                            .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
+                            .requestMatchers(HttpMethod.DELETE, "/users/delete/**").hasAuthority(AppConstants.ROLE_ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(AppConstants.ROLE_ADMIN, AppConstants.ROLE_DOCTOR, AppConstants.ROLE_PATIENT)
                             .anyRequest().permitAll();
+
                 })
                 .addFilter(new CustomAuthenticationFilter(authenticationManager))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)

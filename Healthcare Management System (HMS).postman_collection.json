@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"doctor@example.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,11 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8090/users/login",
+							"raw": "localhost:8091/users/login",
 							"host": [
 								"localhost"
 							],
-							"port": "8090",
+							"port": "8091",
 							"path": [
 								"users",
 								"login"
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"john.doe@example.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"Patient\",\r\n    \"isActive\": true\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"Admin\",\r\n    \"isActive\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"dateOfBirth\": \"1990-01-01\",\n    \"gender\": \"Male\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"12345678901\",\n    \"address\": \"123 Main St, Anytown, AN 12345\",\n    \"isApproved\": false,\n    \"isActive\": true\n}\n",
+							"raw": "{\n    \"email\": \"shadrilhassan@yahoo.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"dateOfBirth\": \"1990-01-01\",\n    \"gender\": \"Female\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"12345678901\",\n    \"address\": \"123 Main St, Anytown, AN 12345\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,10 +101,20 @@
 				{
 					"name": "Patient Get By Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8090/patients/id/00-00001",
+							"raw": "localhost:8090/patients/id/00-00002",
 							"host": [
 								"localhost"
 							],
@@ -112,7 +122,7 @@
 							"path": [
 								"patients",
 								"id",
-								"00-00001"
+								"00-00002"
 							]
 						}
 					},
@@ -121,6 +131,16 @@
 				{
 					"name": "Patient Get By Email",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -146,7 +166,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzExMDg1fQ.YCcVg-Mwz7zUhwhcrN5K8KdpRf519iLYbGuz5g_hkcs",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAxNjI1NzIxfQ.OEuDB6IF0qwIuYKAzlSLYvyl8C1iun38i7A-HjiK9QM",
 									"type": "string"
 								}
 							]
@@ -170,6 +190,16 @@
 				{
 					"name": "Patient Update Profile",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -204,7 +234,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzExMDg1fQ.YCcVg-Mwz7zUhwhcrN5K8KdpRf519iLYbGuz5g_hkcs",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
 									"type": "string"
 								}
 							]
@@ -221,13 +251,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8092/health-records/create",
+							"raw": "http://localhost:8090/patients/health-records/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8092",
+							"port": "8090",
 							"path": [
+								"patients",
 								"health-records",
 								"create"
 							]
@@ -238,19 +269,30 @@
 				{
 					"name": "HealthRecord Get By Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/health-records/id/9",
+							"raw": "http://localhost:8090/patients/health-records/id/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
+								"patients",
 								"health-records",
 								"id",
-								"9"
+								"1"
 							]
 						}
 					},
@@ -259,16 +301,27 @@
 				{
 					"name": "HealthRecord Get All",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/health-records/all",
+							"raw": "http://localhost:8090/patients/health-records/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
+								"patients",
 								"health-records",
 								"all"
 							]
@@ -279,19 +332,238 @@
 				{
 					"name": "HealthRecord By PatientId",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8090/health-records/patient/00-00001",
+							"raw": "http://localhost:8090/patients/health-records/patient/00-00001",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8090",
 							"path": [
+								"patients",
 								"health-records",
 								"patient",
 								"00-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Approved Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/all/approved",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"all",
+								"approved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Unapproved Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/all/unapproved",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"all",
+								"unapproved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/approve/00-00002",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"approve",
+								"00-00002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient By User Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count total patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/count",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search By Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/patients/search/s",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"patients",
+								"search",
+								"s"
 							]
 						}
 					},
@@ -303,13 +575,65 @@
 			"name": "doctor-service",
 			"item": [
 				{
+					"name": "Room Allocation",
+					"item": [
+						{
+							"name": "Create Room",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"roomNo\" : \"204\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8090/rooms/create",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"rooms",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Available Rooms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8090/rooms/available",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"rooms",
+										"available"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Doctor Register",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"doctor@example.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"careerTitle\": \"Senior Surgeon\",\n    \"department\": \"Cardiology\",\n    \"specialization\": \"Cardiac Surgery\",\n    \"designation\": \"Lead Surgeon\",\n    \"institute\": \"City Hospital\",\n    \"experienceYears\": 15,\n    \"qualifications\": \"MBBS, MD\",\n    \"licenseNumber\": \"MED123456\",\n    \"dateOfBirth\": \"1975-01-15\",\n    \"gender\": \"Male\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"1234567890\",\n    \"biography\": \"A brief biography of the doctor\",\n    \"address\": \"123 Main St, Anytown, AN 12345\",\n    \"isApproved\": true,\n    \"isActive\": true\n}\n",
+							"raw": "{\n    \"email\": \"doctor12221223@example.com\",\n    \"password\": \"1234\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"careerTitle\": \"Senior Surgeon\",\n    \"department\": \"XYY\",\n    \"specialization\": \"Cardiac Surgery\",\n    \"designation\": \"Lead Surgeon\",\n    \"institute\": \"City Hospital\",\n    \"experienceYears\": 15,\n    \"qualifications\": \"MBBS, MD\",\n    \"licenseNumber\": \"MED123456\",\n    \"dateOfBirth\": \"1975-01-15\",\n    \"gender\": \"Male\",\n    \"bloodGroup\": \"A_Positive\",\n    \"phoneNumber\": \"1234567890\",\n    \"biography\": \"A brief biography of the doctor\",\n    \"address\": \"123 Main St, Anytown, AN 12345\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -333,6 +657,16 @@
 				{
 					"name": "Doctor Get By Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -353,10 +687,20 @@
 				{
 					"name": "Doctor Get By Email",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8090/doctors/email/doctor@example.com",
+							"raw": "localhost:8090/doctors/email/doctor1221@example.com",
 							"host": [
 								"localhost"
 							],
@@ -364,7 +708,7 @@
 							"path": [
 								"doctors",
 								"email",
-								"doctor@example.com"
+								"doctor1221@example.com"
 							]
 						}
 					},
@@ -378,7 +722,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3JAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJEb2N0b3IiXSwiZXhwIjoxNzAwODE4MjMxfQ.faqwkeqXgjdNDHD1ONO2X7aN6VvmiSyxBD2bT71eo5s",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IxMjIxQGV4YW1wbGUuY29tIiwicm9sZXMiOlsiRG9jdG9yIl0sImV4cCI6MTcwMTUxNTM1OH0.1-Zs9skYWrpUk6LsDPg2u53oFqyH_Lg_-1JOMPdbma8",
 									"type": "string"
 								}
 							]
@@ -402,6 +746,16 @@
 				{
 					"name": "Doctor Update Profile",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -436,7 +790,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3JAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJEb2N0b3IiXSwiZXhwIjoxNzAwODE4MjMxfQ.faqwkeqXgjdNDHD1ONO2X7aN6VvmiSyxBD2bT71eo5s",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3JAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJEb2N0b3IiXSwiZXhwIjoxNzAxNjI0MTgwfQ.kBGQJcFnLpSC4d2csCuonlJKLxH3fkrRO4jxumMRKaU",
 									"type": "string"
 								}
 							]
@@ -445,7 +799,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"date\": \"2023-12-01\",\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"17:00\",\r\n    \"perPatientTimeInMinutes\": 30\r\n}",
+							"raw": "{\r\n    \"date\": \"2023-11-28\",\r\n    \"startTime\": \"14:20\",\r\n    \"endTime\": \"20:00\",\r\n    \"perPatientTimeInMinutes\": 25\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -453,14 +807,482 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8093/appointments/create",
+							"raw": "localhost:8090/appointments/create",
 							"host": [
 								"localhost"
 							],
-							"port": "8093",
+							"port": "8090",
 							"path": [
 								"appointments",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Appointment Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcwMjA0NDQzNH0.lmEe2WJOWS9SGUNnRjAorxpuSu6iECLCyIk2afx95_8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"availabilityId\" : 77,\r\n    \"patientId\" : \"00-00002\",\r\n    \"appointmentType\" : \"Telemedicine\",\r\n    \"appointmentStatus\" : \"Booked\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/appointments/book",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Appointment Get By Doctor Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/doctor/11-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"doctor",
+								"11-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Doctor And Assign Rooms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/approve/11-00001/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"approve",
+								"11-00001",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment By Doctor Id and Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/doctor/11-00003/2023-12-02",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"doctor",
+								"11-00003",
+								"2023-12-02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Appointment Slots By DoctorId and Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/slots/get/doctor/11-00003/2023-11-23",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"slots",
+								"get",
+								"doctor",
+								"11-00003",
+								"2023-11-23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment Slots",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/slots/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"slots",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booked Appointment By DoctorId and Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/doctor/11-00003/2023-11-21",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"doctor",
+								"11-00003",
+								"2023-11-21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Distinct Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/department/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"department",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor By Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/department/Cardiology",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"department",
+								"Cardiology"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Doctor and Allocate Room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/approve/allocate/11-00003/202",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"approve",
+								"allocate",
+								"11-00003",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Approved Doctor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/approved/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"approved",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count total doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/count",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patients Booked Appointment List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/all/patient/00-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"all",
+								"patient",
+								"00-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctors Booked Appointment By date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/booked/doctor/11-00003/2023-11-24",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"booked",
+								"doctor",
+								"11-00003",
+								"2023-11-24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Search By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/search/name/j",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"search",
+								"name",
+								"j"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search By Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/doctors/search/department/car",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"doctors",
+								"search",
+								"department",
+								"car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "COUNT APPOINTMENTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/count",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patients upcoming appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/upcoming/patient/00-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"upcoming",
+								"patient",
+								"00-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todays doctors appointment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/today/doctor/11-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"today",
+								"doctor",
+								"11-00001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Appointments Doctor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/appointments/get/all/doctor/11-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"appointments",
+								"get",
+								"all",
+								"doctor",
+								"11-00001"
 							]
 						}
 					},
@@ -479,7 +1301,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzM4MjEyfQ.BGSdP6IirHWuDb16mALkX0SXTGlc_S18903qpUKbIH0",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAxMzM4OTQ3fQ.hy-d_os12NTJ-JeeQBDvoGF0aQevnmzsbtfo2Rd7NVg",
 									"type": "string"
 								}
 							]
@@ -518,7 +1340,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAwNzQyMDQ3fQ.wz-IxUOL3xfzxp19AedAcvMZVIRM8HiXd8OE1HIXnfg",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAxNzA0OTY5fQ.1GHW_mlEaFnDQfR9bayIgGOFx_QMt19ANu-iQxv5gLk",
 									"type": "string"
 								}
 							]
@@ -527,7 +1349,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"postId\": 1,\r\n    \"commentContent\": \"This is my comment on the post.\"\r\n}\r\n",
+							"raw": "{\r\n    \"postId\": 13,\r\n    \"commentContent\": \"This is my comment on the post.\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -566,7 +1388,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"postId\" : 2,\n    \"voteType\" : \"Upvote\"\n}",
+							"raw": "{\n    \"postId\" : 2,\n    \"voteType\" : \"Downvote\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -594,7 +1416,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8090/community-portal/posts/1/votes/count",
+							"raw": "localhost:8090/community-portal/posts/3/votes/count",
 							"host": [
 								"localhost"
 							],
@@ -602,7 +1424,7 @@
 							"path": [
 								"community-portal",
 								"posts",
-								"1",
+								"3",
 								"votes",
 								"count"
 							]
@@ -711,6 +1533,16 @@
 				{
 					"name": "Community Get Comments By postId",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3JAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJEb2N0b3IiXSwiZXhwIjoxNzAxNzA0OTIxfQ.D8azCyMGGtJs20XDvKRbdEltH55PuuyWON93YmWny7Q",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -724,6 +1556,1006 @@
 								"posts",
 								"2",
 								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notification-service",
+			"item": [
+				{
+					"name": "Sms Notofication",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phoneNumberTo",
+									"value": "+8801754402481",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Facebook Hack Key: 84970",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8090/notifications/sms",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"sms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email Notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "emailTo",
+									"value": "shadrilhassan@outlook.com",
+									"type": "text"
+								},
+								{
+									"key": "subject",
+									"value": "Testing",
+									"type": "text"
+								},
+								{
+									"key": "messageBody",
+									"value": "Sending mail notifications using spring boot 3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8090/notifications/email",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Notification Preference",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : \"1\",\n    \"prefType\" : \"Email_Notification\",\n    \"enabled\" : \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/notifications/preferences/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"preferences",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Preferences by Type and User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/preferences/1/Email_Notification",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"preferences",
+								"1",
+								"Email_Notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update notification preference",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"notificationPreferenceId\" : \"1\",\n    \"userId\" : \"1\",\n    \"prefType\" : \"Email_Notification\",\n    \"enabled\" : \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/notifications/preferences/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"preferences",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Notification Preference",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/preferences/delete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"preferences",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"notificationType\": \"ALERT\",\n    \"notificationText\": \"Your order has been shipped\",\n    \"timestamp\": \"2023-11-27T12:00:00\",\n    \"isRead\": false\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/notifications/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unread Notifications By UserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/unread/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"unread",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Notifications By UserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Notification as Read",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/mark-read/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"mark-read",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mark all read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/notifications/mark-all-read/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"notifications",
+								"mark-all-read",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cdss-service",
+			"item": [
+				{
+					"name": "CDSS Generate HealthRecommendation",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFkcmlsaGFzc2FuQG91dGxvb2suY29tIiwicm9sZXMiOlsiUGF0aWVudCJdLCJleHAiOjE3MDE4ODg1OTd9.baAIr_NUdVqWQGVx_lZoaYueGQdmHha6Lrdgb4WAilI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/cdss/health-recommendation/generate",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cdss",
+								"health-recommendation",
+								"generate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDSS All Health Recommendation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlBhdGllbnQiXSwiZXhwIjoxNzAxMzM4OTQ3fQ.hy-d_os12NTJ-JeeQBDvoGF0aQevnmzsbtfo2Rd7NVg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/cdss/health-recommendation/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cdss",
+								"health-recommendation",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDSS Get Health Recommendation By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/cdss/health-recommendation/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cdss",
+								"health-recommendation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDSS Get Health Recommendation By Patient Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/cdss/health-recommendation/patient/00-00001",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"cdss",
+								"health-recommendation",
+								"patient",
+								"00-00001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pharmaceutical-inventory-service",
+			"item": [
+				{
+					"name": "Create Medical Equipment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicalEquipmentName\": \"Heart Rate Monitor\",\r\n    \"medicalEquipmentType\": \"Laboratory_Equipment\",\r\n    \"manufacturer\": \"HealthTech Inc.\",\r\n    \"manufactureDate\": \"2023-01-15\",\r\n    \"expiryDate\": \"2028-01-15\",\r\n    \"isOccupied\": false,\r\n    \"isActive\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Medical Equipment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicalEquipmentId\": 1,\r\n    \"medicalEquipmentName\": \"Heart Rate Monitor 1\",\r\n    \"medicalEquipmentType\": \"Laboratory_Equipment\",\r\n    \"manufacturer\": \"HealthTech Inc.\",\r\n    \"manufactureDate\": \"2023-01-15\",\r\n    \"expiryDate\": \"2028-01-15\",\r\n    \"isOccupied\": false,\r\n    \"isActive\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Medical Equipment By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/get/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"get",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Medical Equipment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Medical Equipment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/get-all",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Medical Equipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IxMjIxQGV4YW1wbGUuY29tIiwicm9sZXMiOlsiRG9jdG9yIl0sImV4cCI6MTcwMTM0MzAyNn0.Efsik4DQJQV9S7ahmV7mD091hMpz_uKv4EbOHXrgoi8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/book/2/00-00002",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"book",
+								"2",
+								"00-00002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return Medical Equipment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IxMjIxQGV4YW1wbGUuY29tIiwicm9sZXMiOlsiRG9jdG9yIl0sImV4cCI6MTcwMTM0MzAyNn0.Efsik4DQJQV9S7ahmV7mD091hMpz_uKv4EbOHXrgoi8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/return/2/00-00002",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"return",
+								"2",
+								"00-00002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Medicine",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicineName\": \"Paracetamol\",\r\n    \"genericName\": \"Acetaminophen\",\r\n    \"medicineType\": \"Syrup\",\r\n    \"manufacturer\": \"Health Pharma\",\r\n    \"manufactureDate\": \"2023-01-15\",\r\n    \"expiryDate\": \"2025-01-15\",\r\n    \"isOccupied\": false,\r\n    \"isActive\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Medicine",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicineId\": 1,\r\n    \"medicineName\": \"Paracetamol-1\",\r\n    \"genericName\": \"Acetaminophen\",\r\n    \"medicineType\": \"Tablet\",\r\n    \"manufacturer\": \"Health Pharma\",\r\n    \"manufactureDate\": \"2023-01-15\",\r\n    \"expiryDate\": \"2025-01-15\",\r\n    \"isOccupied\": false,\r\n    \"isActive\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Medicine By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/get/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Medicine",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Medicine",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/get-all",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Medicine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IxMjIxQGV4YW1wbGUuY29tIiwicm9sZXMiOlsiRG9jdG9yIl0sImV4cCI6MTcwMTM0MzAyNn0.Efsik4DQJQV9S7ahmV7mD091hMpz_uKv4EbOHXrgoi8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/book/2/00-00002",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"book",
+								"2",
+								"00-00002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return Medicine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IxMjIxQGV4YW1wbGUuY29tIiwicm9sZXMiOlsiRG9jdG9yIl0sImV4cCI6MTcwMTM0MzAyNn0.Efsik4DQJQV9S7ahmV7mD091hMpz_uKv4EbOHXrgoi8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/return/2/00-00002",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"return",
+								"2",
+								"00-00002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Medicine By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/search/name/p",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"search",
+								"name",
+								"p"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Medicine By Manufracturer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/search/manufacturer/h",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"search",
+								"manufacturer",
+								"h"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Medicine By Generic Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/search/generic-name/A",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"search",
+								"generic-name",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Medical Equipment By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/search/name/A",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"search",
+								"name",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Medical Equipment By Manufacturer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/search/manufacturer/xxx",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"search",
+								"manufacturer",
+								"xxx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alert Medicine Expiry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medicine/alert-expiry",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medicine",
+								"alert-expiry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alert Equipment Expiry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/pharmaceutical-inventory/medical-equipment/alert-expiry",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"pharmaceutical-inventory",
+								"medical-equipment",
+								"alert-expiry"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analytics-research-service",
+			"item": [
+				{
+					"name": "Researcher Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Khalid\",\r\n    \"email\" : \"khalid@gmail.com\",\r\n    \"designation\" : \"Researcher\",\r\n    \"institute\" : \"Dhaka University\",\r\n    \"purpose\" : \"Research issue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/research/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"research",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grant Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/research/give-access/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"research",
+								"give-access",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Research Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/research/get/analytic-data/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"research",
+								"get",
+								"analytic-data",
+								"1"
 							]
 						}
 					},

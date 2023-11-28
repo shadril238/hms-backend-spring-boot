@@ -1,5 +1,7 @@
 package com.shadril.patientservice.security;
 
+import com.shadril.patientservice.constants.AppConstants;
+import jakarta.ws.rs.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +40,13 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth
+                            .requestMatchers(HttpMethod.POST, "/patients/register").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/patients/login").permitAll()
+                            .requestMatchers(HttpMethod.DELETE, "/patients/delete/**").hasAuthority(AppConstants.ROLE_ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/patients/**").hasAnyAuthority(AppConstants.ROLE_ADMIN, AppConstants.ROLE_DOCTOR, AppConstants.ROLE_PATIENT)
+                            .requestMatchers(HttpMethod.POST, "/patients/**").hasAnyAuthority(AppConstants.ROLE_ADMIN, AppConstants.ROLE_DOCTOR, AppConstants.ROLE_PATIENT)
+                            .requestMatchers(HttpMethod.PUT, "/patients/**").hasAnyAuthority(AppConstants.ROLE_ADMIN, AppConstants.ROLE_DOCTOR, AppConstants.ROLE_PATIENT)
+                            .requestMatchers(HttpMethod.DELETE, "/patients/**").hasAnyAuthority(AppConstants.ROLE_ADMIN, AppConstants.ROLE_DOCTOR, AppConstants.ROLE_PATIENT)
                             .anyRequest().permitAll();
                 })
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
