@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.shadril.pharmaceutical-inventory-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.shadril.pharmaceutical-inventory-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/community-portal-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/doctor-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/analytic-research-service/hms-backend-spring-boot.analytic-research-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/analytic-research-service/hms-backend-spring-boot.analytic-research-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cdss-service/hms-backend-spring-boot.cdss-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/community-portal-service/hms-backend-spring-boot.community-portal-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/community-portal-service/hms-backend-spring-boot.community-portal-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/doctor-service/hms-backend-spring-boot.doctor-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/doctor-service/hms-backend-spring-boot.doctor-service.main.iml" />
