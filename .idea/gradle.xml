@@ -35,6 +35,7 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/cdss-service" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
@@ -44,8 +45,10 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/community-portal-service" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/community-portal-service" />
@@ -56,7 +59,7 @@
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/config-server" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
-        <option name="gradleJvm" value="17" />
+        <option name="gradleJvm" value="18" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/config-server" />
@@ -64,6 +67,7 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/doctor-service" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
         <option name="modules">
@@ -76,7 +80,7 @@
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/eureka-service-discovery" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
-        <option name="gradleJvm" value="17" />
+        <option name="gradleJvm" value="18" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/eureka-service-discovery" />
@@ -93,8 +97,10 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/patient-service" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle/gradle-8.2" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/patient-service" />
