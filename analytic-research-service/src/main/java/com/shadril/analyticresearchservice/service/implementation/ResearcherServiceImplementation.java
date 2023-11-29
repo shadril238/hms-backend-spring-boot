@@ -1,6 +1,7 @@
 package com.shadril.analyticresearchservice.service.implementation;
 
 import com.opencsv.CSVWriter;
+import com.shadril.analyticresearchservice.builderpattern.ResearcherBuilder;
 import com.shadril.analyticresearchservice.dto.HealthRecordDto;
 import com.shadril.analyticresearchservice.dto.ResearcherDto;
 import com.shadril.analyticresearchservice.dto.ResponseMessageDto;
@@ -40,9 +41,16 @@ public class ResearcherServiceImplementation implements ResearcherService {
                 throw new CustomException(new ResponseMessageDto("Researcher with email: " + researcherDto.getEmail() + " already exists", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
             }
 
-            ResearcherEntity researcherEntity = modelMapper.map(researcherDto, ResearcherEntity.class);
-            researcherEntity.setIsValid(false);
-            researcherEntity.setIsTaken(false);
+            ResearcherEntity researcherEntity = new ResearcherBuilder()
+                    .name(researcherDto.getName())
+                    .email(researcherDto.getEmail())
+                    .designation(researcherDto.getDesignation())
+                    .institute(researcherDto.getInstitute())
+                    .purpose(researcherDto.getPurpose())
+                    .isValid(false)
+                    .isTaken(false)
+                    .build();
+
             analyticResearchRepository.save(researcherEntity);
             log.info("Researcher with email: {} registered successfully", researcherDto.getEmail());
         } catch (Exception e) {
