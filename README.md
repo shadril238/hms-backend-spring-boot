@@ -41,7 +41,7 @@ The Healthcare Management System Backend plays a critical role in a comprehensiv
 - Ensures reliable deployment through comprehensive integration and unit testing.
 
 ## API Documentation
-Access our detailed [API Documentation](https://documenter.getpostman.com/view/26502327/2s9YeG5Wjk) for a complete overview of the available APIs and their usage.
+Access detailed [API Documentation](https://documenter.getpostman.com/view/26502327/2s9YeG5Wjk) for a complete overview of the available APIs and their usage.
 
 ## Eureka Server Dashboard
 Gain insights into the health and status of microservices with Eureka Discovery Server Dashboard:
